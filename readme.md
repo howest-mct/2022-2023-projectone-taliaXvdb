@@ -1,9 +1,9 @@
 # Titel van project
 
-**VOORNAAM NAAM:** A B
+**VOORNAAM NAAM:** Talia Van den Bossche
 
-**Sparringpartner:** C D
+**Sparringpartner:** Jentl Antheunis
 
-**Projectsamenvatting in max 10 woorden:** E
+**Projectsamenvatting in max 10 woorden:** drinkreminder
 
-**Projecttitel:** F
+**Projecttitel:** Aqua Alert

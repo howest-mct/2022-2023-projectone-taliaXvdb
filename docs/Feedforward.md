@@ -32,17 +32,27 @@
 
 # Feedforward gesprekken
 
-## Gesprek 1 (Datum: xx/xx/2023)
+## Gesprek 1 (Datum: 22/05/2023)
 
-Lector:
+Lector: Geert Desloovere
 
 Vragen voor dit gesprek:
 
-- vraag 1: V
+- vraag 1: Is mijn schema goed?
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: G
+- feedback 1: 
+
+De levelshifter was onvolledig geschakeld, de lm35 kan ik niet gebruiken op de manier dat ik het nu heb, dus moest ik een andere zoeken. Ik moet zeker ook eens kijken op welk protocol mijn RFid werkt.
+
+- vraag 2: 
+
+Waarvoor mag ik een library gebruiken?
+
+- feedback 2: 
+
+Ik mag voor mijn RFid en ledring een library gebruiken
 
 ## Gesprek 2 (Datum: xx/xx/2023)
 

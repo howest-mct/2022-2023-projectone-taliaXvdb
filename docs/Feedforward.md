@@ -54,9 +54,9 @@ Waarvoor mag ik een library gebruiken?
 
 Ik mag voor mijn RFid en ledring een library gebruiken
 
-## Gesprek 2 (Datum: xx/xx/2023)
+## Gesprek 2 (Datum: 24/05/2023)
 
-Lector:
+Lector: Hans, Pieter-Jan, Christophe
 
 Vragen voor dit gesprek:
 
@@ -64,7 +64,9 @@ Vragen voor dit gesprek:
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: G
+- feedback 1: 
+
+Werkt al goed, juist nog een paar dingen aanpassen in mijn schema en als alles werkt meer tabellen nog in database
 
 ## Gesprek 3 (Datum: xx/xx/2023)
 

@@ -2,28 +2,28 @@ import time
 import board
 import neopixel
 
-# Aantal LED's in de ring en GPIO-pinnummer
-LED_COUNT = 24
-LED_PIN = board.D24
+class leds:
+    def __init__(self, parcount, parpin, parbright: float) -> None:
+        self.count = parcount
+        self.pin = parpin
+        self.brightness = parbright
 
-# Maak een Neopixel-object aan
-pixels = neopixel.NeoPixel(LED_PIN, LED_COUNT)
+        self.setup()
 
-# Functie om de LED-ring aan te sturen
-def set_led_ring(color):
-    for i in range(LED_COUNT):
-        pixels[i] = color
-        pixels.show()
-        time.sleep(0.1)
+    def setup(self):
+        self.pixels = neopixel.NeoPixel(self.pin, self.count)
+        self.pixels.brightness = self.brightness
 
-# Stuur de LED-ring aan met een bepaalde kleur
-set_led_ring((255, 0, 0))  # Rood
+    def rainbow_effect(self, wait):
+        for i in range(self.count):
+            hue = int(i * (255 / self.count))
+            self.pixels[i] = (hue, 255 - hue, 0)
+        self.pixels.show()
+        time.sleep(wait)
 
-# Wacht een paar seconden
-time.sleep(2)
-
-# Zet alle LED's uit
-set_led_ring((0, 0, 0))
-
-# Sluit de Neopixel-objecten af
-pixels.deinit()
+    def wave_effect(self, wait):
+        for i in range(self.count):
+            self.pixels.fill((0, 0, 0))  # Zet alle leds uit
+            self.pixels[i] = (255, 255, 255)  # Schakel de huidige led in
+            self.pixels.show()
+            time.sleep(wait)

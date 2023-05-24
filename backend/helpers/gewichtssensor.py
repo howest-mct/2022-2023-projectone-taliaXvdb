@@ -6,6 +6,8 @@ class HX711:
         self.sck = sck
         self.tare = 0
 
+        self.setup()
+
     def setup(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.dt, GPIO.IN)
@@ -36,7 +38,7 @@ class HX711:
 
     def get_weight(self):
         raw_value = self.read()
-        ##### 209 is de calibratie factor: aanpassen totdat gewicht ongeveer juist is #####
+        ##### 295 is de calibratie factor: aanpassen totdat gewicht ongeveer juist is #####
         weight = raw_value / 295
 
         if weight > -3 and weight < 3:

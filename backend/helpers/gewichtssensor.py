@@ -6,8 +6,6 @@ class HX711:
         self.sck = sck
         self.tare = 0
 
-        self.setup()
-
     def setup(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.dt, GPIO.IN)

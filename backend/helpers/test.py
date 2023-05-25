@@ -9,7 +9,7 @@ import board
 from RPi import GPIO
 hx711 = HX711(dt=25, sck=18)
 ds18b20 = DS18B20()
-buzz = reminder(17, 220)
+buzz = reminder(16)
 # lcd = LCDClass([13, 6, 5, 27], 26, 19, 4)
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
@@ -23,6 +23,7 @@ try:
         temp = ds18b20.read_temp()
         ledring.wave_effect(0.05)
         brrr.vibrate(1)
+        print('song')
         buzz.reminder_song()
         time.sleep(1)
 except KeyboardInterrupt:

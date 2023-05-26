@@ -37,10 +37,6 @@ html {
   width: 100%;
 }
 
-h2 {
-  color: #1990c7;
-}
-
 /*---------------------------------------/*
  # OBJECTS
 /*---------------------------------------*/
@@ -124,29 +120,8 @@ h2 {
   stroke: #fafafa;
 }
 
-.c-water-input:checked + .c-page {
-  opacity: 1;
-}
-
 .c-pages {
   display: flex;
-  justify-content: space-between;
-}
-.c-pages .c-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  text-align: center;
-  opacity: 0.4;
-}
-.c-pages .c-page__title {
-  margin-top: 1rem;
-  font-size: 1rem;
-}
-.c-pages .c-page__symbol {
-  stroke: #fafafa;
-  stroke-width: 2px;
-  transform: scaleY(-1);
 }
 
 .c-water {

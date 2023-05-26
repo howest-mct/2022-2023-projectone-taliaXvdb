@@ -40,3 +40,25 @@ class DataRepository:
     def read_history():
         sql = "SELECT * FROM history"
         return Database.get_rows(sql)
+    
+    #UPDATE
+    def update_user(id, name, goal, streak):
+        sql = "UPDATE user SET name = %s, goal = %s, streak = %s  WHERE userID = %s"
+        params = [name, goal, streak, id]
+        return Database.execute_sql(sql, params)
+    
+    def update_reminder(id, iduser, type, time, amount, fasterWhenHot):
+        sql = "UPDATE reminder SET iduser = %s, type = %s, time = %s, amount = %s, fasterWhenHot = %s WHERE reminderID = %s"
+        params = [iduser, type, time, amount, fasterWhenHot, id]
+        return Database.execute_sql(sql, params)
+    
+    #DELETE
+    def delete_user(id):
+        sql = "DELETE FROM user WHERE userID = %s"
+        params = [id]
+        return Database.execute_sql(sql, params)
+    
+    def delete_reminder(id):
+        sql = "DELETE FROM reminder WHERE reminderID = %s"
+        params = [id]
+        return Database.execute_sql(sql, params)

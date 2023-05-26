@@ -22,6 +22,11 @@ class DataRepository:
         params = [iduser, type, time, amount, fasterWhenHot]
         return Database.execute_sql(sql, params)
     
+    def create_reading(deviceid, actionid, userid, date, value, comment):
+        sql = "INSERT INTO history (deviceID, actionID, userID, date, value, comment) VALUES (%s,%s,%s,%s,%s,%s)"
+        params = [deviceid, actionid, userid, date, value, comment]
+        return Database.execute_sql(sql, params)
+    
     #READ
     def read_all_users():
         sql = "SELECT * FROM user"
@@ -31,6 +36,20 @@ class DataRepository:
         sql = "SELECT * FROM user WHERE userID = %s"
         params = [id]
         return Database.get_one_row(sql, params)
+
+    def read_reminders_by_userid(id):
+        sql = "SELECT * FROM reminder WHERE iduser = %s"
+        params = [id]
+        return Database.get_rows(sql, params)
+    
+    def read_one_reminder(id):
+        sql = "SELECT * FROM reminder WHERE reminderID = %s"
+        params = [id]
+        return Database.get_one_row(sql, params)
+
+    def read_all_reminders():
+        sql = "SELECT * FROM reminder"
+        return Database.get_rows(sql)
     
     def read_history_by_userid(id):
         sql = "SELECT * FROM history WHERE userID = %s"

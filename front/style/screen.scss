@@ -41,9 +41,6 @@ html {
   height: 100%;
   width: 100%;
 }
-h2 {
-  color: $color-light;
-}
 
 /*---------------------------------------/*
  # OBJECTS
@@ -131,34 +128,8 @@ h2 {
   }
 }
 
-.c-water-input {
-  &:checked + .c-page {
-    opacity: 1;
-  }
-}
-
-.c-pages {
+.c-pages{
   display: flex;
-  justify-content: space-between;
-
-  .c-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    text-align: center;
-    opacity: 0.4;
-
-    &__title {
-      margin-top: 1rem;
-      font-size: 1rem;
-    }
-    &__symbol {
-      stroke: $color-white;
-      stroke-width: 2px;
-      -webkit-transform: scaleY(-1);
-      transform: scaleY(-1);
-    }
-  }
 }
 
 .c-water {

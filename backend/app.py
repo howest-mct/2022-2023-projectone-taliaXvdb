@@ -65,7 +65,7 @@ CORS(app)
 def hallo():
     return "Server is running, er zijn momenteel geen API endpoints beschikbaar."
 
-ENDPOINT = 'api/v1/waterreminder'
+ENDPOINT = '/api/v1/waterreminder'
 
 @app.route(ENDPOINT + '/users/', methods= ['GET', 'POST'])
 def users():
@@ -132,14 +132,14 @@ def reminders(iduser):
         else:
             return jsonify(status='ERROR'), 500
         
-@app.route(ENDPOINT + '/user/<iduser>/reminders/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
-def reminder(iduser, reminderid):
+@app.route(ENDPOINT + '/reminder/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
+def reminder(reminderid):
     if request.method == 'GET':
         reminder = DataRepository.read_one_reminder(reminderid)
         return jsonify(reminder = reminder), 200
     elif request.method == 'PUT':
         form = DataRepository.json_or_formdata(request)
-        data = DataRepository.update_reminder(reminderid, iduser, form['type'], form['time'], form['amount'], form['fasterWhenHot'])
+        data = DataRepository.update_reminder(reminderid, form['userid'], form['type'], form['time'], form['amount'], form['fasterWhenHot'])
         if data is not None:
             if data > 0:
                 return jsonify(status='OK', data=id), 201
@@ -162,7 +162,8 @@ def initial_connection():
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")
-        socketio.run(app, debug=False, host='0.0.0.0')
+        app.run(debug=False)
+        # socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:

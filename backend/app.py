@@ -157,13 +157,17 @@ def initial_connection():
     print('A new client connect')
     # # Send to the client!
 
-
+@socketio.on('F2B_gettemp')
+def show_temp():
+    temp = DataRepository.read_lasttemp()
+    print(temp)
+    emit('B2F_showtemp', temp)
 
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")
-        app.run(debug=False)
-        # socketio.run(app, debug=False, host='0.0.0.0')
+        # app.run(debug=False)
+        socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:

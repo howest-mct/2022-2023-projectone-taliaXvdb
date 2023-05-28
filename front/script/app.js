@@ -1,5 +1,5 @@
 const lanIP = `${window.location.hostname}:5000`;
-// const socketio = io(lanIP);
+const socketio = io(lanIP);
 
 const init = function () {
   console.info('DOM geladen');
@@ -27,15 +27,15 @@ const initLogin = function () {
   console.info('init login');
 
   //queryselectors
-  const htmlButton = document.querySelector('.js-button')
-  const htmlInput = document.querySelector('.js-input')
-  htmlInput.addEventListener('change', function(){
-    let userid = htmlInput.value
-    console.info(userid)
-  })
-  htmlButton.addEventListener('click', function(){
-    console.info('clicked')
-  })
+  const htmlButton = document.querySelector('.js-button');
+  const htmlInput = document.querySelector('.js-input');
+  htmlInput.addEventListener('change', function () {
+    let userid = htmlInput.value;
+    console.info(userid);
+  });
+  htmlButton.addEventListener('click', function () {
+    console.info('clicked');
+  });
 };
 
 const initIndex = function () {
@@ -44,6 +44,13 @@ const initIndex = function () {
 
 const initOverview = function () {
   console.info('init overview');
+  socketio.on('connect', function () {
+    console.info('succesfully connected to socket');
+    socketio.send('F2B_gettemp');
+  });
+  socketio.on('B2F_showtemp', function (temp) {
+    console.info(temp);
+  });
 };
 
 const initReadings = function () {

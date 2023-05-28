@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="style/screen.css">
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
   <!-- <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script> -->
-  <script src="script/dataHandler.js"></script>
+  <script src="script/datahandler.js"></script>
   <script src="script/app.js"></script>
 </head>
 
@@ -26,10 +26,25 @@
     </header>
     <main>
         <div>
-            <button>Temperature</button>
-            <button>Weight</button>
-            <button>ID</button>
+            <button class="js-btn" data-temperature>Temperature</button>
+            <button class="js-btn" data-weight>Weight</button>
+            <button class="js-btn" data-id>ID</button>
         </div>
+        <table class="js-historytable">
+          <thead>
+            <tr>
+              <th>recordID</th>
+              <th>deviceID</th>
+              <th>actionID</th>
+              <th>date</th>
+              <th>value</th>
+              <th>comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+      </table>
     </main>
 </body>
     

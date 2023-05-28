@@ -11,6 +11,7 @@ class DS18B20:
         for line in sensor_file:
             line = line.rstrip('\n')
             line = int(line)
-            print(f"De temperatuur is {line/1000} °Celsius")
-
+            line = line/1000
+            print(f"De temperatuur is {line} °Celsius")
         sensor_file.close()
+        return line

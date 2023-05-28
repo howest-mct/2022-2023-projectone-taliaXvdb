@@ -44,7 +44,22 @@ def setup():
     hx711.setup()
 
 def loop():
-    pass
+    temp = ds18b20.read_temp()
+    result = create_measurement(1, 1, 3, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), temp, 'temperature measured')
+    print(result)
+    time.sleep(5)
+
+def create_measurement(deviceID, actionID, userID, time, value, comment):
+    data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
+    if data is not None:
+        return 'ok'
+    else:
+        return 'error'
+    
+def gpio_thread():
+    setup()
+    while True:
+        loop()
 
 def callback_button(pin):
     print('button pressed')
@@ -162,9 +177,11 @@ def initial_connection():
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")
-        app.run(debug=False)
-        # socketio.run(app, debug=False, host='0.0.0.0')
+        # threading.Thread(target=gpio_thread, daemon=True).start()
+        # app.run(debug=False)
+        socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:
         print("finished")
+        GPIO.cleanup()

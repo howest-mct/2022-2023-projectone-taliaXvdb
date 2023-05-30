@@ -61,7 +61,7 @@ class DataRepository:
         return Database.get_rows(sql)
     
     def read_lasttemp():
-        sql = "SELECT value FROM history WHERE deviceID = 1 ORDER BY date DESC LIMIT 1"
+        sql = "SELECT value FROM history WHERE deviceID = 1 ORDER BY ID DESC LIMIT 1"
         return Database.get_one_row(sql)
     
     #UPDATE

@@ -35,6 +35,7 @@ const initLogin = function () {
   });
   htmlButton.addEventListener('click', function () {
     console.info('clicked');
+    window.location = 'index.html';
   });
 };
 
@@ -44,12 +45,14 @@ const initIndex = function () {
 
 const initOverview = function () {
   console.info('init overview');
+  htmlTemp = document.querySelector('.js-temp')
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
-    socketio.send('F2B_gettemp');
+    socketio.emit('F2B_gettemp');
   });
   socketio.on('B2F_showtemp', function (temp) {
     console.info(temp);
+    htmlTemp.innerHTML += temp;
   });
 };
 

@@ -14,6 +14,7 @@ lcd = LCDpcfClass(26, 19)
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
 hx711.setup()
+lcd.clear_lcd()
 
 try:
     while True:
@@ -30,6 +31,7 @@ try:
 except KeyboardInterrupt:
     pass
 
+lcd.clear_lcd()
 brrr.cleanup()
 hx711.cleanup()
 GPIO.cleanup()

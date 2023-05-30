@@ -44,18 +44,31 @@ def setup():
     hx711.setup()
 
 def loop():
-    pass
+    temp = ds18b20.read_temp()
+    create_measurement(1,1, 2, time.gmtime(time.time()), temp, 'Temperature measured')
+    time.sleep(1)
+
+def create_measurement(deviceID, actionID, userID, date, value, comment):
+    data = DataRepository.create_reading(deviceID, actionID, userID, date, value, comment)
+    if data is not None:
+        return 'ok'
+    else:
+        return 'error'
 
 def callback_button(pin):
     print('button pressed')
 
+def gpio_thread():
+    setup()
+    while True:
+        loop()
+        time.sleep(0.01)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
 
 # ping interval forces rapid B2F communication
-socketio = SocketIO(app, cors_allowed_origins="*",
-                    async_mode='gevent', ping_interval=0.5)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', ping_interval=0.5)
 CORS(app)
 
 # API ENDPOINTS
@@ -167,6 +180,7 @@ if __name__ == '__main__':
     try:
         print("**** Starting APP ****")
         # app.run(debug=False)
+        threading.Thread(target=gpio_thread, daemon=True).start()
         socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')

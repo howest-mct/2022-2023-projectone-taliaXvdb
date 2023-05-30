@@ -45,7 +45,7 @@ def setup():
 
 def loop():
     temp = ds18b20.read_temp()
-    create_measurement(1,1, 2, time.gmtime(time.time()), temp, 'Temperature measured')
+    create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
     time.sleep(1)
 
 def create_measurement(deviceID, actionID, userID, date, value, comment):

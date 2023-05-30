@@ -23,7 +23,7 @@ try:
         print("Weight: {} grams".format(weight))
         temp = ds18b20.read_temp()
         lcd.show_ip()
-        # ledring.wave_effect(0.05)
+        ledring.wave_effect(0.05)
         brrr.vibrate(1)
         print('song')
         buzz.reminder_song()

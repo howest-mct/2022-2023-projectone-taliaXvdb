@@ -1,12 +1,12 @@
 # Projectgegevens
 
-**VOORNAAM NAAM:** A B
+**VOORNAAM NAAM:** Talia Van den Bossche
 
-**Sparringpartner:** C D
+**Sparringpartner:** Jentl Antheunis
 
-**Projectsamenvatting in max 10 woorden:** E
+**Projectsamenvatting in max 10 woorden:** water reminder
 
-**Projecttitel:** F
+**Projecttitel:** Aqua Alert
 
 # Tips voor feedbackgesprekken
 
@@ -68,14 +68,44 @@ Dit is de feedback op mijn vragen.
 
 Werkt al goed, juist nog een paar dingen aanpassen in mijn schema en als alles werkt meer tabellen nog in database
 
-## Gesprek 3 (Datum: xx/xx/2023)
+## Gesprek 3 (Datum: 30/05/2023)
 
-Lector:
+Lector: Dieter en Stijn
 
-Vragen voor dit gesprek:
+Vragen voor dit gesprek: MVP
 
 - [x] vraag 1: V
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: G
+- feedback 1: 
+
+Op het moment van de MVP was er wat code evrdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.
+
+## Gesprek 3 (Datum: 30/05/2023)
+
+Lector: Frederik
+
+Vragen voor dit gesprek: 
+
+- vraag 1: 
+
+Extra tabel logging nodig?
+
+- feedback 1: 
+
+Op zich kan het met queries maar die zullen zeer groot worden en complex, dus inderdaad beter nog een extra tabel koppelen aan user.
+
+## Gesprek 3 (Datum: 30/05/2023)
+
+Lector: Dieter en Stijn
+
+Vragen voor dit gesprek: MVP
+
+- [x] vraag 1: V
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Op het moment van de MVP was er wat code evrdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.

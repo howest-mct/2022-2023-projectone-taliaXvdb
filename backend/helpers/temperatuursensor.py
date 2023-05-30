@@ -7,12 +7,15 @@ class DS18B20:
         self.sensor_file_name = '/sys/bus/w1/devices/28-23a37a000900/temperature'
 
     def read_temp(self):
-        sensor_file = open(self.sensor_file_name, 'r')
-        for line in sensor_file:
-            line = line.rstrip('\n')
-            line = int(line)
-            line = line/1000
-            print(f"De temperatuur is {line} °Celsius")
+        line="17500"
+        # sensor_file = open(self.sensor_file_name, 'r')
+        sensor_file = open('/sys/bus/w1/devices/28-23a37a000900/temperature', 'r')
+        # line = sensor_file.readline()
+        print(line)
+        line = line.rstrip('\n')
+        line = int(line)
+        line = line/1000
+        print(f"De temperatuur is {line} °Celsius")
 
         sensor_file.close()
         return line

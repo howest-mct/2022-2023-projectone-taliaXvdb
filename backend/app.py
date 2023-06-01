@@ -16,6 +16,7 @@ from helpers.trilmotor import VibrationMotor
 from helpers.ledring import leds
 from helpers.buzzer import reminder
 from helpers.LCD import LCDpcfClass
+from helpers.rfid import RFid
 
 #REGION GPIO, PIN DEFINING
 btn = 21
@@ -35,6 +36,7 @@ buzz = reminder(16)
 lcd = LCDpcfClass(lcdPins['rs'], lcdPins['e'])
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
+rfid = RFid()
 
 def setup():
     GPIO.setmode(GPIO.BCM)
@@ -175,6 +177,12 @@ def show_temp():
     temp = DataRepository.read_lasttemp()
     print(temp)
     emit('B2F_showtemp', temp)
+
+@socketio.on('F2B_readrfid')
+def show_id():
+    id = rfid.read_rfid()
+    print(id)
+    emit('B2F_showid', id)
 
 if __name__ == '__main__':
     try:

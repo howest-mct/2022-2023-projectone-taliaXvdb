@@ -46,6 +46,7 @@ const initLogin = function () {
     console.info(id);
     htmlRfid.innerHTML += id
     localStorage.setItem('userid', id)
+    window.location = 'index.html'
   });
 };
 

@@ -153,3 +153,38 @@ Vragen voor dit gesprek:
 Is mijn design goed?
 
 - feedback 1:
+
+logo -> talia's call (claudia denkt beter niet)
+weten op welk scherm je zit
+nog niet vriendelijk voor niet-it mensen
+ipv "welcome" iets interessants zetten om mensen aant te zetten tot het gebruiken
+maak paar varianten en kies dan pas welk te doen
+scan your badge... wat dan?
+onboard: beetje gemist
+waarom capitalized? (moeilijk te lezen)
+labels: wat zijn ze?
+aangemeld: waar te zien dat je aangemeld zijt?
+aanmoedigen wanneer nodig
+time until next reminder: je ziet resterende tijd, maar niet interval
+also: is het interessant om dat te tonen als je al op de website zit
+al bij al: meer motivaties om aan te moedigen om het leuk te maken
+!-> zien waar in de app je bent
+!-> naast square grid ook layout belangrijk: niet te dicht bij rand (ook op mobile)
+modular scale: text moet niet te groot zijn. Bouw op van klein naar groter
+labeltjes van paginas terug te zien op schermen -> weten waar je bent
+streaks: cool! motivatie, top
+maar waarom staat temperatuur daar (snap waarom het bijhouden, maar waarom tonen)
+eerder bij 50% zetten (opgelet, je hebt nog niet veel gedronken en tis warm)
+streak: mooi visualiseren
+zorg dat info leesbaar is en dat user er iets mee is
+met bv gewicht is de user niet
+historiek: ja, nutteloze info: nee
+!-> als ingelogd: toon dat je ingelogd bent
+rekening houden met te veel water drinken (ook waarschuwing)
+meer uitleg (ipv gewoon "reminders" uitleggen wat het is en wat je ermee doet)
+!-> ga naar normale mensen en vraag feedback of vraag hoe ze het zouden gebruiken
+reminder systeem beetje herdenken
+bij gemiste reminders: ...?
+
+CONCLUSIE:
+goed begonnen, mobile first, layout is belangrijkst, design kan in browser

@@ -43,12 +43,14 @@ def setup():
     GPIO.setup(btn, GPIO.IN)
     GPIO.add_event_detect(btn, GPIO.FALLING, callback=callback_button, bouncetime=300)
     lcd.set_cursor()
+    lcd.clear_lcd()
     hx711.setup()
 
 def loop():
     temp = ds18b20.read_temp()
     create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
-    time.sleep(1)
+    lcd.show_ip()
+    time.sleep(5)
 
 def create_measurement(deviceID, actionID, userID, date, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, date, value, comment)

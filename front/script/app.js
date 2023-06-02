@@ -27,17 +27,7 @@ const initLogin = function () {
   console.info('init login');
 
   //queryselectors
-  const htmlButton = document.querySelector('.js-button');
-  const htmlInput = document.querySelector('.js-input');
   const htmlRfid =document.querySelector('.js-rfid')
-  htmlInput.addEventListener('change', function () {
-    let userid = htmlInput.value;
-    console.info(userid);
-  });
-  htmlButton.addEventListener('click', function () {
-    console.info('clicked');
-    window.location = 'index.html';
-  });
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_readrfid');

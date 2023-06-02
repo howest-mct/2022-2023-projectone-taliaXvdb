@@ -108,4 +108,48 @@ Dit is de feedback op mijn vragen.
 
 - feedback 1: 
 
-Op het moment van de MVP was er wat code evrdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.
+Op het moment van de MVP was er wat code verdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.
+
+## Gesprek 4 (Datum: 31/05/2023)
+
+Lector: Christophe
+
+Vragen voor dit gesprek: 
+
+- [x] vraag 1: 
+
+socketio werkt niet
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Zat op verkeerde adres, je moet op 192.168.168.169 zitten.
+
+## Gesprek 5 (Datum: 31/05/2023)
+
+Lector: Pieter-Jan
+
+Vragen voor dit gesprek: 
+
+- [x] vraag 1: 
+
+Welke behuizing is het best
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Best een soort box vanonder voorzien voor de lcd, ...
+
+## Gesprek 6 (Datum: 2/06/2023)
+
+Lector: Claudia
+
+Vragen voor dit gesprek:
+
+- vraag 1:
+
+Is mijn design goed?
+
+- feedback 1:

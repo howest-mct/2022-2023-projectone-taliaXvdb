@@ -180,9 +180,9 @@ def show_temp():
 
 @socketio.on('F2B_readrfid')
 def show_id():
-    id = rfid.read_rfid()
-    print(id)
-    emit('B2F_showid', id)
+    iduser = rfid.read_rfid()
+    print(iduser)
+    emit('B2F_showid', iduser)
 
 if __name__ == '__main__':
     try:

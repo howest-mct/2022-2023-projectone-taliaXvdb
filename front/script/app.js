@@ -43,8 +43,8 @@ const initLogin = function () {
     socketio.emit('F2B_readrfid');
   });
   socketio.on('B2F_showid', function (id) {
-    console.info(id.value);
-    htmlRfid.innerHTML += id.value
+    console.info(id);
+    htmlRfid.innerHTML += id
   });
 };
 

@@ -12,4 +12,4 @@ class RFid:
         print("Hold a tag near the reader")
         id, text = self.reader.read()
         print("ID: %s\nText: %s" % (id,text))
-        sleep(5)
+        return id

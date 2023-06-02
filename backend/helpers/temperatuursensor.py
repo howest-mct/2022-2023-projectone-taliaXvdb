@@ -10,10 +10,8 @@ class DS18B20:
     def read_temp(self):
         line = ""
         while line == "":
-            print("read")
             sensor_file = open(self.sensor_file_name, 'r')
             line = sensor_file.readline()
-            print(line)
             if line:
                 line = line.rstrip('\n')
                 line = int(line)

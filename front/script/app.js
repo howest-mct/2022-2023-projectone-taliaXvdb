@@ -45,6 +45,7 @@ const initLogin = function () {
   socketio.on('B2F_showid', function (id) {
     console.info(id);
     htmlRfid.innerHTML += id
+    localStorage.setItem('userid', id)
   });
 };
 

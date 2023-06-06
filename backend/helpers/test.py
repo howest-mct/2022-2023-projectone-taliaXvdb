@@ -14,6 +14,7 @@ lcd = LCDpcfClass(26, 19)
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
 hx711.setup()
+lcd.clear_lcd()
 
 try:
     while True:
@@ -22,7 +23,7 @@ try:
         print("Weight: {} grams".format(weight))
         temp = ds18b20.read_temp()
         lcd.show_ip()
-        # ledring.wave_effect(0.05)
+        ledring.wave_effect(0.05)
         brrr.vibrate(1)
         print('song')
         buzz.reminder_song()
@@ -30,6 +31,7 @@ try:
 except KeyboardInterrupt:
     pass
 
+lcd.clear_lcd()
 brrr.cleanup()
 hx711.cleanup()
 GPIO.cleanup()

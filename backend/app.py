@@ -16,6 +16,7 @@ from helpers.trilmotor import VibrationMotor
 from helpers.ledring import leds
 from helpers.buzzer import reminder
 from helpers.LCD import LCDpcfClass
+from helpers.rfid import RFid
 
 #REGION GPIO, PIN DEFINING
 btn = 21
@@ -35,16 +36,26 @@ buzz = reminder(16)
 lcd = LCDpcfClass(lcdPins['rs'], lcdPins['e'])
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
+rfid = RFid()
 
 def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(btn, GPIO.IN)
     GPIO.add_event_detect(btn, GPIO.FALLING, callback=callback_button, bouncetime=300)
     lcd.set_cursor()
+    lcd.clear_lcd()
     hx711.setup()
 
 def loop():
     temp = ds18b20.read_temp()
+    weight = hx711.get_weight()
+    create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
+    create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
+    lcd.show_ip()
+    time.sleep(5)
+
+def create_measurement(deviceID, actionID, userID, date, value, comment):
+    data = DataRepository.create_reading(deviceID, actionID, userID, date, value, comment)
     result = create_measurement(1, 1, 3, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), temp, 'temperature measured')
     print(result)
     time.sleep(5)
@@ -55,7 +66,7 @@ def create_measurement(deviceID, actionID, userID, time, value, comment):
         return 'ok'
     else:
         return 'error'
-    
+      
 def gpio_thread():
     setup()
     while True:
@@ -64,13 +75,17 @@ def gpio_thread():
 def callback_button(pin):
     print('button pressed')
 
+def gpio_thread():
+    setup()
+    while True:
+        loop()
+        time.sleep(0.01)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
 
 # ping interval forces rapid B2F communication
-socketio = SocketIO(app, cors_allowed_origins="*",
-                    async_mode='gevent', ping_interval=0.5)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', ping_interval=0.5)
 CORS(app)
 
 # API ENDPOINTS
@@ -172,16 +187,39 @@ def initial_connection():
     print('A new client connect')
     # # Send to the client!
 
+@socketio.on('F2B_gettemp')
+def show_temp():
+    temp = DataRepository.read_lastweight()
+    print(temp)
+    emit('B2F_showtemp', temp)
 
+@socketio.on('F2B_getweight')
+def show_temp():
+    weight = DataRepository.read_lasttemp()
+    print(weight)
+    emit('B2F_showtemp', weight)
+
+@socketio.on('F2B_readrfid')
+def show_id():
+    iduser = rfid.read_rfid()
+    print(iduser)
+    emit('B2F_showid', iduser)
 
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")
+        # app.run(debug=False)
+        threading.Thread(target=gpio_thread, daemon=True).start()
         # threading.Thread(target=gpio_thread, daemon=True).start()
         # app.run(debug=False)
         socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:
+        lcd.clear_lcd()
+        hx711.cleanup()
+        brrr.cleanup()
+        leds.cleanup()
+        GPIO.cleanup()
         print("finished")
         GPIO.cleanup()

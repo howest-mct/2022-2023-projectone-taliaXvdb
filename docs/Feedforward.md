@@ -1,12 +1,12 @@
 # Projectgegevens
 
-**VOORNAAM NAAM:** A B
+**VOORNAAM NAAM:** Talia Van den Bossche
 
-**Sparringpartner:** C D
+**Sparringpartner:** Jentl Antheunis
 
-**Projectsamenvatting in max 10 woorden:** E
+**Projectsamenvatting in max 10 woorden:** water reminder
 
-**Projecttitel:** F
+**Projecttitel:** Aqua Alert
 
 # Tips voor feedbackgesprekken
 
@@ -68,14 +68,123 @@ Dit is de feedback op mijn vragen.
 
 Werkt al goed, juist nog een paar dingen aanpassen in mijn schema en als alles werkt meer tabellen nog in database
 
-## Gesprek 3 (Datum: xx/xx/2023)
+## Gesprek 3 (Datum: 30/05/2023)
 
-Lector:
+Lector: Dieter en Stijn
 
-Vragen voor dit gesprek:
+Vragen voor dit gesprek: MVP
 
 - [x] vraag 1: V
 
 Dit is de feedback op mijn vragen.
 
-- feedback 1: G
+- feedback 1: 
+
+Op het moment van de MVP was er wat code evrdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.
+
+## Gesprek 3 (Datum: 30/05/2023)
+
+Lector: Frederik
+
+Vragen voor dit gesprek: 
+
+- vraag 1: 
+
+Extra tabel logging nodig?
+
+- feedback 1: 
+
+Op zich kan het met queries maar die zullen zeer groot worden en complex, dus inderdaad beter nog een extra tabel koppelen aan user.
+
+## Gesprek 3 (Datum: 30/05/2023)
+
+Lector: Dieter en Stijn
+
+Vragen voor dit gesprek: MVP
+
+- [x] vraag 1: V
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Op het moment van de MVP was er wat code verdwenen dus ik kon niet veel tonen, maar ze geloofden wel dat het normaal werkt. Voor de rest ben ik goed bezig.
+
+## Gesprek 4 (Datum: 31/05/2023)
+
+Lector: Christophe
+
+Vragen voor dit gesprek: 
+
+- [x] vraag 1: 
+
+socketio werkt niet
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Zat op verkeerde adres, je moet op 192.168.168.169 zitten.
+
+## Gesprek 5 (Datum: 31/05/2023)
+
+Lector: Pieter-Jan
+
+Vragen voor dit gesprek: 
+
+- [x] vraag 1: 
+
+Welke behuizing is het best
+
+Dit is de feedback op mijn vragen.
+
+- feedback 1: 
+
+Best een soort box vanonder voorzien voor de lcd, ...
+
+## Gesprek 6 (Datum: 2/06/2023)
+
+Lector: Claudia
+
+Vragen voor dit gesprek:
+
+- vraag 1:
+
+Is mijn design goed?
+
+- feedback 1:
+
+logo -> talia's call (claudia denkt beter niet)
+weten op welk scherm je zit
+nog niet vriendelijk voor niet-it mensen
+ipv "welcome" iets interessants zetten om mensen aant te zetten tot het gebruiken
+maak paar varianten en kies dan pas welk te doen
+scan your badge... wat dan?
+onboard: beetje gemist
+waarom capitalized? (moeilijk te lezen)
+labels: wat zijn ze?
+aangemeld: waar te zien dat je aangemeld zijt?
+aanmoedigen wanneer nodig
+time until next reminder: je ziet resterende tijd, maar niet interval
+also: is het interessant om dat te tonen als je al op de website zit
+al bij al: meer motivaties om aan te moedigen om het leuk te maken
+!-> zien waar in de app je bent
+!-> naast square grid ook layout belangrijk: niet te dicht bij rand (ook op mobile)
+modular scale: text moet niet te groot zijn. Bouw op van klein naar groter
+labeltjes van paginas terug te zien op schermen -> weten waar je bent
+streaks: cool! motivatie, top
+maar waarom staat temperatuur daar (snap waarom het bijhouden, maar waarom tonen)
+eerder bij 50% zetten (opgelet, je hebt nog niet veel gedronken en tis warm)
+streak: mooi visualiseren
+zorg dat info leesbaar is en dat user er iets mee is
+met bv gewicht is de user niet
+historiek: ja, nutteloze info: nee
+!-> als ingelogd: toon dat je ingelogd bent
+rekening houden met te veel water drinken (ook waarschuwing)
+meer uitleg (ipv gewoon "reminders" uitleggen wat het is en wat je ermee doet)
+!-> ga naar normale mensen en vraag feedback of vraag hoe ze het zouden gebruiken
+reminder systeem beetje herdenken
+bij gemiste reminders: ...?
+
+CONCLUSIE:
+goed begonnen, mobile first, layout is belangrijkst, design kan in browser

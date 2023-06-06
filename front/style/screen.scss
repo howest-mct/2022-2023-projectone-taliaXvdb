@@ -1,196 +1,618 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+/*---------------------------------------/*
+ # Imports
+/*---------------------------------------*/
+
+// import open color
+@import 'open-color';
+
+/*---------------------------------------/*
+ # TOOLS
+/*---------------------------------------*/
+
+//
+// Media Query mixin
+// @include mq(#point, #query1, #query2);
+//
+
+@mixin mq($breakpoint, $query1: min, $query2: width) {
+  $query: map-get($breakpoints, $breakpoint);
+
+  @if $query != null {
+    @media (#{$query1}-#{$query2}: #{$query}) {
+      @content;
+    }
+  } @else {
+    @media (#{$query1}-#{$query2}: $breakpoint) {
+      @content;
+    }
+  }
+}
 
 /*---------------------------------------/*
  # SETTINGS
 /*---------------------------------------*/
-$color-dark: #205d8c;
-$color-light: #1990c7;
-$color-white: #fafafa;
 
-@keyframes wave-front {
-  to {
-    transform: translate(-50%);
-  }
-}
-@keyframes wave-back {
-  to {
-    transform: translate(50%);
-  }
-}
+// ---
+// Settings: Colors
+// ---
+
+//* Stap 1: Kleurenpalet aanpassen
+$color-text: $oc-gray-9;
+$color-text-light: $oc-gray-7;
+$color-text-lighter: $oc-gray-5;
+
+$color-primary: $oc-blue-3;
+$color-primary-light: $oc-blue-2;
+$color-primary-lighter: $oc-blue-0;
+$color-primary-dark: $oc-blue-5;
+
+$color-border: $oc-gray-2;
+$color-border-light: $oc-gray-0;
+$color-border-dark: $oc-gray-3;
+
+// ---
+// Settings: radii
+// ---
+
+$radius: 4px;
+$radius-m: 8px;
+$radius-l: 16px;
+
+// ---
+// Settings: Typography
+// ---
+
+$root-font-size: 16;
+
+// modular scale ratio
+$ratio: 1.125;
+
+// font-sizes
+$ms0: 1rem; // 16px
+$ms-1: calc($ms0 / $ratio); // 14,2222222222px
+$ms-2: calc($ms-1 / $ratio); // 12,6701311556px
+$ms1: calc($ms0 * $ratio); // 18px
+$ms2: calc($ms1 * $ratio); // 20,25px
+$ms3: calc($ms2 * $ratio); // 22.781px
+$ms4: calc($ms3 * $ratio); // 25.629px
+$ms5: calc($ms4 * $ratio); // 28.833px
+$ms6: calc($ms5 * $ratio); // 32.437px
+$ms7: calc($ms6 * $ratio); // 36.491px
+$ms8: calc($ms7 * $ratio); // 41.053px
+$ms9: calc($ms8 * $ratio); // 46.184px
+$ms10: calc($ms9 * $ratio); // 51.957px
+$ms11: calc($ms10 * $ratio); // 58.452px
+
+//* stap 2: Font Family aanpassen
+$font-family-primary: 'Oscine', Helvetica, arial, sans-serif;
+
+// ---
+// Settings: Spacing
+// ---
+
+// baseline unit
+$baseline: calc(8 / $root-font-size * 1rem);
+
+// spacing scale
+$space-xxs: calc($baseline * 0.5); // 4px
+$space-xxs: calc($baseline * 1); // 8px
+$space-xs: calc($baseline * 1.5); // 12px
+$space-s: calc($baseline * 2); // 16px
+$space-m: calc($baseline * 3); // 24px
+$space-l: calc($space-s * 2); // 32px
+$space-xl: calc($space-m * 2); // 48px
+$space-xxl: calc($space-l * 2); // 64px
+$space-xxxl: calc($space-xl * 2); // 96px
+
+// ---
+// Breakpoints
+// ---
+
+$breakpoints: (
+  bp1: calc(577 / 16 * 1em),
+  bp2: calc(769 / 16 * 1em),
+  bp3: calc(993 / 16 * 1em),
+  bp4: calc(1201 / 16 * 1em),
+  bp5: calc(1401 / 16 * 1em),
+) !default;
+
+// ---
+// Grid
+// ---
+
+$container-max-width: calc(1400 / $root-font-size * 1rem);
+
+// The gutter between columns
+$grid-gutter: $space-m;
+$grid-gutter-s: $space-xs;
+$grid-gutter-l: $space-l;
+
+// Define the amount of columns in the grid
+$columns: (2, 3, 4, 5, 6) !default;
 
 /*---------------------------------------/*
  # GENERIC
 /*---------------------------------------*/
-::-moz-selection {
-  background: $color-light;
-  color: $color-white;
+
+*,
+*:before,
+*:after {
+  // Reset box-sizing
+  box-sizing: border-box;
 }
-::selection {
-  background: $color-light;
-  color: $color-white;
+
+* {
+  // Reset margin and font-size
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+}
+
+img {
+  display: block; // make images block level elements
+  max-width: 100%; // make images responsive
 }
 
 /*---------------------------------------/*
  # ELEMENTS
 /*---------------------------------------*/
-body,
+
+/*
+    Elements: Page
+    ---
+    Default markup for page level elements
+*/
+
 html {
-  font: 16px/1.5 Oswald, sans-serif;
-  background: $color-white;
-  -webkit-font-smoothing: antialiased;
-  height: 100%;
-  width: 100%;
+  font-size: calc($root-font-size / 16 * 100%);
+  line-height: calc(24 / $root-font-size); // 24px
+  font-family: $font-family-primary; // global font-family
+  color: $color-text; // global text color
+  scroll-behavior: smooth; // smooth scrolling
+}
+
+/*
+    Customize the background color and color to match your design.
+*/
+
+::selection {
+  background: $color-primary-light; // background color
+  color: white; // text color
+}
+
+/*
+    Elements: typography
+    ---
+    Default markup for typographic elements
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: $ms4;
+  line-height: calc($baseline * 4);
+  margin-bottom: $space-m;
+}
+
+h2 {
+  font-size: $ms3;
+  line-height: calc($baseline * 3);
+  margin-bottom: $space-m;
+}
+
+h3 {
+  font-size: $ms1;
+  line-height: calc($baseline * 3);
+  margin-bottom: $space-m;
+}
+
+h4,
+h5,
+h6 {
+  font-size: $ms0;
+  line-height: calc($baseline * 3);
+  margin-bottom: $space-m;
+}
+
+p,
+ol,
+ul,
+dl,
+table,
+address,
+figure {
+  margin-bottom: $space-m;
+}
+
+ul,
+ol {
+  margin-left: $space-m;
+}
+
+li ul,
+li ol {
+  margin-bottom: 0;
+}
+
+blockquote {
+  font-style: italic;
+  font-size: $ms3;
+  line-height: calc($baseline * 4);
+  margin-bottom: $space-m;
+}
+
+figcaption {
+  font-size: $ms-1;
+  line-height: calc($baseline * 2);
+  margin-top: $space-xs;
+  color: $color-text-lighter;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: $color-border;
+  margin-bottom: $space-m;
+}
+
+a {
+  color: $color-primary;
+  transition: all 0.1s ease-in-out;
+}
+
+a:visited {
+  color: $color-primary;
+}
+
+a:hover {
+  color: $color-primary-light;
+}
+
+a:active {
+  color: $color-primary-dark;
 }
 
 /*---------------------------------------/*
  # OBJECTS
 /*---------------------------------------*/
-.o-hide-accessible {
-  position: absolute;
-  width: 1px;
-  height: 1px;
+
+/*
+    Objects: list reset
+    ---
+    Resets the default list styles
+*/
+
+.o-list-reset {
+  list-style: none;
+  margin-left: 0;
+}
+
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+
+.o-button-reset {
+  border: none;
+  margin: 0;
   padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-/*---------------------------------------/*
- # COMPONENTS
-/*---------------------------------------*/
-.c-app {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 4rem;
-  color: $color-white;
-  background: $color-dark;
-  background: linear-gradient(180deg, $color-dark 0, #002949);
-  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.3);
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: inherit;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
 }
 
-.c-percentage {
-  margin: 1rem 0 7rem;
-  text-align: center;
+/*
+    Objects: Row
+    ---
+    Creates a horizontal row with padding
+*/
 
-  &__current {
-    margin: 0;
-    font-size: 5rem;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: white;
-    &:after {
-      content: '%';
-    }
-  }
+.o-row {
+  padding: $space-m $space-m 0;
+  display: flow-root;
+}
 
-  &__goal {
-    margin-top: 0;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.05rem;
+.o-row--primary {
+  background: $color-primary-dark;
+}
+
+.o-row--l {
+  @include mq(bp2) {
+    padding: $space-xl $space-m $space-m;
   }
 }
 
-.c-btn {
-  all: unset;
-  display: flex;
-  align-items: center;
-  height: 2rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-size: 1rem;
-  line-height: 1rem;
-  border-radius: 2rem;
-  border: 2px solid $color-white;
-  cursor: pointer;
+/*
+    Objects: Container
+    ---
+    Creates a horizontal container that sets de global max-width
+*/
 
-  &:hover {
-    color: $color-light;
-    background: $color-white;
-    .c-btn__symbol {
-      stroke: $color-light;
-    }
-  }
-
-  &__symbol {
-    height: 1rem;
-    width: auto;
-    margin-right: 0.5rem;
-    stroke-width: 2px;
-    stroke: $color-white;
-  }
-}
-
-.c-pages{
-  display: flex;
-}
-
-.c-water {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: $color-light;
-  will-change: transform;
-  transform: translateY(50%);
-  transition: transform 1s ease-in-out;
-  z-index: 10;
-  &__wave {
-    width: 200%;
-    position: absolute;
-    bottom: 100%;
-    &--back {
-      right: 0;
-      fill: #082e3f;
-      animation: wave-back 1.6s linear infinite;
-    }
-    &--front {
-      left: 0;
-      margin-bottom: -1px;
-      fill: #1990c7;
-      animation: wave-front 1.1s linear infinite;
-    }
-  }
-}
-
-.c-dashboard {
-  // max-width: 960px;
+.o-container {
   margin-left: auto;
   margin-right: auto;
-  padding: 1.5rem;
+  width: 100%;
+  max-width: $container-max-width;
 }
 
-.c-table {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+/*
+    Objects: Section
+    ---
+    Sections that follow each other get a margin-top
+*/
+
+.o-section + .o-section {
+  margin-top: $space-m;
+}
+
+/*
+    Objects: Layout
+    ---
+    The layout object provides us with a column-style layout system. This object
+    contains the basic structural elements, but classes should be complemented
+    with width utilities
+*/
+
+.o-layout {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.o-layout__item {
+  flex-basis: 100%;
+}
+
+/* gutter modifiers, these affect o-layout__item too */
+
+.o-layout--gutter {
+  margin-left: calc($grid-gutter / -2);
+  margin-right: calc($grid-gutter / -2);
+}
+
+.o-layout--gutter > .o-layout__item {
+  padding-left: calc($grid-gutter / 2);
+  padding-right: calc($grid-gutter / 2);
+}
+
+.o-layout--gutter-s {
+  margin-left: calc($grid-gutter-s / -2);
+  margin-right: calc($grid-gutter-s / -2);
+}
+
+.o-layout--gutter-s > .o-layout__item {
+  padding-left: calc($grid-gutter-s / 2);
+  padding-right: calc($grid-gutter-s / 2);
+}
+
+.o-layout--gutter-l {
+  margin-left: calc($grid-gutter-l / -2);
+  margin-right: calc($grid-gutter-l / -2);
+}
+
+.o-layout--gutter-l > .o-layout__item {
+  padding-left: calc($grid-gutter-l / 2);
+  padding-right: calc($grid-gutter-l / 2);
+}
+
+/* reverse horizontal row modifier */
+
+.o-layout--row-reverse {
+  flex-direction: row-reverse;
+}
+
+/* Horizontal alignment modifiers*/
+
+.o-layout--justify-start {
+  justify-content: flex-start;
+}
+
+.o-layout--justify-end {
+  justify-content: flex-end;
+}
+
+.o-layout--justify-center {
+  justify-content: center;
+}
+
+.o-layout--justify-space-around {
+  justify-content: space-around;
+}
+
+.o-layout--justify-space-evenly {
+  justify-content: space-evenly;
+}
+
+.o-layout--justify-space-between {
+  justify-content: space-between;
+}
+
+/* Vertical alignment modifiers */
+
+.o-layout--align-start {
+  align-items: flex-start;
+}
+
+.o-layout--align-end {
+  align-items: flex-end;
+}
+
+.o-layout--align-center {
+  align-items: center;
+}
+
+.o-layout--align-baseline {
+  align-items: baseline;
+}
+
+/* Vertical alignment modifiers that only work if there is one than one flex item */
+
+.o-layout--align-content-start {
+  align-content: start;
+}
+
+.o-layout--align-content-end {
+  align-content: end;
+}
+
+.o-layout--align-content-center {
+  align-content: center;
+}
+
+.o-layout--align-content-space-around {
+  align-content: space-around;
+}
+
+.o-layout--align-content-space-between {
+  align-content: space-between;
+}
+
+/*------------------------------------*\
+  #COMPONENTS
+\*------------------------------------*/
+
+//* This is where the components go
+
+//logo
+
+.c-logo{
+  max-width: 5rem;
+  max-height: 5rem;
+}
+
+.c-header{
+  background-color: $color-primary;
+  padding: $space-s;
 }
 
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/
-.u-icon-water-sm {
-  height: 2rem;
+
+/*
+    Utilities: Colors
+    ---
+    Utility classes to set the color of an element
+*/
+
+.u-color-meta {
+  color: $color-text-lighter;
 }
-.u-icon-water-md {
-  height: 2.5rem;
+
+//* possibility to add more u-color classes
+
+/*
+    Utilities: Max widths
+    ---
+    max-width utility classes
+*/
+
+.u-max-width-s {
+  max-width: calc(600 / 16 * 1rem);
 }
-.u-icon-water-lg {
-  height: 3rem;
+
+.u-max-width-m {
+  max-width: calc(960 / 16 * 1rem);
 }
-.u-space-center-center {
-  display: flex;
-  align-content: center;
-  align-items: center;
-  // min-height: 100vh;
+
+.u-max-width-l {
+  max-width: calc(1400 / 16 * 1rem);
 }
-.u-bring-to-front {
-  z-index: 20;
+
+/*
+    Utitlities: whitespace
+    ---
+    Utility classes to put specific margins and padding onto elements
+*/
+
+.u-pt-clear {
+  padding-top: 0;
+}
+
+.u-mb-clear {
+  margin-bottom: 0;
+}
+
+.u-mb-s {
+  margin-bottom: $space-s;
+}
+
+.u-mb-xs {
+  margin-bottom: $space-xs;
+}
+
+/*
+  Utilities: Font size
+  ---
+  Font size utility classes
+*/
+
+.u-ms-1 {
+  font-size: $ms-1;
+  line-height: calc($baseline * 3);
+}
+
+/*
+    Utilities: Widths
+    ---
+    Width utility classes
+*/
+
+.u-flex-basis-auto {
+  flex-basis: auto;
+}
+
+// Loop through the different columns
+@each $column in $columns {
+  // Generate the grid classes
+  @each $denominator, $numerator in $column {
+    // Begin creating a numerator for our fraction up until we hit the
+    // denominator.
+    @for $numerator from 1 through $denominator {
+      // Build a class in the format `.u-4-of-6`
+      .u-#{$numerator}-of-#{$denominator} {
+        flex-basis: calc(($numerator / $denominator) * 100%) !important;
+      }
+    }
+  }
+}
+
+// Loop through the different breakpoints
+@each $breakpoint, $value in $breakpoints {
+  @include mq($value) {
+    // Loop through the different columns
+    @each $column in $columns {
+      // Generate the grid classes
+      @each $denominator, $numerator in $column {
+        // Begin creating a numerator for our fraction up until we hit the
+        // denominator.
+        @for $numerator from 1 through $denominator {
+          // Build a class in the format `.u-4-of-6-bp1`
+          .u-#{$numerator}-of-#{$denominator}-#{$breakpoint} {
+            flex-basis: calc(($numerator / $denominator) * 100%) !important;
+          }
+        }
+      }
+    }
+  }
 }

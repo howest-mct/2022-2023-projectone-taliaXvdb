@@ -7,14 +7,21 @@
   <title>Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="style/screen.css">
-  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
-  <!-- <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="https://use.typekit.net/vbl7jgm.css">
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
   <script src="script/datahandler.js"></script>
   <script src="script/app.js"></script>
 </head>
 
 <body class="js-pagereadings">
     <header class="u-bring-to-front">
+      <div class="c-header">
+        <h2 class="c-logo">
+          <a class="c-logo__link" href="index.html">
+              <img src="img/logo.svg" alt="logo">
+          </a>
+        </h2>
+      </div>
         <div class="c-pages">
           <li>
             <ul><a href="index.html">HOME</a></ul>
@@ -25,26 +32,16 @@
         </div>
     </header>
     <main>
-        <div>
-            <button class="js-btn" data-temperature>Temperature</button>
-            <button class="js-btn" data-weight>Weight</button>
-            <button class="js-btn" data-id>ID</button>
-        </div>
-        <table class="js-historytable">
-          <thead>
-            <tr>
-              <th>recordID</th>
+        <table class="js-historyTable">
+          <tr>
+              <th>ID</th>
               <th>deviceID</th>
-              <th>actionID</th>
               <th>date</th>
               <th>value</th>
-              <th>comment</th>
-            </tr>
-          </thead>
+          </tr>
           <tbody>
-            
           </tbody>
-      </table>
+        </table>
     </main>
 </body>
     

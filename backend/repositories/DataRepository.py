@@ -60,6 +60,14 @@ class DataRepository:
         sql = "SELECT * FROM history"
         return Database.get_rows(sql)
     
+    def read_lasttemp():
+        sql = "SELECT value FROM history WHERE deviceID = 1 ORDER BY ID DESC LIMIT 1"
+        return Database.get_one_row(sql)
+    
+    def read_lastweight():
+        sql = "SELECT value FROM history WHERE deviceID = 2 ORDER BY ID DESC LIMIT 1"
+        return Database.get_one_row(sql)
+    
     #UPDATE
     def update_user(id, name, goal, streak):
         sql = "UPDATE user SET name = %s, goal = %s, streak = %s  WHERE userID = %s"

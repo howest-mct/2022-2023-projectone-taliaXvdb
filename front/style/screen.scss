@@ -262,16 +262,16 @@ hr {
 }
 
 a {
-  color: $color-primary;
+  color: $color-text;
   transition: all 0.1s ease-in-out;
 }
 
 a:visited {
-  color: $color-primary;
+  color: $color-text;
 }
 
 a:hover {
-  color: $color-primary-light;
+  color: $color-text;
 }
 
 a:active {
@@ -293,6 +293,9 @@ a:active {
   margin-left: 0;
 }
 
+.o-link-reset {
+  text-decoration: none;
+}
 /*
     Object: Button reset
     ---
@@ -503,6 +506,11 @@ a:active {
 .c-header{
   background-color: $color-primary;
   padding: $space-s;
+
+  &__nav{
+    color: black;
+    display: flex;
+  }
 }
 
 /*---------------------------------------/*

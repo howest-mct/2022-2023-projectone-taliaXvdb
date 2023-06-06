@@ -137,16 +137,16 @@ hr {
 }
 
 a {
-  color: #74c0fc;
+  color: #212529;
   transition: all 0.1s ease-in-out;
 }
 
 a:visited {
-  color: #74c0fc;
+  color: #212529;
 }
 
 a:hover {
-  color: #a5d8ff;
+  color: #212529;
 }
 
 a:active {
@@ -164,6 +164,10 @@ a:active {
 .o-list-reset {
   list-style: none;
   margin-left: 0;
+}
+
+.o-link-reset {
+  text-decoration: none;
 }
 
 /*
@@ -357,6 +361,10 @@ a:active {
 .c-header {
   background-color: #74c0fc;
   padding: 1rem;
+}
+.c-header__nav {
+  color: black;
+  display: flex;
 }
 
 /*---------------------------------------/*

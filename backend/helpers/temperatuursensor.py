@@ -18,5 +18,4 @@ class DS18B20:
                 line = line/1000
                 print(f"De temperatuur is {line} °Celsius")
             sensor_file.close()
-
         return line

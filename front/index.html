@@ -7,7 +7,7 @@
   <title>Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="style/screen.css">
-  <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.typekit.net/vbl7jgm.css">
   <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
   <script src="script/datahandler.js"></script>
   <script src="script/app.js"></script>
@@ -15,13 +15,20 @@
 
 <body class="js-pageindex">
   <header>
+    <div class="c-header">
+      <h2 class="c-logo">
+        <a class="c-logo__link" href="index.html">
+            <img src="img/logo.svg" alt="logo">
+        </a>
+      </h2>
+    </div>
     <div class="c-pages">
-      <li>
-        <ul><a href="index.html">HOME</a></ul>
-        <ul><a href="overview.html">OVERVIEW</a></ul>
-        <ul><a href="readings.html">READINGS</a></ul>
-        <ul><a href="settings.html">SETTINGS</a></ul>
-      </li>
+      <ul class="o-list-reset">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="overview.html">OVERVIEW</a></li>
+        <li><a href="readings.html">READINGS</a></li>
+        <li><a href="settings.html">SETTINGS</a></li>
+      </ul>
     </div>
   </header>
   <main>

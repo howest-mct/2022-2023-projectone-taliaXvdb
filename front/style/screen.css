@@ -47,11 +47,11 @@ html {
     Customize the background color and color to match your design.
 */
 ::-moz-selection {
-  background: #f3f0ff;
+  background: #a5d8ff;
   color: white;
 }
 ::selection {
-  background: #f3f0ff;
+  background: #a5d8ff;
   color: white;
 }
 
@@ -137,20 +137,20 @@ hr {
 }
 
 a {
-  color: #7048e8;
+  color: #74c0fc;
   transition: all 0.1s ease-in-out;
 }
 
 a:visited {
-  color: #7048e8;
+  color: #74c0fc;
 }
 
 a:hover {
-  color: #f3f0ff;
+  color: #a5d8ff;
 }
 
 a:active {
-  color: #6741d9;
+  color: #339af0;
 }
 
 /*---------------------------------------/*
@@ -201,7 +201,7 @@ a:active {
 }
 
 .o-row--primary {
-  background: #6741d9;
+  background: #339af0;
 }
 
 @media (min-width: 48.0625em) {
@@ -352,6 +352,11 @@ a:active {
 .c-logo {
   max-width: 5rem;
   max-height: 5rem;
+}
+
+.c-header {
+  background-color: #74c0fc;
+  padding: 1rem;
 }
 
 /*---------------------------------------/*

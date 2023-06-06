@@ -41,10 +41,10 @@ $color-text: $oc-gray-9;
 $color-text-light: $oc-gray-7;
 $color-text-lighter: $oc-gray-5;
 
-$color-primary: $oc-violet-7;
-$color-primary-light: $oc-violet-0;
-$color-primary-lighter: $oc-violet-4;
-$color-primary-dark: $oc-violet-8;
+$color-primary: $oc-blue-3;
+$color-primary-light: $oc-blue-2;
+$color-primary-lighter: $oc-blue-0;
+$color-primary-dark: $oc-blue-5;
 
 $color-border: $oc-gray-2;
 $color-border-light: $oc-gray-0;
@@ -498,6 +498,11 @@ a:active {
 .c-logo{
   max-width: 5rem;
   max-height: 5rem;
+}
+
+.c-header{
+  background-color: $color-primary;
+  padding: $space-s;
 }
 
 /*---------------------------------------/*

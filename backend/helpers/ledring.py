@@ -26,3 +26,6 @@ class leds:
             self.pixels[i] = (0, 0, 255)  # Schakel de huidige led in
             self.pixels.show()
             time.sleep(wait)
+
+    def cleanup(self):
+        self.pixels.fill((0, 0, 0))  # Zet alle leds uit

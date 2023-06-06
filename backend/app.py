@@ -203,4 +203,9 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:
+        lcd.clear_lcd()
+        hx711.cleanup()
+        brrr.cleanup()
+        leds.cleanup()
+        GPIO.cleanup()
         print("finished")

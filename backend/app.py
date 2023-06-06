@@ -48,7 +48,9 @@ def setup():
 
 def loop():
     temp = ds18b20.read_temp()
+    weight = hx711.get_weight()
     create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
+    create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
     lcd.show_ip()
     time.sleep(5)
 
@@ -176,9 +178,15 @@ def initial_connection():
 
 @socketio.on('F2B_gettemp')
 def show_temp():
-    temp = DataRepository.read_lasttemp()
+    temp = DataRepository.read_lastweight()
     print(temp)
     emit('B2F_showtemp', temp)
+
+@socketio.on('F2B_getweight')
+def show_temp():
+    weight = DataRepository.read_lasttemp()
+    print(weight)
+    emit('B2F_showtemp', weight)
 
 @socketio.on('F2B_readrfid')
 def show_id():

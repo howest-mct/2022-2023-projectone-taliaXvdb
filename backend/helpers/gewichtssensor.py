@@ -31,6 +31,7 @@ class HX711:
         GPIO.output(self.sck, GPIO.LOW)
 
         data = data - self.tare
+        print(f'Het gewicht is {data}')
 
         return data
 

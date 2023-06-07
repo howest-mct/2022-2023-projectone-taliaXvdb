@@ -354,13 +354,13 @@ a:active {
   #COMPONENTS
 \*------------------------------------*/
 .c-logo {
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
 }
 
 .c-header {
   background-color: #74c0fc;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
   display: flex;
 }
 .c-header__nav {
@@ -377,7 +377,31 @@ a:active {
   align-items: center;
   gap: 2rem;
   padding-left: 1.5rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.c-progress {
+  align-items: center;
+}
+
+.c-info {
+  display: flex;
+  padding-left: 2rem;
+}
+.c-info__item {
+  display: flex;
+  gap: 1rem;
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.c-info__img {
+  width: 3rem;
+  height: 3rem;
+  fill: #74c0fc;
+}
+.c-info__title, .c-info__value {
+  margin-bottom: 0;
 }
 
 /*---------------------------------------/*

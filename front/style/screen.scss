@@ -499,13 +499,15 @@ a:active {
 //logo
 
 .c-logo{
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
 }
+
+// header
 
 .c-header{
   background-color: $color-primary;
-  margin-bottom: 0;
+  margin-bottom: $space-s;
   display: flex;
 
   &__nav{
@@ -521,9 +523,39 @@ a:active {
   align-items: center;
   gap: $space-l;
   padding-left: $space-m;
-  margin-top: $space-xxs;
+  margin-top: $space-xs;
 }
 
+// cirkel
+
+.c-progress{
+  align-items: center;
+}
+
+// boxes
+
+.c-info{
+  display: flex;
+  padding-left: $space-l;
+
+  &__item{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-s;
+  }
+
+  &__img{
+    width: 3rem;
+    height: 3rem;
+    fill: $color-primary;
+  }
+
+  &__title, &__value{
+    margin-bottom: 0;
+  }
+}
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/

@@ -501,16 +501,26 @@ a:active {
 .c-logo{
   max-width: 5rem;
   max-height: 5rem;
+  display: block;
 }
 
 .c-header{
   background-color: $color-primary;
-  padding: $space-s;
+  display: flex;
+  margin-bottom: 0;
 
   &__nav{
     color: black;
-    display: flex;
+    @include mq(bp1, max) {
+      display: none;
+    }
   }
+}
+
+.c-nav__list {
+  display: flex;
+  align-items: center;
+  gap: $space-l;
 }
 
 /*---------------------------------------/*

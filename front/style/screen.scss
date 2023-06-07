@@ -496,6 +496,7 @@ a:active {
 
 //* This is where the components go
 
+//* header
 //logo
 
 .c-logo{
@@ -525,6 +526,14 @@ a:active {
   padding-left: $space-m;
   margin-top: $space-xs;
 }
+
+// title
+
+.c-title{
+  padding-left: $space-s;
+}
+
+//* index.html
 
 // cirkel
 
@@ -556,6 +565,33 @@ a:active {
     margin-bottom: 0;
   }
 }
+
+//* overview.html
+
+.c-streak{
+  display: flex;
+  padding-left: $space-l;
+  padding-bottom: $space-l;
+
+  &__item{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-s;
+  }
+
+  &__img{
+    width: 3rem;
+    height: 3rem;
+    fill: $color-primary;
+  }
+
+  &__title, &__value{
+    margin-bottom: 0;
+  }
+}
+//
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/

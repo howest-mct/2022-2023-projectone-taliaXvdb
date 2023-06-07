@@ -380,6 +380,10 @@ a:active {
   margin-top: 0.75rem;
 }
 
+.c-title {
+  padding-left: 1rem;
+}
+
 .c-progress {
   align-items: center;
 }
@@ -401,6 +405,27 @@ a:active {
   fill: #74c0fc;
 }
 .c-info__title, .c-info__value {
+  margin-bottom: 0;
+}
+
+.c-streak {
+  display: flex;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+.c-streak__item {
+  display: flex;
+  gap: 1rem;
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.c-streak__img {
+  width: 3rem;
+  height: 3rem;
+  fill: #74c0fc;
+}
+.c-streak__title, .c-streak__value {
   margin-bottom: 0;
 }
 

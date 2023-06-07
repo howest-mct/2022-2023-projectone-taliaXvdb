@@ -33,12 +33,27 @@
   </header>
   <main>
     <h1 class="c-title">Settings</h1>
-    <p>Edit name</p>
-    <input type="text" name="name" id="nameid">
-    <button>enter</button>
-    <p>Edit goal</p>
-    <input type="number" name="goal" id="goalid">
-    <button>enter</button>
+    <article class="o-container">
+      <div class="c-edit o-layout o-layout--gutter">
+        <div class="o-layout__item">
+          <div class="c-edit__item">
+            <p class="c-edit__title">Edit name</p>
+            <input type="text" name="name" id="nameid" class="c-edit__input">
+          </div>
+        </div>
+        <div class="o-layout__item">
+          <div class="c-edit__item">
+            <p class="c-edit__title">Edit goal</p>
+            <input type="number" name="goal" id="goalid" class="c-edit__input">
+          </div>
+        </div>
+        <div class="o-layout__item">
+          <div class="c-edit__button">
+            <button class="o-button-reset">save</button>
+          </div>
+        </div>
+      </div>
+    </article>
     <h2>reminders</h2>
     <table>
       <tr>

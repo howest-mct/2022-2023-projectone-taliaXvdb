@@ -431,6 +431,33 @@ a:active {
   margin-bottom: 0;
 }
 
+.c-edit {
+  display: flex;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+.c-edit__title {
+  margin-bottom: 0;
+}
+.c-edit__input {
+  gap: 1rem;
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border: #f8f9fa;
+}
+.c-edit__button {
+  display: flex;
+  gap: 1rem;
+  background-color: #74c0fc;
+  justify-content: center;
+  width: 5rem;
+  border-radius: 1rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  box-shadow: 5px 5px 4px #e9ecef;
+}
+
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/

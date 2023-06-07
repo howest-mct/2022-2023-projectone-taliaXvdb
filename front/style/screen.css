@@ -398,6 +398,7 @@ a:active {
   background-color: #e7f5ff;
   border-radius: 1rem;
   padding: 1rem;
+  box-shadow: 5px 5px 4px #e9ecef;
 }
 .c-info__img {
   width: 3rem;
@@ -419,6 +420,7 @@ a:active {
   background-color: #e7f5ff;
   border-radius: 1rem;
   padding: 1rem;
+  box-shadow: 5px 5px 4px #e9ecef;
 }
 .c-streak__img {
   width: 3rem;

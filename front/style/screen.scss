@@ -553,6 +553,7 @@ a:active {
     background-color: $color-primary-lighter;
     border-radius: 1rem;
     padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
   }
 
   &__img{
@@ -579,6 +580,7 @@ a:active {
     background-color: $color-primary-lighter;
     border-radius: 1rem;
     padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
   }
 
   &__img{

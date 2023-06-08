@@ -58,7 +58,7 @@ const showReadings = function (jsonObject) {
   }
 };
 
-const showProgress = function(progress) {
+const showProgress = function(progress, color) {
   var canvas = document.getElementById("progressCanvas");
   var context = canvas.getContext("2d");
 
@@ -74,7 +74,7 @@ const showProgress = function(progress) {
   context.beginPath();
   context.arc(centerX, centerY, radius, startAngle, endAngle);
   context.lineWidth = 10;
-  context.strokeStyle = "#00FF00";
+  context.strokeStyle = color;
   context.stroke();
 
   // Toevoegen van het percentage als tekst in de cirkel
@@ -156,7 +156,7 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
-  showProgress(0.1)
+  showProgress(0.76, '#4DABF7')
 };
 
 const initOverview = function () {

@@ -539,6 +539,9 @@ a:active {
 
 .c-progress{
   display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: $space-l;
 }
 
 // boxes

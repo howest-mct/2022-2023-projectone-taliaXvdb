@@ -54,12 +54,6 @@ def loop():
     lcd.show_ip()
     time.sleep(5)
 
-def create_measurement(deviceID, actionID, userID, date, value, comment):
-    data = DataRepository.create_reading(deviceID, actionID, userID, date, value, comment)
-    result = create_measurement(1, 1, 3, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), temp, 'temperature measured')
-    print(result)
-    time.sleep(5)
-
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
     if data is not None:
@@ -189,15 +183,16 @@ def initial_connection():
 
 @socketio.on('F2B_gettemp')
 def show_temp():
-    temp = DataRepository.read_lastweight()
+    temp = ds18b20.read_temp()
+    temp = temp.round()
     print(temp)
     emit('B2F_showtemp', temp)
 
 @socketio.on('F2B_getweight')
-def show_temp():
-    weight = DataRepository.read_lasttemp()
+def show_weight():
+    weight = DataRepository.read_lastweight()
     print(weight)
-    emit('B2F_showtemp', weight)
+    emit('B2F_showweight', weight)
 
 @socketio.on('F2B_readrfid')
 def show_id():

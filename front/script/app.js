@@ -34,10 +34,10 @@ const showHistory = function (jsonObject) {
 
 const showReadings = function (jsonObject) {
   console.info(jsonObject);
-  const htmlHistory = document.querySelector('.js-historytable')
-  const htmlButton = document.querySelectorAll('.js-btn')
-  for(const record of jsonObject.history){
-    console.info(record)
+  const htmlHistory = document.querySelector('.js-historytable');
+  const htmlButton = document.querySelectorAll('.js-btn');
+  for (const record of jsonObject.history) {
+    console.info(record);
     htmlHistory.innerHTML += `
     <tr>
       <td>${record.ID}</td>
@@ -47,20 +47,19 @@ const showReadings = function (jsonObject) {
       <td>${record.value}</td>
       <td>${record.comment}</td>
     </tr>
-    `
+    `;
   }
-  for(const btn of htmlButton){
-    btn.addEventListener('click', function (){
-      if(btn.getAttribute('data-temperature')){
-
+  for (const btn of htmlButton) {
+    btn.addEventListener('click', function () {
+      if (btn.getAttribute('data-temperature')) {
       }
-    })
+    });
   }
 };
 
-const showProgress = function(progress, color) {
-  var canvas = document.getElementById("progressCanvas");
-  var context = canvas.getContext("2d");
+const showProgress = function (progress, color) {
+  var canvas = document.getElementById('progressCanvas');
+  var context = canvas.getContext('2d');
 
   var centerX = canvas.width / 2;
   var centerY = canvas.height / 2;
@@ -79,12 +78,12 @@ const showProgress = function(progress, color) {
 
   // Toevoegen van het percentage als tekst in de cirkel
   var percentage = Math.round(progress * 100);
-  context.font = "28px Oscine";
-  context.fillStyle = "#000000";
-  context.textAlign = "center";
-  context.textBaseline = "middle";
-  context.fillText(percentage + "%", centerX, centerY);
-}
+  context.font = '28px Oscine';
+  context.fillStyle = '#000000';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillText(percentage + '%', centerX, centerY);
+};
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -101,7 +100,7 @@ const getHistory = function () {
 const getOverview = function () {};
 
 const getReadings = function () {
-  let userid = window.localStorage.getItem('userid')
+  let userid = window.localStorage.getItem('userid');
   const url = `http://127.0.0.1:5000/api/v1/waterreminder/user/${userid}/`;
   handleData(url, showReadings, showError);
 };
@@ -156,18 +155,23 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
-  showProgress(0.76, '#4DABF7')
-  htmlTemp = document.querySelector('.js-temp')
-  htmlGoal = document.querySelector('.js-goal')
-  htmlTime = document.querySelector('.js-time')
-  socketio.on('B2F_showtemp', function (temp) {
-    console.info(temp.value);
-    htmlTemp.innerHTML = temp.value;
+  showProgress(0.76, '#4DABF7');
+  htmlTemp = document.querySelector('.js-temp');
+  htmlGoal = document.querySelector('.js-goal');
+  htmlTime = document.querySelector('.js-time');
+  socketio.on('connect', function () {
+    console.info('succesfully connected to socket');
+    socketio.emit('F2B_getgoal');
+    socketio.emit('F2B_gettemp');
   });
-  socketio.on('B2F_showgoal', function(goal){
-    console.info(goal.value)
-    htmlGoal.innerHTML = goal.value
-  })
+  socketio.on('B2F_showtemp', function (temp) {
+    console.info(temp);
+    htmlTemp.innerHTML = temp;
+  });
+  socketio.on('B2F_showgoal', function (goal) {
+    console.info(goal.goal);
+    htmlGoal.innerHTML = goal.goal;
+  });
 };
 
 const initOverview = function () {
@@ -183,7 +187,6 @@ const initOverview = function () {
   //   console.info(weight.value);
   //   htmlWeight.innerHTML += weight.value;
   // });
-  
 };
 
 const initReadings = function () {
@@ -197,5 +200,3 @@ const initSettings = function () {
 
 document.addEventListener('DOMContentLoaded', init);
 // #endregion
-
-

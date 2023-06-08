@@ -262,16 +262,16 @@ hr {
 }
 
 a {
-  color: $color-primary;
+  color: $color-text;
   transition: all 0.1s ease-in-out;
 }
 
 a:visited {
-  color: $color-primary;
+  color: $color-text;
 }
 
 a:hover {
-  color: $color-primary-light;
+  color: $color-text;
 }
 
 a:active {
@@ -293,6 +293,9 @@ a:active {
   margin-left: 0;
 }
 
+.o-link-reset {
+  text-decoration: none;
+}
 /*
     Object: Button reset
     ---
@@ -493,18 +496,136 @@ a:active {
 
 //* This is where the components go
 
+//* header
 //logo
 
 .c-logo{
-  max-width: 5rem;
-  max-height: 5rem;
+  width: 4rem;
+  height: 4rem;
 }
+
+// header
 
 .c-header{
   background-color: $color-primary;
-  padding: $space-s;
+  margin-bottom: $space-s;
+  display: flex;
+
+  &__nav{
+    color: black;
+    @include mq(bp1, max) {
+      display: none;
+    }
+  }
 }
 
+.c-nav__list {
+  display: flex;
+  align-items: center;
+  gap: $space-l;
+  padding-left: $space-m;
+  margin-top: $space-xs;
+}
+
+// title
+
+.c-title{
+  padding-left: $space-s;
+}
+
+//* index.html
+
+// cirkel
+
+.c-progress{
+  align-items: center;
+}
+
+// boxes
+
+.c-info{
+  display: flex;
+  padding-left: $space-l;
+
+  &__item{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+
+  &__img{
+    width: 3rem;
+    height: 3rem;
+    fill: $color-primary;
+  }
+
+  &__title, &__value{
+    margin-bottom: 0;
+  }
+}
+
+//* overview.html
+
+.c-streak{
+  display: flex;
+  padding-left: $space-l;
+  padding-bottom: $space-l;
+
+  &__item{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+
+  &__img{
+    width: 3rem;
+    height: 3rem;
+    fill: $color-primary;
+  }
+
+  &__title, &__value{
+    margin-bottom: 0;
+  }
+}
+
+//* settings.html
+
+.c-edit{
+  display: flex;
+  padding-left: $space-l;
+  padding-bottom: $space-l;
+
+  &__title{
+    margin-bottom: 0;
+  }
+
+  &__input{
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-xxs;
+    border: $color-border-light;
+  }
+
+  &__button{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary;
+    justify-content: center;
+    width: 5rem;
+    border-radius: 1rem;
+    margin-top: $space-xs;
+    padding: $space-xxs;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+}
+//
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/

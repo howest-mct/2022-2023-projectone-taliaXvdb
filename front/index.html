@@ -14,24 +14,59 @@
 </head>
 
 <body class="js-pageindex">
-  <header>
+  <header class="c-header o-row o-row--s o-row--top">
     <div class="c-header">
-      <h2 class="c-logo">
+      <div class="c-logo">
         <a class="c-logo__link" href="index.html">
             <img src="img/logo.svg" alt="logo">
         </a>
-      </h2>
-    </div>
-    <div class="c-pages">
-      <ul class="o-list-reset">
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="overview.html">OVERVIEW</a></li>
-        <li><a href="readings.html">READINGS</a></li>
-        <li><a href="settings.html">SETTINGS</a></li>
-      </ul>
+      </div>
+      <nav class="c-header__nav c-nav">
+        <ul class="o-list-reset c-nav__list">
+          <li class="c-nav__item"><a href="index.html" class="o-link-reset">HOME</a></li>
+          <li class="c-nav__item"><a href="overview.html" class="o-link-reset">OVERVIEW</a></li>
+          <li class="c-nav__item"><a href="readings.html" class="o-link-reset">READINGS</a></li>
+          <li class="c-nav__item"><a href="settings.html" class="o-link-reset">SETTINGS</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
   <main>
+    <h1 class="c-title">Current progress</h1>
+    <div class="c-progress">
+      <p>wow een cirkel</p>
+    </div>
+    <article class="o-container">
+      <div class="c-info o-layout o-layout--gutter">
+        <div class="o-layout__item u-1-of-3">
+          <div class="c-info__item">
+            <object data="img/flag-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+            <div class="c-info__text">
+              <p class="c-info__title">Goal:</p>
+              <p class="c-info__value">1500</p>
+            </div>
+          </div>
+        </div>
+        <div class="o-layout__item u-1-of-3">
+          <div class="c-info__item">
+            <object data="img/clock-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+            <div class="c-info__text">
+              <p class="c-info__title">Next hydration in:</p>
+              <p class="c-info__value">00:12:56</p>
+            </div>
+          </div>
+        </div>
+        <div class="o-layout__item u-1-of-3">
+          <div class="c-info__item">
+            <object data="img/thermometer.svg" type="image/svg+xml" class="c-info__img"></object>
+            <div class="c-info__text">
+              <p class="c-info__title">Temperature:</p>
+              <p class="c-info__value">17.5</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
   </main>
 </body>
 

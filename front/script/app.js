@@ -155,14 +155,14 @@ const initOverview = function () {
     socketio.emit('F2B_getweight');
     socketio.emit('F2B_gettemp');
   });
-  socketio.on('B2F_showweight', function (weight) {
-    console.info(weight.value);
-    htmlWeight.innerHTML += weight.value;
-  });
-  socketio.on('B2F_showtemp', function (temp) {
-    console.info(temp.value);
-    htmlTemp.innerHTML += temp.value;
-  });
+  // socketio.on('B2F_showweight', function (weight) {
+  //   console.info(weight.value);
+  //   htmlWeight.innerHTML += weight.value;
+  // });
+  // socketio.on('B2F_showtemp', function (temp) {
+  //   console.info(temp.value);
+  //   htmlTemp.innerHTML += temp.value;
+  // });
 };
 
 const initReadings = function () {

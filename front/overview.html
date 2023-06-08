@@ -14,27 +14,37 @@
 </head>
 
 <body class="js-pageoverview">
-    <header>
+    <header class="c-header o-row o-row--s o-row--top">
       <div class="c-header">
-        <h2 class="c-logo">
+        <div class="c-logo">
           <a class="c-logo__link" href="index.html">
               <img src="img/logo.svg" alt="logo">
           </a>
-        </h2>
-      </div>
-      <div class="c-pages">
-        <ul class="o-list-reset">
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="overview.html">OVERVIEW</a></li>
-          <li><a href="readings.html">READINGS</a></li>
-          <li><a href="settings.html">SETTINGS</a></li>
-        </ul>
+        </div>
+        <nav class="c-header__nav c-nav">
+          <ul class="o-list-reset c-nav__list">
+            <li class="c-nav__item"><a href="index.html" class="o-link-reset">HOME</a></li>
+            <li class="c-nav__item"><a href="overview.html" class="o-link-reset">OVERVIEW</a></li>
+            <li class="c-nav__item"><a href="readings.html" class="o-link-reset">READINGS</a></li>
+            <li class="c-nav__item"><a href="settings.html" class="o-link-reset">SETTINGS</a></li>
+          </ul>
+        </nav>
       </div>
     </header>
-    <h1>OVERVIEW</h1>
-    <h3 class="js-temp">Today's temperature: </h3>
-    <h3 class="js-weight">Weight:</h3>
-    <h3>You have a streak of</h3>
+    <h1 class="c-title">Overview</h1>
+    <article class="o-container">
+      <div class="c-streak o-layout o-layout--gutter">
+        <div class="o-layout__item u-1-of-3">
+          <div class="c-streak__item">
+            <object data="img/flash-outline.svg" type="image/svg+xml" class="c-streak__img"></object>
+            <div class="c-streak__text">
+              <p class="c-streak__title">Streak:</p>
+              <p class="c-streak__value">3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
     <table>
         <th>Date</th>
         <th>goal</th>

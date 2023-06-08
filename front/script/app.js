@@ -31,33 +31,6 @@ const showHistory = function (jsonObject) {
   }
   htmlTable.innerHTML += `</tbody></table>`;
 };
-// #endregion
-
-// #region ***  Callback-No Visualisation - callback___  ***********
-// #endregion
-
-// #region ***  Data Access - get___                     ***********
-
-const getHistory = function () {
-  const userid = localStorage.getItem('userid');
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/`;
-  handleData(url, showHistory, showError);
-};
-// #endregion
-
-// #region ***  Event Listeners - listenTo___            ***********
-// #endregion
-
-// #region ***  Init / DOMContentLoaded                  ***********
-
-//#region ***  DOM references
-
-//#endregion
-
-//#region ***  Callback-Visualisation - show___         ***********
-const showError = function (error) {
-  console.error(error);
-};
 
 const showReadings = function (jsonObject) {
   console.info(jsonObject);
@@ -84,12 +57,47 @@ const showReadings = function (jsonObject) {
     })
   }
 };
-//#endregion
 
-//#region ***  Callback-No Visualisation - callback___  ***********
-//#endregion
+const showProgress = function(progress) {
+  var canvas = document.getElementById("progressCanvas");
+  var context = canvas.getContext("2d");
 
-//#region ***  Data Access - get___                     ***********
+  var centerX = canvas.width / 2;
+  var centerY = canvas.height / 2;
+  var radius = 80;
+  var startAngle = -0.5 * Math.PI;
+  var endAngle = (2 * progress - 0.5) * Math.PI;
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Tekenen van de voortgangscirkel
+  context.beginPath();
+  context.arc(centerX, centerY, radius, startAngle, endAngle);
+  context.lineWidth = 10;
+  context.strokeStyle = "#00FF00";
+  context.stroke();
+
+  // Toevoegen van het percentage als tekst in de cirkel
+  var percentage = Math.round(progress * 100);
+  context.font = "28px Oscine";
+  context.fillStyle = "#000000";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(percentage + "%", centerX, centerY);
+}
+// #endregion
+
+// #region ***  Callback-No Visualisation - callback___  ***********
+// #endregion
+
+// #region ***  Data Access - get___                     ***********
+
+const getHistory = function () {
+  const userid = localStorage.getItem('userid');
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/`;
+  handleData(url, showHistory, showError);
+};
+
 const getOverview = function () {};
 
 const getReadings = function () {
@@ -97,9 +105,13 @@ const getReadings = function () {
   const url = `http://127.0.0.1:5000/api/v1/waterreminder/user/${userid}/`;
   handleData(url, showReadings, showError);
 };
-//#endregion
+// #endregion
 
-//#region ***  Event Listeners - listenTo___            ***********
+// #region ***  Event Listeners - listenTo___            ***********
+// #endregion
+
+//#region ***  DOM references
+
 //#endregion
 
 //#region ***  Init / DOMContentLoaded                  ***********
@@ -144,6 +156,7 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
+  showProgress(0.1)
 };
 
 const initOverview = function () {

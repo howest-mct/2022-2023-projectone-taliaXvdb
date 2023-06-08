@@ -385,7 +385,7 @@ a:active {
 }
 
 .c-progress {
-  align-items: center;
+  display: flex;
 }
 
 .c-info {

@@ -157,6 +157,17 @@ const initLogin = function () {
 const initIndex = function () {
   console.info('init index');
   showProgress(0.76, '#4DABF7')
+  htmlTemp = document.querySelector('.js-temp')
+  htmlGoal = document.querySelector('.js-goal')
+  htmlTime = document.querySelector('.js-time')
+  socketio.on('B2F_showtemp', function (temp) {
+    console.info(temp.value);
+    htmlTemp.innerHTML = temp.value;
+  });
+  socketio.on('B2F_showgoal', function(goal){
+    console.info(goal.value)
+    htmlGoal.innerHTML = goal.value
+  })
 };
 
 const initOverview = function () {
@@ -172,10 +183,7 @@ const initOverview = function () {
   //   console.info(weight.value);
   //   htmlWeight.innerHTML += weight.value;
   // });
-  // socketio.on('B2F_showtemp', function (temp) {
-  //   console.info(temp.value);
-  //   htmlTemp.innerHTML += temp.value;
-  // });
+  
 };
 
 const initReadings = function () {

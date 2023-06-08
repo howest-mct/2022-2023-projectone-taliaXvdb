@@ -188,3 +188,56 @@ bij gemiste reminders: ...?
 
 CONCLUSIE:
 goed begonnen, mobile first, layout is belangrijkst, design kan in browser
+
+## gesprek 7 (Datum: 6/06/23)
+
+Lector: Dieter en Stijn
+
+Vragen voor dit gesprek:
+
+- vraag 1: MVP
+
+- feedback:
+
+realtime gegevens kunnen tonen en niet alle rijen tonen. Voor de rest goed bezig en op schema
+
+## gesprek 8 (Datum: 6/06/23)
+
+Lector: Geert
+
+Vragen voor dit gesprek:
+
+- vraag 1: Behuizing via bepaalde website
+
+- feedback:
+Website mag
+
+## gesprek 9 (Datum: 7/06/23)
+
+Lector: Claudia
+
+Vragen voor dit gesprek:
+
+- vraag 1: design nakijken
+
+- feedback:
+voor reminders: inspiratie op dribbble
+naam moet er al staan in edit scherm
+meerdere sumbit knoppen: niet doen
+login scherm is beter (zet aan om verder te gaan)
+marges van de tekst zijn wel verschillend
+2e label op home screen moet aangepast worden (niet duidelijk)
+settings: huidige waarden moeten er al staan, 1 save en 1 cancel knop
+
+## gesprek 10 (Datum: 7/06/23)
+
+Lector: Geert
+
+Vragen voor dit gesprek:
+
+- vraag 1: Behuizing nakijken
+
+- feedback:
+
+Het is goed, maar plaats voor lcd en knop vergeten
+

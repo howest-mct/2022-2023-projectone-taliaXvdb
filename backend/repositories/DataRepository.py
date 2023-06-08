@@ -36,6 +36,11 @@ class DataRepository:
         sql = "SELECT * FROM user WHERE userID = %s"
         params = [id]
         return Database.get_one_row(sql, params)
+    
+    def read_goal_by_userid(id):
+        sql = "SELECT goal FROM user WHERE userID = %s"
+        params = [id]
+        return Database.get_one_row(sql, params)
 
     def read_reminders_by_userid(id):
         sql = "SELECT * FROM reminder WHERE iduser = %s"

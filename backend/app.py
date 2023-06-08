@@ -205,6 +205,12 @@ def show_id():
     print(iduser)
     emit('B2F_showid', iduser)
 
+@socketio.on('F2B_getgoal')
+def show_goal():
+    goal = DataRepository.read_goal_by_userid(2)
+    print(goal)
+    emit('B2F_showgoal', goal)
+
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")

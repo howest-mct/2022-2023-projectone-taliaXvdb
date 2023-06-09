@@ -204,7 +204,8 @@ def show_id():
         ids.append(user['userID'])
         if iduser not in ids:
             emit('B2F_showuser', iduser)
-    emit('B2F_showid', iduser)
+        else:
+            emit('B2F_showid', iduser)
 
 @socketio.on('F2B_getgoal')
 def show_goal():

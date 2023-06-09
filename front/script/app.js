@@ -86,9 +86,13 @@ const showProgress = function (progress, color) {
 };
 
 const showPopup = function() {
-  var popupWindow = window.open("", "_blank", "width=400,height=300");
-  popupWindow.document.write("<h1>Dit is een pop-upscherm</h1>");
-  popupWindow.document.write("<p>Hallo vanuit de pop-up!</p>");
+  var popupContainer = document.getElementById("popupContainer");
+  popupContainer.style.display = "block";
+}
+
+const closePopup = function () {
+  var popupContainer = document.getElementById("popupContainer");
+  popupContainer.style.display = "none";
 }
 // #endregion
 

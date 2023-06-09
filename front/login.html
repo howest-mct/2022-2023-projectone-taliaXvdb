@@ -14,14 +14,17 @@
 </head>
 
 <body class="js-pagelogin">
-    <h1>Geef uw ID op</h1>
-    <p class="js-rfid">Het ID is: </p>
+    <h1>Scan your badge</h1>
 
     <div id="popupContainer" class="popup-container">
       <div id="popupContent" class="popup-content">
-        <h1>Dit is een pop-upvenster</h1>
-        <p>Hallo vanuit de pop-up!</p>
-        <button onclick="closePopup()">Sluiten</button>
+        <h1>Create a new user profile</h1>
+        <p>Your name:</p>
+        <input type="text" class="form-control c-name js-name" name="userName" id="userName" placeholder="name" required pattern="[a-zA-Z -'éàè]{3,}" title="naam heeft minstens 3 tekens nodig">
+        <p>Your goal</p>
+        <input type="number" class="form-control c-goal js-goal" name="goal" id="goal" min="1000" max="3500" value="1500" step="100">
+        <input type="button" name="save" id="save">
+        <button onclick="closePopup()">Save</button>
       </div>
     </div>
 </body>

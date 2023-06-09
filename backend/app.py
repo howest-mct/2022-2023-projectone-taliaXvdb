@@ -197,7 +197,13 @@ def show_weight():
 @socketio.on('F2B_readrfid')
 def show_id():
     iduser = rfid.read_rfid()
-    print(iduser)
+    users = DataRepository.read_all_users()
+    print(users)
+    for user in users:
+        ids = []
+        ids.append(user['userID'])
+        if iduser not in ids:
+            emit('B2F_showuser', iduser)
     emit('B2F_showid', iduser)
 
 @socketio.on('F2B_getgoal')

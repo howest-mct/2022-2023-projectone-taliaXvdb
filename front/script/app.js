@@ -84,6 +84,12 @@ const showProgress = function (progress, color) {
   context.textBaseline = 'middle';
   context.fillText(percentage + '%', centerX, centerY);
 };
+
+const showPopup = function() {
+  var popupWindow = window.open("", "_blank", "width=400,height=300");
+  popupWindow.document.write("<h1>Dit is een pop-upscherm</h1>");
+  popupWindow.document.write("<p>Hallo vanuit de pop-up!</p>");
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -151,6 +157,9 @@ const initLogin = function () {
     localStorage.setItem('userid', id);
     window.location = 'index.html';
   });
+  socketio.on('B2F_showuser', function(id){
+    showPopup()
+  })
 };
 
 const initIndex = function () {

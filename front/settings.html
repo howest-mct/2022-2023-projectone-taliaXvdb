@@ -48,26 +48,33 @@
           </div>
         </div>
         <div class="o-layout__item">
-            <input class="o-button-reset c-btn js-save" type="submit" name="button" id="submit" value="Save">
+            <input class="o-button-reset c-edit__button js-save" type="submit" name="button" id="submit" value="Save">
         </div>
       </div>
     </article>
-    <div class="c-reminders">
-      <h2 class="c-reminders__title">reminders</h2>
-      <div class="js-info c-reminders__info">
-        <object data="img/info-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+    <div class="c-reminderheader">
+      <h2 class="c-title">Reminders</h2>
+      <div class="js-info c-reminderheader__info">
+        <object data="img/info-outline.svg" type="image/svg+xml" class="c-reminderheader__img js-info"></object>
       </div>
     </div>
-    <table class="js-table c-reminders__table">
-      <tr>
-        <th>type</th>
-        <th>time</th>
-        <th>amount</th>
-        <th>hot</th>
-      </tr>
-      <tbody>
-      </tbody>
-    </table>
+    <article class="o-container">
+      <div class="c-reminders o-layout o-layout--gutter">
+        <div class="o-layout__item">
+          <!-- <div class="c-reminder__item">
+            <object data="img/bulb-outline.svg" type="image/svg+xml" data-type="bulb" class="c-reminder__img js-reminder"></object>
+          </div>
+          <div class="c-reminder__item">
+            <object data="img/music-outline.svg" type="image/svg+xml" data-type="music" class="c-reminder__img js-reminder"></object>
+          </div>
+          <div class="c-reminder__item">
+            <object data="img/phone-call-outline.svg" type="image/svg+xml" data-type="vibrate" class="c-reminder__img js-reminder"></object>
+          </div> -->
+        </div>
+      </div>
+      <table class="js-table c-reminder__table">
+      </table>
+    </article>
 
     <div id="popupContainer" class="popup-container">
       <div id="popupContent" class="popup-content">
@@ -81,7 +88,7 @@
         <p>Click an icon to see what it 
           sounds/looks like. To make changes, click
           the value you want to change.</p>
-        <input class="c-btn" type="submit" name="button" id="submit" value="Close" onclick="closePopup()">
+        <input class="c-btn" type="submit" name="button" id="submit" value="Close" onclick="closePopup(2)">
       </div>
     </div>
   </main>

@@ -92,24 +92,35 @@ const newUser = function () {
   var reminderType = document.getElementById('reminderType').value;
   var interval = document.getElementById('interval').value;
   var amount = document.getElementById('amount').value;
-  socketio.emit('F2B_createuser', {newid, name, goal, reminderType, interval, amount});
+  socketio.emit('F2B_createuser', {
+    newid,
+    name,
+    goal,
+    reminderType,
+    interval,
+    amount,
+  });
   closePopup();
 };
 
 const showPopup = function (number) {
-  if (number == 1){
+  if (number == 1) {
     var popupContainer = document.getElementById('popupContainer');
     popupContainer.style.display = 'block';
-  }
-  else if (number == 2) {
+  } else if (number == 2) {
     var popupContainer = document.getElementById('popupContainer2');
-    popupContainer.style.display = 'block'; 
+    popupContainer.style.display = 'block';
   }
 };
 
-const closePopup = function () {
-  var popupContainer = document.getElementById('popupContainer');
-  popupContainer.style.display = 'none';
+const closePopup = function (number) {
+  if (number == 1) {
+    var popupContainer = document.getElementById('popupContainer');
+    popupContainer.style.display = 'none';
+  } else if (number == 2) {
+    var popupContainer = document.getElementById('popupContainer2');
+    popupContainer.style.display = 'none';
+  }
 };
 
 const showTypes = function (jsonObject) {
@@ -121,46 +132,46 @@ const showTypes = function (jsonObject) {
   }
 };
 
-const showLogging = function(jsonObject){
-  console.info(jsonObject)
-}
+const showLogging = function (jsonObject) {
+  console.info(jsonObject);
+};
 
-const showReminders = function(jsonObject) {
-  const htmlReminders = document.querySelector('.js-table')
+const showReminders = function (jsonObject) {
+  const htmlReminders = document.querySelector('.js-table');
+  let htmlString = ""
   // console.info(jsonObject)
-  htmlReminders.innerHTML = `<tr>
+  htmlString = `<thead><tr>
       <th>type</th>
       <th>time</th>
       <th>amount</th>
-    </tr>
-  <tbody>`
-  for(const reminder of jsonObject.reminders){
-    console.info(reminder)
-    if(reminder.type == 1){
-      htmlReminders.innerHTML += `<tr>
+    </tr></thead>
+  <tbody>`;
+  for (const reminder of jsonObject.reminders) {
+    console.info(reminder);
+    if (reminder.type == 1) {
+      htmlString += `<tr>
       <td><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="bulb"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
-    </tr>`
-    }
-    else if(reminder.type == 2){
-      htmlReminders.innerHTML += `<tr>
+      </tr>`;
+    } else if (reminder.type == 2) {
+      htmlString += `<tr>
       <td><object data="img/music-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="music"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
-    </tr>`
-    }
-    else if(reminder.type == 3){
-      htmlReminders.innerHTML += `<tr>
-      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate></object></td>
+      </tr>`;
+    } else if (reminder.type == 3) {
+      htmlString += `<tr>
+      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
-    </tr>`
+      </tr>`;
     }
   }
-  htmlReminders.innerHTML += `</tbody></table>`
-  listenToClick()
-}
+  htmlString += `</tbody></table>`;
+  htmlReminders.innerHTML = htmlString
+  listenToClick();
+};
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -174,7 +185,6 @@ const getHistory = function () {
   handleData(url, showHistory, showError);
 };
 
-
 const getReadings = function () {
   let userid = window.localStorage.getItem('userid');
   const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/${userid}/`;
@@ -186,48 +196,43 @@ const getTypes = function () {
   handleData(url, showTypes, showError);
 };
 
-const getProgress = function(){
-  let userid = localStorage.getItem('userid')
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/logging/`
-  handleData(url, showLogging, showError)
-}
+const getProgress = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/logging/`;
+  handleData(url, showLogging, showError);
+};
 
-const getReminders = function(){
-  let userid = localStorage.getItem('userid')
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/reminders/`
-  handleData(url, showReminders, showError)
-}
+const getReminders = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/reminders/`;
+  handleData(url, showReminders, showError);
+};
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
 
-const listenToClick = function(){
-  const remindertypes = document.querySelectorAll('.js-reminders')
-  for(const type of remindertypes){
+const listenToClick = function () {
+  const remindertypes = document.querySelectorAll('.js-reminder');
+  console.info(remindertypes);
+  for (const type of remindertypes) {
+    console.info(type)
     type.addEventListener('click', function () {
-      kind = type.getAttribute()
-      if (kind == 'bulb'){
-        console.info('bulb clicked')
-        socketio.emit('F2B_lighton')
-      }
-      else if(kind == 'music'){
-        console.info('sound clicked')
-        socketio.emit('F2B_playmusic')
-      }
-      else if(kind == 'vibrate'){
-        console.info('vibrate clicked')
-        socketio.emit('F2B_vibrate')
+      console.info(this);
+      const kind = this.getAttribute('data-type');
+      console.info(kind)
+      if (kind == 'bulb') {
+        console.info('bulb clicked');
+        socketio.emit('F2B_lighton');
+      } else if (kind == 'music') {
+        console.info('sound clicked');
+        socketio.emit('F2B_playmusic');
+      } else if (kind == 'vibrate') {
+        console.info('vibrate clicked');
+        socketio.emit('F2B_vibrate');
       }
     });
   }
-  
-  // htmlSound.addEventListener('click', function () {
-  //   socketio.emit('F2B_playmusic')
-  // });
-  // htmlVibrate.addEventListener('click', function () {
-  //   socketio.emit('F2B_vibrate')
-  // });
-}
+};
 // #endregion
 
 //#region ***  DOM references
@@ -299,7 +304,7 @@ const initIndex = function () {
     console.info(goal.goal);
     htmlGoal.innerHTML = goal.goal;
   });
-  getProgress()
+  getProgress();
 };
 
 const initOverview = function () {
@@ -311,7 +316,6 @@ const initOverview = function () {
     socketio.emit('F2B_getweight');
     socketio.emit('F2B_gettemp');
   });
-  
 };
 
 const initReadings = function () {
@@ -323,17 +327,18 @@ const initSettings = function () {
   console.info('init settings');
   const htmlSave = document.querySelector('.js-save');
   const htmlDone = document.querySelector('.js-done');
-  const htmlInfo = document.querySelector('.js-info')
+  const htmlInfo = document.querySelector('.js-info');
   htmlSave.addEventListener('click', function () {
     showPopup(1);
   });
   htmlDone.addEventListener('click', function () {
-    closePopup();
+    closePopup(1);
   });
-  htmlInfo.addEventListener('click', function(){
-    showPopup(2)
-  })
-  getReminders()
+  htmlInfo.addEventListener('click', function () {
+    showPopup(2);
+  });
+  getReminders();
+  listenToClick()
 };
 
 document.addEventListener('DOMContentLoaded', init);

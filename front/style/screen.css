@@ -457,7 +457,7 @@ a:active {
 
 .c-edit {
   display: flex;
-  padding-left: 2rem;
+  padding-left: 1.5rem;
   padding-bottom: 2rem;
 }
 .c-edit__title {
@@ -480,6 +480,19 @@ a:active {
   margin-top: 0.75rem;
   padding: 0.5rem;
   box-shadow: 5px 5px 4px #e9ecef;
+}
+
+.c-reminderheader {
+  display: flex;
+}
+.c-reminderheader__img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.c-reminder__img {
+  width: 2rem;
+  height: 2rem;
 }
 
 /*---------------------------------------/*

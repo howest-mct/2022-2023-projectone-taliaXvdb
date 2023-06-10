@@ -624,7 +624,7 @@ a:active {
 
 .c-edit{
   display: flex;
-  padding-left: $space-l;
+  padding-left: $space-m;
   padding-bottom: $space-l;
 
   &__title{
@@ -649,6 +649,23 @@ a:active {
     margin-top: $space-xs;
     padding: $space-xxs;
     box-shadow: 5px 5px 4px $color-border;
+  }
+}
+
+.c-reminderheader{
+  display: flex;
+
+  &__img{
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.c-reminder{
+
+  &__img{
+    width: 2rem;
+    height: 2rem;
   }
 }
 //

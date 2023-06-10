@@ -22,7 +22,7 @@ class leds:
 
     def wave_effect(self, wait):
         for i in range(self.count):
-            self.pixels.fill((0, 0, 0))  # Zet alle leds uit
+            self.cleanup()
             self.pixels[i] = (0, 0, 255)  # Schakel de huidige led in
             self.pixels.show()
             time.sleep(wait)

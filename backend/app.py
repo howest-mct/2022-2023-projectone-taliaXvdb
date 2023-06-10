@@ -75,10 +75,25 @@ def gpio_thread():
         loop()
         time.sleep(0.01)
 
-# functies
-
 def get_interval(userid):
-    pass
+    intervalreminder = DataRepository.read_intervalreminder_by_userid(userid)
+    # print(intervalreminder[0]['time'])
+    # interval = intervalreminder[0]['time']
+    interval = 1*60
+
+    return interval
+
+def doReminder(userid):
+    print('reminder')
+    type = DataRepository.read_remindertype_by_userid(userid)
+    if type == 'light':
+        leds.wave_effect(5)
+
+    elif type == 'sound':
+        buzz.reminder_song()
+
+    elif type == 'vibration':
+        brrr.vibrate(5)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
@@ -164,7 +179,15 @@ def reminders(iduser):
 @app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET', 'POST'])
 def loggings(iduser):
     if request.method == 'GET':
-        pass
+        loggins = DataRepository.read_logging_by_userid(iduser)
+        return jsonify(loggings = loggings), 200
+    elif request.method == 'POST':
+        form = DataRepository.json_or_formdata(request)
+        data = DataRepository.create_logging(iduser, form['time'], form['amount'], form['reached'])
+        if data is not None:
+            return jsonify(status='OK', data=data), 201
+        else:
+            return jsonify(status='ERROR'), 500
         
 @app.route(ENDPOINT + '/reminder/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
 def reminder(reminderid):
@@ -251,6 +274,7 @@ if __name__ == '__main__':
         print("**** Starting APP ****")
         # app.run(debug=False)
         threading.Thread(target=gpio_thread, daemon=True).start()
+        threading.Timer(get_interval(1), doReminder(1))
         # app.run(debug=False)
         socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:

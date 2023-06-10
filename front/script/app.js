@@ -150,19 +150,19 @@ const showReminders = function (jsonObject) {
     console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
-      <td><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="bulb"></object></td>
+      <td class="js-reminder" data-type="bulb"><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="bulb"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
-      <td><object data="img/music-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="music"></object></td>
+      <td class="js-reminder" data-type="music"><object data="img/music-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="music"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
-      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate"></object></td>
+      <td class="js-reminder" data-type="vibrate"><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;
@@ -213,9 +213,7 @@ const getReminders = function () {
 
 const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
-  console.info(remindertypes);
   for (const type of remindertypes) {
-    console.info(type)
     type.addEventListener('click', function () {
       console.info(this);
       const kind = this.getAttribute('data-type');

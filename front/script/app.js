@@ -86,7 +86,7 @@ const showProgress = function (progress, color) {
 };
 
 const newUser = function () {
-  var newid = localStorage.getItem('userid')
+  var newid = localStorage.getItem('userid');
   var name = document.getElementById('userName').value;
   var goal = document.getElementById('goal').value;
   var reminderType = document.getElementById('reminderType').value;
@@ -94,14 +94,19 @@ const newUser = function () {
   var amount = document.getElementById('amount').value;
 
   // Doe iets met de opgehaalde waarden
-  console.info('ID:', newid)
+  console.info('ID:', newid);
   console.info('Name:', name);
   console.info('Goal:', goal);
   console.info('Reminder Type:', reminderType);
   console.info('Interval:', interval);
   console.info('Amount:', amount);
   socketio.emit('F2B_createuser');
-  closePopup()
+  closePopup();
+};
+
+const showPopup = function () {
+  var popupContainer = document.getElementById('popupContainer');
+  popupContainer.style.display = 'block';
 };
 
 const closePopup = function () {
@@ -109,14 +114,14 @@ const closePopup = function () {
   popupContainer.style.display = 'none';
 };
 
-const showTypes = function(jsonObject){
-  const htmlType = document.querySelector('.js-type')
-  console.info(jsonObject)
-  for(const type of jsonObject.types){
-    console.info(type)
-    htmlType.innerHTML += `<option>${type.name}</option>`
+const showTypes = function (jsonObject) {
+  const htmlType = document.querySelector('.js-type');
+  console.info(jsonObject);
+  for (const type of jsonObject.types) {
+    console.info(type);
+    htmlType.innerHTML += `<option>${type.name}</option>`;
   }
-}
+};
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -138,10 +143,10 @@ const getReadings = function () {
   handleData(url, showReadings, showError);
 };
 
-const getTypes = function (){
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/type/`
-  handleData(url, showTypes, showError)
-}
+const getTypes = function () {
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/type/`;
+  handleData(url, showTypes, showError);
+};
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
@@ -176,7 +181,10 @@ const init = function () {
 
 const initLogin = function () {
   console.info('init login');
-
+  const htmlBtn = document.querySelector('.js-btn');
+  htmlBtn.addEventListener('click', function () {
+    closePopup();
+  });
   // sockets
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
@@ -189,9 +197,8 @@ const initLogin = function () {
   });
   socketio.on('B2F_showuser', function (id) {
     localStorage.setItem('userid', id);
-    var popupContainer = document.getElementById('popupContainer');
-    popupContainer.style.display = 'block';
-    getTypes()
+    showPopup();
+    getTypes();
   });
 };
 
@@ -238,6 +245,14 @@ const initReadings = function () {
 
 const initSettings = function () {
   console.info('init settings');
+  const htmlSave = document.querySelector('.js-save');
+  const htmlDone = document.querySelector('.js-done');
+  htmlSave.addEventListener('click', function () {
+    showPopup();
+  });
+  htmlDone.addEventListener('click', function () {
+    closePopup();
+  });
 };
 
 document.addEventListener('DOMContentLoaded', init);

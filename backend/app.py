@@ -75,6 +75,11 @@ def gpio_thread():
         loop()
         time.sleep(0.01)
 
+# functies
+
+def get_interval(userid):
+    pass
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
 

@@ -100,7 +100,7 @@ const newUser = function () {
   console.info('Reminder Type:', reminderType);
   console.info('Interval:', interval);
   console.info('Amount:', amount);
-  socketio.emit('F2B_createuser');
+  socketio.emit('F2B_createuser', {newid, name, goal, reminderType, interval, amount});
   closePopup();
 };
 

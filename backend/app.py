@@ -156,6 +156,11 @@ def reminders(iduser):
         else:
             return jsonify(status='ERROR'), 500
         
+@app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET', 'POST'])
+def loggings(iduser):
+    if request.method == 'GET':
+        pass
+        
 @app.route(ENDPOINT + '/reminder/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
 def reminder(reminderid):
     if request.method == 'GET':
@@ -241,7 +246,6 @@ if __name__ == '__main__':
         print("**** Starting APP ****")
         # app.run(debug=False)
         threading.Thread(target=gpio_thread, daemon=True).start()
-        # threading.Thread(target=gpio_thread, daemon=True).start()
         # app.run(debug=False)
         socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:

@@ -27,6 +27,11 @@ class DataRepository:
         params = [deviceid, actionid, userid, date, value, comment]
         return Database.execute_sql(sql, params)
     
+    def create_logging(userid, time, amount, reached):
+        sql = "INSERT INTO logging (usersID, loggingTime, loggingAmount, reached) VALUES (%s,%s,%s,%s)"
+        params = [userid, time, amount, reached]
+        return Database.execute_sql(sql,params)
+    
     #READ
     def read_all_users():
         sql = "SELECT * FROM user"
@@ -76,6 +81,15 @@ class DataRepository:
     def read_lastweight():
         sql = "SELECT value FROM history WHERE deviceID = 2 ORDER BY ID DESC LIMIT 1"
         return Database.get_one_row(sql)
+    
+    def read_loggings():
+        sql = "SELECT * FROM logging"
+        return Database.get_rows((sql))
+    
+    def read_logging_by_userid(id):
+        sql = "SELECT * FROM logging WHERE usersID = %s"
+        params = [id]
+        Database.get_rows(sql,params)
     
     #UPDATE
     def update_user(id, name, goal, streak):

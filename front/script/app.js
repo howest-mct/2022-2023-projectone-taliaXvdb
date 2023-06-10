@@ -85,15 +85,29 @@ const showProgress = function (progress, color) {
   context.fillText(percentage + '%', centerX, centerY);
 };
 
-const showPopup = function() {
-  var popupContainer = document.getElementById("popupContainer");
-  popupContainer.style.display = "block";
-}
+const newUser = function () {
+  var newid = localStorage.getItem('userid')
+  var name = document.getElementById('userName').value;
+  var goal = document.getElementById('goal').value;
+  var reminderType = document.getElementById('reminderType').value;
+  var interval = document.getElementById('interval').value;
+  var amount = document.getElementById('amount').value;
+
+  // Doe iets met de opgehaalde waarden
+  console.log('ID:', newid)
+  console.log('Name:', name);
+  console.log('Goal:', goal);
+  console.log('Reminder Type:', reminderType);
+  console.log('Interval:', interval);
+  console.log('Amount:', amount);
+  socketio.emit('F2B_createuser');
+  closePopup()
+};
 
 const closePopup = function () {
-  var popupContainer = document.getElementById("popupContainer");
-  popupContainer.style.display = "none";
-}
+  var popupContainer = document.getElementById('popupContainer');
+  popupContainer.style.display = 'none';
+};
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -149,21 +163,22 @@ const init = function () {
 const initLogin = function () {
   console.info('init login');
 
-  //queryselectors
-  const htmlRfid = document.querySelector('.js-rfid');
+  // sockets
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_readrfid');
   });
   socketio.on('B2F_showid', function (id) {
     console.info(id);
-    htmlRfid.innerHTML += id;
     localStorage.setItem('userid', id);
     window.location = 'index.html';
   });
-  socketio.on('B2F_showuser', function(id){
-    showPopup()
-  })
+  socketio.on('B2F_showuser', function (id) {
+    localStorage.setItem('userid', id);
+    var popupContainer = document.getElementById('popupContainer');
+    popupContainer.style.display = 'block';
+    const htmlType = document.querySelector('.js-type')
+  });
 };
 
 const initIndex = function () {

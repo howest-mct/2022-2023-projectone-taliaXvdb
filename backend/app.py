@@ -49,8 +49,8 @@ def setup():
 def loop():
     temp = ds18b20.read_temp()
     weight = hx711.get_weight()
-    create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
-    create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
+    # create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
+    # create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
     lcd.show_ip()
     time.sleep(5)
 
@@ -206,6 +206,10 @@ def show_id():
             emit('B2F_showuser', iduser)
         else:
             emit('B2F_showid', iduser)
+
+@socketio.on('F2B_createuser')
+def create_user():
+    pass
 
 @socketio.on('F2B_getgoal')
 def show_goal():

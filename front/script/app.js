@@ -92,14 +92,6 @@ const newUser = function () {
   var reminderType = document.getElementById('reminderType').value;
   var interval = document.getElementById('interval').value;
   var amount = document.getElementById('amount').value;
-
-  // Doe iets met de opgehaalde waarden
-  console.info('ID:', newid);
-  console.info('Name:', name);
-  console.info('Goal:', goal);
-  console.info('Reminder Type:', reminderType);
-  console.info('Interval:', interval);
-  console.info('Amount:', amount);
   socketio.emit('F2B_createuser', {newid, name, goal, reminderType, interval, amount});
   closePopup();
 };

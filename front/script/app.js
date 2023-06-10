@@ -126,10 +126,39 @@ const showLogging = function(jsonObject){
 }
 
 const showReminders = function(jsonObject) {
-  console.info(jsonObject)
+  const htmlReminders = document.querySelector('.js-reminders')
+  // console.info(jsonObject)
+  htmlReminders.innerHTML = `<tr>
+      <th>type</th>
+      <th>time</th>
+      <th>amount</th>
+    </tr>
+  <tbody>`
   for(const reminder of jsonObject.reminders){
     console.info(reminder)
+    if(reminder.type == 1){
+      htmlReminders.innerHTML += `<tr>
+      <td><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td>${reminder.time}</td>
+      <td>${reminder.amount}</td>
+    </tr>`
+    }
+    else if(reminder.type == 2){
+      htmlReminders.innerHTML += `<tr>
+      <td><object data="img/music-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td>${reminder.time}</td>
+      <td>${reminder.amount}</td>
+    </tr>`
+    }
+    else if(reminder.type == 3){
+      htmlReminders.innerHTML += `<tr>
+      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td>${reminder.time}</td>
+      <td>${reminder.amount}</td>
+    </tr>`
+    }
   }
+  htmlReminders.innerHTML += `</tbody></table>`
 }
 // #endregion
 

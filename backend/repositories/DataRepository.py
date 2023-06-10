@@ -94,7 +94,7 @@ class DataRepository:
     
     def read_loggings():
         sql = "SELECT * FROM logging"
-        return Database.get_rows((sql))
+        return Database.get_rows(sql)
     
     def read_logging_by_userid(id):
         sql = "SELECT * FROM logging WHERE usersID = %s"

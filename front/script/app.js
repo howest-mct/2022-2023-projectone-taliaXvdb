@@ -120,6 +120,17 @@ const showTypes = function (jsonObject) {
     htmlType.innerHTML += `<option>${type.name}</option>`;
   }
 };
+
+const showLogging = function(jsonObject){
+  console.info(jsonObject)
+}
+
+const showReminders = function(jsonObject) {
+  console.info(jsonObject)
+  for(const reminder of jsonObject.reminders){
+    console.info(reminder)
+  }
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -133,7 +144,6 @@ const getHistory = function () {
   handleData(url, showHistory, showError);
 };
 
-const getOverview = function () {};
 
 const getReadings = function () {
   let userid = window.localStorage.getItem('userid');
@@ -145,6 +155,18 @@ const getTypes = function () {
   const url = `http://192.168.168.169:5000/api/v1/waterreminder/type/`;
   handleData(url, showTypes, showError);
 };
+
+const getProgress = function(){
+  let userid = localStorage.getItem('userid')
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/logging/`
+  handleData(url, showLogging, showError)
+}
+
+const getReminders = function(){
+  let userid = localStorage.getItem('userid')
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/reminders/`
+  handleData(url, showReminders, showError)
+}
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
@@ -219,6 +241,7 @@ const initIndex = function () {
     console.info(goal.goal);
     htmlGoal.innerHTML = goal.goal;
   });
+  getProgress()
 };
 
 const initOverview = function () {
@@ -230,10 +253,7 @@ const initOverview = function () {
     socketio.emit('F2B_getweight');
     socketio.emit('F2B_gettemp');
   });
-  // socketio.on('B2F_showweight', function (weight) {
-  //   console.info(weight.value);
-  //   htmlWeight.innerHTML += weight.value;
-  // });
+  
 };
 
 const initReadings = function () {
@@ -255,6 +275,7 @@ const initSettings = function () {
   htmlInfo.addEventListener('click', function(){
     showPopup(2)
   })
+  getReminders()
 };
 
 document.addEventListener('DOMContentLoaded', init);

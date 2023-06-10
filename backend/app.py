@@ -179,7 +179,7 @@ def reminders(iduser):
 @app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET', 'POST'])
 def loggings(iduser):
     if request.method == 'GET':
-        loggins = DataRepository.read_logging_by_userid(iduser)
+        loggings = DataRepository.read_logging_by_userid(iduser)
         return jsonify(loggings = loggings), 200
     elif request.method == 'POST':
         form = DataRepository.json_or_formdata(request)
@@ -222,7 +222,6 @@ def initial_connection():
 @socketio.on('F2B_gettemp')
 def show_temp():
     temp = ds18b20.read_temp()
-    temp = temp.round()
     print(temp)
     emit('B2F_showtemp', temp)
 
@@ -283,7 +282,6 @@ if __name__ == '__main__':
         lcd.clear_lcd()
         hx711.cleanup()
         brrr.cleanup()
-        leds.cleanup()
         GPIO.cleanup()
         print("finished")
         GPIO.cleanup()

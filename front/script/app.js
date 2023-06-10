@@ -126,7 +126,7 @@ const showLogging = function(jsonObject){
 }
 
 const showReminders = function(jsonObject) {
-  const htmlReminders = document.querySelector('.js-reminders')
+  const htmlReminders = document.querySelector('.js-table')
   // console.info(jsonObject)
   htmlReminders.innerHTML = `<tr>
       <th>type</th>
@@ -138,27 +138,28 @@ const showReminders = function(jsonObject) {
     console.info(reminder)
     if(reminder.type == 1){
       htmlReminders.innerHTML += `<tr>
-      <td><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="bulb"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
     </tr>`
     }
     else if(reminder.type == 2){
       htmlReminders.innerHTML += `<tr>
-      <td><object data="img/music-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td><object data="img/music-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="music"></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
     </tr>`
     }
     else if(reminder.type == 3){
       htmlReminders.innerHTML += `<tr>
-      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-info__img"></object></td>
+      <td><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate></object></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
     </tr>`
     }
   }
   htmlReminders.innerHTML += `</tbody></table>`
+  listenToClick()
 }
 // #endregion
 
@@ -199,6 +200,34 @@ const getReminders = function(){
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
+
+const listenToClick = function(){
+  const remindertypes = document.querySelectorAll('.js-reminders')
+  for(const type of remindertypes){
+    type.addEventListener('click', function () {
+      kind = type.getAttribute()
+      if (kind == 'bulb'){
+        console.info('bulb clicked')
+        socketio.emit('F2B_lighton')
+      }
+      else if(kind == 'music'){
+        console.info('sound clicked')
+        socketio.emit('F2B_playmusic')
+      }
+      else if(kind == 'vibrate'){
+        console.info('vibrate clicked')
+        socketio.emit('F2B_vibrate')
+      }
+    });
+  }
+  
+  // htmlSound.addEventListener('click', function () {
+  //   socketio.emit('F2B_playmusic')
+  // });
+  // htmlVibrate.addEventListener('click', function () {
+  //   socketio.emit('F2B_vibrate')
+  // });
+}
 // #endregion
 
 //#region ***  DOM references

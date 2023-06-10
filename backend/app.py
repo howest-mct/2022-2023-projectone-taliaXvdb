@@ -268,6 +268,21 @@ def show_goal():
     print(goal)
     emit('B2F_showgoal', goal)
 
+@socketio.on('F2B_lighton')
+def light_on():
+    leds.wave_effect(3)
+    time.sleep(1)
+
+@socketio.on('F2B_playmusic')
+def sound_on():
+    buzz.reminder_song()
+    time.sleep(3)
+
+@socketio.on('F2B_vibrate')
+def vibrate_on():
+    brrr.vibrate(3)
+    time.sleep(1)
+
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")

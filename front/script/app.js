@@ -94,12 +94,12 @@ const newUser = function () {
   var amount = document.getElementById('amount').value;
 
   // Doe iets met de opgehaalde waarden
-  console.log('ID:', newid)
-  console.log('Name:', name);
-  console.log('Goal:', goal);
-  console.log('Reminder Type:', reminderType);
-  console.log('Interval:', interval);
-  console.log('Amount:', amount);
+  console.info('ID:', newid)
+  console.info('Name:', name);
+  console.info('Goal:', goal);
+  console.info('Reminder Type:', reminderType);
+  console.info('Interval:', interval);
+  console.info('Amount:', amount);
   socketio.emit('F2B_createuser');
   closePopup()
 };
@@ -108,6 +108,15 @@ const closePopup = function () {
   var popupContainer = document.getElementById('popupContainer');
   popupContainer.style.display = 'none';
 };
+
+const showTypes = function(jsonObject){
+  const htmlType = document.querySelector('.js-type')
+  console.info(jsonObject)
+  for(const type of jsonObject.types){
+    console.info(type)
+    htmlType.innerHTML += `<option>${type.name}</option>`
+  }
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -125,9 +134,14 @@ const getOverview = function () {};
 
 const getReadings = function () {
   let userid = window.localStorage.getItem('userid');
-  const url = `http://127.0.0.1:5000/api/v1/waterreminder/user/${userid}/`;
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/${userid}/`;
   handleData(url, showReadings, showError);
 };
+
+const getTypes = function (){
+  const url = `http://192.168.168.169:5000/api/v1/waterreminder/type/`
+  handleData(url, showTypes, showError)
+}
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
@@ -177,7 +191,7 @@ const initLogin = function () {
     localStorage.setItem('userid', id);
     var popupContainer = document.getElementById('popupContainer');
     popupContainer.style.display = 'block';
-    const htmlType = document.querySelector('.js-type')
+    getTypes()
   });
 };
 

@@ -56,6 +56,10 @@ class DataRepository:
         sql = "SELECT * FROM reminder"
         return Database.get_rows(sql)
     
+    def read_reminder_types():
+        sql = "SELECT name FROM type"
+        return Database.get_rows(sql)
+    
     def read_history_by_userid(id):
         sql = "SELECT h.*, a.description FROM history h JOIN action a ON a.actionID = h.actionID WHERE userID = %s"
         params = [id]

@@ -174,6 +174,11 @@ def reminder(reminderid):
     elif request.method == 'DELETE':
         return jsonify(status='DELETED', id=DataRepository.delete_reminder(reminderid))
 
+@app.route(ENDPOINT + '/type/', methods=['GET'])
+def types():
+    if request.method == 'GET':
+        types = DataRepository.read_reminder_types()
+        return jsonify(types = types), 200
 
 # regio SOCKETIO
 @socketio.on('connect')

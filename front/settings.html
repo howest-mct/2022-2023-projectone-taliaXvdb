@@ -48,11 +48,14 @@
           </div>
         </div>
         <div class="o-layout__item">
-            <input class="o-button-reset c-btn js-save" type="sumit" name="button" id="submit" value="Save">
+            <input class="o-button-reset c-btn js-save" type="submit" name="button" id="submit" value="Save">
         </div>
       </div>
     </article>
-    <h2>reminders</h2><object data="img/info-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+    <h2>reminders</h2>
+    <div class="js-info">
+      <object data="img/info-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+    </div>
     <table>
       <tr>
         <th>type</th>
@@ -66,6 +69,15 @@
       <div id="popupContent" class="popup-content">
         <h1>Edits saved!</h1>
         <input class="c-btn js-done" type="submit" name="button" id="submit" value="Done">
+      </div>
+    </div>
+
+    <div id="popupContainer2" class="popup-container">
+      <div id="popupContent" class="popup-content">
+        <p>Click an icon to see what it 
+          sounds/looks like. To make changes, click
+          the value you want to change.</p>
+        <input class="c-btn js-close" type="submit" name="button" id="submit" value="Close" onclick="closePopup()">
       </div>
     </div>
   </main>

@@ -104,9 +104,15 @@ const newUser = function () {
   closePopup();
 };
 
-const showPopup = function () {
-  var popupContainer = document.getElementById('popupContainer');
-  popupContainer.style.display = 'block';
+const showPopup = function (number) {
+  if (number == 1){
+    var popupContainer = document.getElementById('popupContainer');
+    popupContainer.style.display = 'block';
+  }
+  else if (number == 2) {
+    var popupContainer = document.getElementById('popupContainer2');
+    popupContainer.style.display = 'block'; 
+  }
 };
 
 const closePopup = function () {
@@ -197,7 +203,7 @@ const initLogin = function () {
   });
   socketio.on('B2F_showuser', function (id) {
     localStorage.setItem('userid', id);
-    showPopup();
+    showPopup(1);
     getTypes();
   });
 };
@@ -247,12 +253,16 @@ const initSettings = function () {
   console.info('init settings');
   const htmlSave = document.querySelector('.js-save');
   const htmlDone = document.querySelector('.js-done');
+  const htmlInfo = document.querySelector('.js-info')
   htmlSave.addEventListener('click', function () {
-    showPopup();
+    showPopup(1);
   });
   htmlDone.addEventListener('click', function () {
     closePopup();
   });
+  htmlInfo.addEventListener('click', function(){
+    showPopup(2)
+  })
 };
 
 document.addEventListener('DOMContentLoaded', init);

@@ -213,8 +213,22 @@ def show_id():
             emit('B2F_showid', iduser)
 
 @socketio.on('F2B_createuser')
-def create_user():
-    pass
+def create_user(payload):
+    id = payload['newid']
+    name = payload['name']
+    goal = payload['goal']
+    type = payload['reminderType']
+    interval = payload['interval']
+    amount = payload['amount']
+    print(f'id: {id}, name: {name}, goal: {goal}, type: {type}, interval: {interval}, amount: {amount}')
+    if type == 'light':
+        typeid = 1
+    elif type == 'sound':
+        typeid = 2
+    elif type == 'vibration':
+        typeid = 3
+    DataRepository.create_user(id, name, goal, 0)
+    DataRepository.create_reminder(id, typeid, interval, amount)
 
 @socketio.on('F2B_getgoal')
 def show_goal():

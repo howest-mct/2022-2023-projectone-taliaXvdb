@@ -12,14 +12,14 @@ class DataRepository:
 
     #CREATE
     @staticmethod
-    def create_user(name, goal, streak):
-        sql = "INSERT INTO user (name, goal, streak) VALUES (%s,%s,%s)"
-        params = [name, goal, streak]
+    def create_user(id, name, goal, streak):
+        sql = "INSERT INTO user (userID, name, goal, streak) VALUES (%s,%s,%s,%s)"
+        params = [id, name, goal, streak]
         return Database.execute_sql(sql, params)
     
-    def create_reminder(iduser, type, time, amount, fasterWhenHot):
-        sql = "INSERT INTO reminder (iduser, type, time, amount, fasterWhenHot) VALUES (%s,%s,%s,%s,%s)"
-        params = [iduser, type, time, amount, fasterWhenHot]
+    def create_reminder(iduser, type, time, amount):
+        sql = "INSERT INTO reminder (iduser, type, time, amount) VALUES (%s,%s,%s,%s)"
+        params = [iduser, type, time, amount]
         return Database.execute_sql(sql, params)
     
     def create_reading(deviceid, actionid, userid, date, value, comment):

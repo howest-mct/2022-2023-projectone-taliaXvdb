@@ -179,8 +179,9 @@ def reminders(iduser):
 @app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET', 'POST'])
 def loggings(iduser):
     if request.method == 'GET':
+        user = DataRepository.read_user(iduser)
         loggings = DataRepository.read_logging_by_userid(iduser)
-        return jsonify(loggings = loggings), 200
+        return jsonify(user=user, loggings = loggings), 200
     elif request.method == 'POST':
         form = DataRepository.json_or_formdata(request)
         data = DataRepository.create_logging(iduser, form['time'], form['amount'], form['reached'])
@@ -188,6 +189,14 @@ def loggings(iduser):
             return jsonify(status='OK', data=data), 201
         else:
             return jsonify(status='ERROR'), 500
+        
+@app.route(ENDPOINT + '/user/<iduser>/logging/last/', methods=['GET'])
+def last_logging(iduser):
+    if request.method == 'GET':
+        user = DataRepository.read_user(iduser)
+        last_log = DataRepository.read_lastlogging_by_userid(iduser)
+        last_log['loggingTime'] = str(last_log['loggingTime'])
+        return jsonify(user=user, last_log = last_log), 200
         
 @app.route(ENDPOINT + '/reminder/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
 def reminder(reminderid):

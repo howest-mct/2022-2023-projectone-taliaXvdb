@@ -138,7 +138,7 @@ const showLogging = function (jsonObject) {
 
 const showReminders = function (jsonObject) {
   const htmlReminders = document.querySelector('.js-table');
-  let htmlString = ""
+  let htmlString = '';
   // console.info(jsonObject)
   htmlString = `<thead><tr>
       <th>type</th>
@@ -169,8 +169,35 @@ const showReminders = function (jsonObject) {
     }
   }
   htmlString += `</tbody></table>`;
-  htmlReminders.innerHTML = htmlString
+  htmlReminders.innerHTML = htmlString;
   listenToClick();
+};
+
+const drawChart = function (title, labels, data) {
+  const options = {
+    chart: {
+      id: 'myChart',
+      type: 'line',
+    },
+    stroke: {
+      curve: 'stepline',
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    series: [
+      {
+        name: title,
+        data: data,
+      },
+    ],
+    labels: labels,
+    noData: {
+      text: 'Loading...',
+    },
+  };
+  const chart = new ApexCharts(document.querySelector('.js-chart'), options);
+  chart.render();
 };
 // #endregion
 
@@ -217,7 +244,7 @@ const listenToClick = function () {
     type.addEventListener('click', function () {
       console.info(this);
       const kind = this.getAttribute('data-type');
-      console.info(kind)
+      console.info(kind);
       if (kind == 'bulb') {
         console.info('bulb clicked');
         socketio.emit('F2B_lighton');
@@ -336,7 +363,7 @@ const initSettings = function () {
     showPopup(2);
   });
   getReminders();
-  listenToClick()
+  listenToClick();
 };
 
 document.addEventListener('DOMContentLoaded', init);

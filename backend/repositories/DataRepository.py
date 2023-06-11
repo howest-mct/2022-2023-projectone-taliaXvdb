@@ -102,9 +102,9 @@ class DataRepository:
         return Database.get_rows(sql,params)
 
     def read_lastlogging_by_userid(id):
-        sql = "SELECT l.* FROM logging l JOIN (SELECT loggingDate, MAX(loggingTime) AS `last_time` FROM logging GROUP BY loggingDate) lt ON lt.loggingDate = l.loggingDate WHERE l.loggingDate = lt.loggingDate and l.loggingTime = lt.`last_time` HAVING l.usersID = %s;"
-        params = [id]
-        return Database.get_one_row(sql,params)
+        sql = "SELECT l.usersID, l.loggingDate, l .loggingTime, l.reached, dt.`total` FROM logging l JOIN (SELECT loggingDate, MAX(loggingTime) AS `last_time` FROM logging GROUP BY loggingDate) lt ON lt.loggingDate = l.loggingDate JOIN (SELECT loggingDate, SUM(loggingAmount) AS `total` FROM logging WHERE usersID = %s GROUP BY loggingDate) dt ON dt.loggingDate = lt.loggingDate WHERE l.loggingDate = lt.loggingDate and l.loggingTime = lt.`last_time` HAVING l.usersID = %s;"
+        params = [id, id]
+        return Database.get_rows(sql,params)
     
     #UPDATE
     def update_user(id, name, goal, streak):

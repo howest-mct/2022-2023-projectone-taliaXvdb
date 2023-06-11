@@ -173,31 +173,96 @@ const showReminders = function (jsonObject) {
   listenToClick();
 };
 
-const drawChart = function (title, labels, data) {
-  const options = {
-    chart: {
-      id: 'myChart',
-      type: 'line',
-    },
-    stroke: {
-      curve: 'stepline',
-    },
-    dataLabels: {
-      enabled: false,
-    },
+const showGraph = function (title, labels, axistitle) {
+  var options = {
     series: [
       {
-        name: title,
-        data: data,
+        name: labels[0],
+        data: [28, 29, 33, 36, 32, 32, 33],
+      },
+      {
+        name: labels[1],
+        data: [12, 11, 14, 18, 17, 13, 13],
       },
     ],
-    labels: labels,
-    noData: {
-      text: 'Loading...',
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+      toolbar: {
+        show: false,
+      },
+    },
+    colors: ['#77B6EA', '#545454'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    title: {
+      text: title,
+      align: 'left',
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+        opacity: 0.5,
+      },
+    },
+    markers: {
+      size: 1,
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      title: {
+        text: axistitle[0],
+      },
+    },
+    yaxis: {
+      title: {
+        text: axistitle[1],
+      },
+      min: 5,
+      max: 40,
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5,
     },
   };
-  const chart = new ApexCharts(document.querySelector('.js-chart'), options);
+
+  var chart = new ApexCharts(document.querySelector('.js-chart'), options);
   chart.render();
+};
+
+const showLastLog = function (jsonObject) {
+  console.info(jsonObject);
+  const title = 'Did I reach my goal?';
+  const labels = ['goal', 'what i drank'];
+  const axistitles = ['Date', 'Amount(ml)'];
+  let goalData = [];
+  let amountDrank = [];
+  socketio.emit('F2B_getgoal');
+  socketio.on('B2F_showgoal', function (goal) {
+    for (const logged of jsonObject.data) {
+      console.info(logged.total)
+      goalData.push(jsonObject.user.goal);
+      amountDrank.push(logged.total)
+    }
+    showGraph(title, labels, axistitles);
+  });
 };
 // #endregion
 
@@ -208,31 +273,43 @@ const drawChart = function (title, labels, data) {
 
 const getHistory = function () {
   const userid = localStorage.getItem('userid');
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/`;
   handleData(url, showHistory, showError);
 };
 
 const getReadings = function () {
   let userid = window.localStorage.getItem('userid');
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/${userid}/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
   handleData(url, showReadings, showError);
 };
 
 const getTypes = function () {
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/type/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/type/`;
   handleData(url, showTypes, showError);
 };
 
 const getProgress = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/logging/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/`;
   handleData(url, showLogging, showError);
 };
 
 const getReminders = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://192.168.168.169:5000/api/v1/waterreminder/user/2/reminders/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/reminders/`;
   handleData(url, showReminders, showError);
+};
+
+const getLastLog = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`;
+  handleData(url, showLastLog, showError);
+};
+
+const getAllLogs = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/`;
+  handleData(url, showLogs, showError);
 };
 // #endregion
 
@@ -338,9 +415,10 @@ const initOverview = function () {
   htmlWeight = document.querySelector('.js-weight');
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
-    socketio.emit('F2B_getweight');
-    socketio.emit('F2B_gettemp');
+    // socketio.emit('F2B_getweight');
+    // socketio.emit('F2B_gettemp');
   });
+  getLastLog();
 };
 
 const initReadings = function () {

@@ -195,8 +195,9 @@ def last_logging(iduser):
     if request.method == 'GET':
         user = DataRepository.read_user(iduser)
         last_log = DataRepository.read_lastlogging_by_userid(iduser)
-        last_log['loggingTime'] = str(last_log['loggingTime'])
-        return jsonify(user=user, last_log = last_log), 200
+        for element in last_log:
+            element['loggingTime'] = str(element['loggingTime'])
+        return jsonify(user=user, data=last_log), 200
         
 @app.route(ENDPOINT + '/reminder/<reminderid>/', methods=['GET', 'PUT', 'DELETE'])
 def reminder(reminderid):

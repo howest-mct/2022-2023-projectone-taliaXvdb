@@ -535,6 +535,63 @@ a:active {
 
 //* login.html
 
+.c-login{
+  display: flex;
+  flex-direction: column;
+  padding-top: $space-xxxl;
+  justify-content: center;
+  align-items: center;
+
+  &__title{
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__img{
+    display: flex;
+    width: 20rem;
+    height: 40rem;
+    justify-content: center;
+    align-items: center;
+  }
+  &__text{
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @include mq(bp1) {
+    // Stijlen voor smartphones
+    padding-top: $space-m; // Aangepaste padding voor smartphones
+    &__title {
+      font-size: 2rem; // Aangepaste fontgrootte voor smartphones
+    }
+    &__img {
+      width: 15rem; // Aangepaste breedte voor smartphones
+      height: 30rem; // Aangepaste hoogte voor smartphones
+    }
+    &__text {
+      font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
+    }
+  }
+  
+  @include mq(bp2) {
+    // Stijlen voor tablets
+    padding-top: $space-l; // Aangepaste padding voor tablets
+    &__title {
+      font-size: 4rem; // Aangepaste fontgrootte voor tablets
+    }
+    &__img {
+      width: 25rem; // Aangepaste breedte voor tablets
+      height: 35rem; // Aangepaste hoogte voor tablets
+    }
+    &__text {
+      font-size: 2.5rem; // Aangepaste fontgrootte voor tablets
+    }
+  }
+}
+
 .popup-container {
   display: none;
   position: fixed;
@@ -565,6 +622,16 @@ a:active {
   justify-content: center;
   align-items: center;
   padding-bottom: $space-l;
+
+  @include mq(bp1) {
+    // Stijlen voor smartphones
+    padding-bottom: $space-m; // Aangepaste padding voor smartphones
+  }
+
+  @include mq(bp2) {
+    // Stijlen voor tablets
+    padding-bottom: $space-xl; // Aangepaste padding voor tablets
+  }
 }
 
 // boxes
@@ -590,6 +657,22 @@ a:active {
 
   &__title, &__value{
     margin-bottom: 0;
+  }
+
+  @include mq(bp1) {
+    // Stijlen voor smartphones
+    padding: $space-xs; // Aangepaste padding voor smartphones
+    width: 2rem; // Aangepaste breedte voor smartphones
+    height: 2rem; // Aangepaste hoogte voor smartphones
+    font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
+  }
+
+  @include mq(bp2) {
+    // Stijlen voor tablets
+    padding: $space-s; // Aangepaste padding voor tablets
+    width: 4rem; // Aangepaste breedte voor tablets
+    height: 4rem; // Aangepaste hoogte voor tablets
+    font-size: 2rem; // Aangepaste fontgrootte voor tablets
   }
 }
 

@@ -384,6 +384,63 @@ a:active {
   padding-left: 1rem;
 }
 
+.c-login {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6rem;
+  justify-content: center;
+  align-items: center;
+}
+.c-login__title {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.c-login__img {
+  display: flex;
+  width: 20rem;
+  height: 40rem;
+  justify-content: center;
+  align-items: center;
+}
+.c-login__text {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 36.0625em) {
+  .c-login {
+    padding-top: 1.5rem;
+  }
+  .c-login__title {
+    font-size: 2rem;
+  }
+  .c-login__img {
+    width: 15rem;
+    height: 30rem;
+  }
+  .c-login__text {
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 48.0625em) {
+  .c-login {
+    padding-top: 2rem;
+  }
+  .c-login__title {
+    font-size: 4rem;
+  }
+  .c-login__img {
+    width: 25rem;
+    height: 35rem;
+  }
+  .c-login__text {
+    font-size: 2.5rem;
+  }
+}
+
 .popup-container {
   display: none;
   position: fixed;
@@ -411,6 +468,16 @@ a:active {
   align-items: center;
   padding-bottom: 2rem;
 }
+@media (min-width: 36.0625em) {
+  .c-progress {
+    padding-bottom: 1.5rem;
+  }
+}
+@media (min-width: 48.0625em) {
+  .c-progress {
+    padding-bottom: 3rem;
+  }
+}
 
 .c-info {
   display: flex;
@@ -431,6 +498,22 @@ a:active {
 }
 .c-info__title, .c-info__value {
   margin-bottom: 0;
+}
+@media (min-width: 36.0625em) {
+  .c-info {
+    padding: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.5rem;
+  }
+}
+@media (min-width: 48.0625em) {
+  .c-info {
+    padding: 1rem;
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+  }
 }
 
 .c-streak {

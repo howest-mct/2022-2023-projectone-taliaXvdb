@@ -200,7 +200,7 @@ const showGraph = function (title, labels, axistitle) {
         show: false,
       },
     },
-    colors: ['#77B6EA', '#545454'],
+    colors: ['#545454', '#77B6EA'],
     dataLabels: {
       enabled: true,
     },

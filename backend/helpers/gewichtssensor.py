@@ -42,6 +42,7 @@ class HX711:
         if weight > -3 and weight < 3:
             weight = 0
 
+        print("Weight: {} grams".format(weight))
         return weight
 
     def cleanup(self):

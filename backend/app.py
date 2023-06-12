@@ -62,11 +62,6 @@ def create_measurement(deviceID, actionID, userID, time, value, comment):
         return 'ok'
     else:
         return 'error'
-      
-def gpio_thread():
-    setup()
-    while True:
-        loop()
 
 def callback_button(pin):
     print('button pressed')
@@ -300,7 +295,6 @@ if __name__ == '__main__':
         print("**** Starting APP ****")
         # app.run(debug=False)
         threading.Thread(target=gpio_thread, daemon=True).start()
-        threading.Timer(get_interval(1), doReminder(1))
         # app.run(debug=False)
         socketio.run(app, debug=False, host='0.0.0.0')
     except KeyboardInterrupt:

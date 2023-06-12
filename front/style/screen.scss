@@ -659,21 +659,21 @@ a:active {
     margin-bottom: 0;
   }
 
-  @include mq(bp1) {
-    // Stijlen voor smartphones
-    padding: $space-xs; // Aangepaste padding voor smartphones
-    width: 2rem; // Aangepaste breedte voor smartphones
-    height: 2rem; // Aangepaste hoogte voor smartphones
-    font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
-  }
+  // @include mq(bp1) {
+  //   // Stijlen voor smartphones
+  //   padding: $space-xs; // Aangepaste padding voor smartphones
+  //   width: 2rem; // Aangepaste breedte voor smartphones
+  //   height: 2rem; // Aangepaste hoogte voor smartphones
+  //   font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
+  // }
 
-  @include mq(bp2) {
-    // Stijlen voor tablets
-    padding: $space-s; // Aangepaste padding voor tablets
-    width: 4rem; // Aangepaste breedte voor tablets
-    height: 4rem; // Aangepaste hoogte voor tablets
-    font-size: 2rem; // Aangepaste fontgrootte voor tablets
-  }
+  // @include mq(bp2) {
+  //   // Stijlen voor tablets
+  //   padding: $space-s; // Aangepaste padding voor tablets
+  //   width: 4rem; // Aangepaste breedte voor tablets
+  //   height: 4rem; // Aangepaste hoogte voor tablets
+  //   font-size: 2rem; // Aangepaste fontgrootte voor tablets
+  // }
 }
 
 //* overview.html

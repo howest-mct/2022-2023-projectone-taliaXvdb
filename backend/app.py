@@ -44,7 +44,9 @@ def setup():
     GPIO.add_event_detect(btn, GPIO.FALLING, callback=callback_button, bouncetime=300)
     lcd.set_cursor()
     lcd.clear_lcd()
+    print("hx711 setup begin")
     hx711.setup()
+    print("hx711 setup done")
 
 def loop():
     temp = ds18b20.read_temp()

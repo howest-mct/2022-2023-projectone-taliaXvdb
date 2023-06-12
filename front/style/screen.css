@@ -482,7 +482,7 @@ a:active {
 
 .c-info {
   display: flex;
-  padding-left: 2rem;
+  padding: 1rem;
 }
 .c-info__item {
   display: flex;

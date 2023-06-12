@@ -30,13 +30,21 @@ weightPins = {
     'sck': 18
 }
 
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
+
+# ping interval forces rapid B2F communication
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', ping_interval=0.5) #, async_handlers=False
+CORS(app)
+
 hx711 = HX711(weightPins['dt'], weightPins['sck'])
 ds18b20 = DS18B20()
 buzz = reminder(16)
 lcd = LCDpcfClass(lcdPins['rs'], lcdPins['e'])
 brrr = VibrationMotor(23)
 ledring = leds(24, board.D12, 0.1)
-rfid = RFid()
+rfid = RFid(socketio)
 
 def setup():
     GPIO.setmode(GPIO.BCM)
@@ -47,14 +55,17 @@ def setup():
     print("hx711 setup begin")
     hx711.setup()
     print("hx711 setup done")
+    lcd.show_ip()
 
 def loop():
-    temp = ds18b20.read_temp()
-    weight = hx711.get_weight()
-    # create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
-    # create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
-    lcd.show_ip()
-    time.sleep(5)
+    while True:
+        temp = ds18b20.read_temp()
+        weight = hx711.get_weight()
+        # print(rfid.read_rfid())
+        # create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
+        # create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
+        
+        time.sleep(0.5)
 
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
@@ -92,12 +103,6 @@ def doReminder(userid):
     elif type == 'vibration':
         brrr.vibrate(5)
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
-
-# ping interval forces rapid B2F communication
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent', ping_interval=0.5)
-CORS(app)
 
 # API ENDPOINTS
 
@@ -297,6 +302,7 @@ if __name__ == '__main__':
         threading.Thread(target=gpio_thread, daemon=True).start()
         # app.run(debug=False)
         socketio.run(app, debug=False, host='0.0.0.0')
+        
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:

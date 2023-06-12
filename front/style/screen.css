@@ -396,11 +396,12 @@ a:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 2rem;
 }
 .c-login__img {
   display: flex;
   width: 20rem;
-  height: 40rem;
+  height: 30rem;
   justify-content: center;
   align-items: center;
 }
@@ -412,14 +413,14 @@ a:active {
 }
 @media (min-width: 36.0625em) {
   .c-login {
-    padding-top: 1.5rem;
+    padding-top: 1rem;
   }
   .c-login__title {
     font-size: 2rem;
   }
   .c-login__img {
-    width: 15rem;
-    height: 30rem;
+    width: 10rem;
+    height: 20rem;
   }
   .c-login__text {
     font-size: 1.5rem;
@@ -433,8 +434,8 @@ a:active {
     font-size: 4rem;
   }
   .c-login__img {
-    width: 25rem;
-    height: 35rem;
+    width: 15rem;
+    height: 25rem;
   }
   .c-login__text {
     font-size: 2.5rem;

@@ -547,11 +547,12 @@ a:active {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: $space-l;
   }
   &__img{
     display: flex;
     width: 20rem;
-    height: 40rem;
+    height: 30rem;
     justify-content: center;
     align-items: center;
   }
@@ -563,13 +564,13 @@ a:active {
   }
   @include mq(bp1) {
     // Stijlen voor smartphones
-    padding-top: $space-m; // Aangepaste padding voor smartphones
+    padding-top: $space-s; // Aangepaste padding voor smartphones
     &__title {
       font-size: 2rem; // Aangepaste fontgrootte voor smartphones
     }
     &__img {
-      width: 15rem; // Aangepaste breedte voor smartphones
-      height: 30rem; // Aangepaste hoogte voor smartphones
+      width: 10rem;
+      height: 20rem;// Aangepaste hoogte voor smartphones
     }
     &__text {
       font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
@@ -583,8 +584,8 @@ a:active {
       font-size: 4rem; // Aangepaste fontgrootte voor tablets
     }
     &__img {
-      width: 25rem; // Aangepaste breedte voor tablets
-      height: 35rem; // Aangepaste hoogte voor tablets
+      width: 15rem;
+      height: 25rem;// Aangepaste hoogte voor tablets
     }
     &__text {
       font-size: 2.5rem; // Aangepaste fontgrootte voor tablets

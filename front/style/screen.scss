@@ -660,13 +660,14 @@ a:active {
     margin-bottom: 0;
   }
 
-  // @include mq(bp1) {
-  //   // Stijlen voor smartphones
-  //   padding: $space-xs; // Aangepaste padding voor smartphones
-  //   width: 2rem; // Aangepaste breedte voor smartphones
-  //   height: 2rem; // Aangepaste hoogte voor smartphones
-  //   font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
-  // }
+  @include mq(bp1) {
+    // Stijlen voor smartphones
+    // padding: $space-xs; // Aangepaste padding voor smartphones
+    // width: 2rem; // Aangepaste breedte voor smartphones
+    // height: 2rem; // Aangepaste hoogte voor smartphones
+    // font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
+    // flex-direction: column;
+  }
 
   // @include mq(bp2) {
   //   // Stijlen voor tablets

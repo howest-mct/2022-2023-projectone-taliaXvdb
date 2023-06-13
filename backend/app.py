@@ -70,6 +70,7 @@ def loop():
         interval = get_interval(UserID)
         while True:
             temp = ds18b20.read_temp()
+            socketio.emit('B2F_showtemp', temp)
             weight = hx711.get_weight()
             if temp != prevTemp:
                 create_measurement(1,1, UserID, time.gmtime(), temp, 'Temperature measured')

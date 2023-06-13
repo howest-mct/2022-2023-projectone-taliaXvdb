@@ -156,7 +156,7 @@ const showReminders = function (jsonObject) {
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="music"><object data="img/music-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="music"></object></td>
+      <td class="js-reminder" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;

@@ -150,7 +150,7 @@ const showReminders = function (jsonObject) {
     console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="bulb"><object data="img/bulb-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="bulb"></object></td>
+      <td class="js-reminder" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;
@@ -162,7 +162,7 @@ const showReminders = function (jsonObject) {
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="vibrate"><object data="img/phone-call-outline.svg" type="image/svg+xml" class="c-reminder__img js-reminder" data-type="vibrate"></object></td>
+      <td class="js-reminder" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
       <td>${reminder.time}</td>
       <td>${reminder.amount}</td>
       </tr>`;
@@ -273,7 +273,7 @@ const showLastLog = function (jsonObject) {
 
 const getHistory = function () {
   const userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
   handleData(url, showHistory, showError);
 };
 
@@ -290,25 +290,25 @@ const getTypes = function () {
 
 const getProgress = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`;
   handleData(url, showLogging, showError);
 };
 
 const getReminders = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/reminders/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/reminders/`;
   handleData(url, showReminders, showError);
 };
 
 const getLastLog = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/last/`;
   handleData(url, showLastLog, showError);
 };
 
 const getAllLogs = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`;
   handleData(url, showLogs, showError);
 };
 // #endregion

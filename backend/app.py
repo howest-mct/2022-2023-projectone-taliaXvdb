@@ -124,14 +124,15 @@ def get_interval(userid):
 
 def doReminder(userid):
     type = DataRepository.read_remindertype_by_userid(userid)
-    print('reminder', type)
-    if type == 'light':
-        ledring.wave_effect(5)
+    print('reminder', type[0]["type"])
+    if type[0]["type"] == 1:
+        print("yes")
+        ledring.wave_effect(0.5)
 
-    elif type == 'sound':
+    elif type[0]["type"] == 2:
         buzz.reminder_song()
 
-    elif type == 'vibration':
+    elif type[0]["type"] == 3:
         brrr.vibrate(5)
 
 

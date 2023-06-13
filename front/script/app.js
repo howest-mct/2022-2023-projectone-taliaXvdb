@@ -264,6 +264,7 @@ const showLastLog = function (jsonObject) {
     showGraph(title, labels, axistitles);
   });
 };
+
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -338,33 +339,7 @@ const listenToClick = function () {
   }
   for(const time of remindertime){
     time.addEventListener('click', function(){
-      console.info(this.innerHTML)
-      currentValue = this.innerHTML
-      var input = document.createElement("input");
-      input.type = "number";
-      input.value = currentValue;
-      input.onblur = function() {
-        // Wanneer het invoerveld wordt verlaten, update het getal
-        var newValue = parseInt(input.value);
-        this.innerHTML = newValue;
-
-        const kind = this.getAttribute('data-type');
-        console.info(kind);
-        if (kind == 'bulb') {
-          
-        } else if (kind == 'music') {
-
-        } else if (kind == 'vibrate') {
-
-        }
-      };
-    
-      // Vervang het huidige element door het invoerveld
-      this.innerHTML = "";
-      this.appendChild(input);
-    
-      // Plaats de focus op het invoerveld
-      input.focus();
+      console.info(this)
     })
   }
 };

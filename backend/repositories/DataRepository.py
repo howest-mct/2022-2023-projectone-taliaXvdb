@@ -58,7 +58,7 @@ class DataRepository:
         return Database.get_rows(sql, params)        
 
     def read_remindertype_by_userid(id):
-        sql = "SELECT type FROM reminder WHERE iduser = %s"
+        sql = "SELECT type FROM reminder WHERE iduser = %s and amount IS NOT NULL"
         params = [id]
         return Database.get_rows(sql, params)                        
     

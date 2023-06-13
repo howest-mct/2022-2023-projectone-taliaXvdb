@@ -34,6 +34,7 @@ UserID = 0
 login = False
 prevTemp = 0
 prevWeight = 0
+scanned = False
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
@@ -62,7 +63,7 @@ def setup():
     lcd.show_ip()
 
 def loop():
-    global UserID, login, prevTemp, prevWeight
+    global UserID, login, prevTemp, prevWeight, scanned
     if login == True:
         start_time = time.time()
         elapsed_time = 0
@@ -90,9 +91,15 @@ def loop():
 
 
             if elapsed_time > 5:
-                print("Timer afgelopen!")
+            # while scanned != True:
                 doReminder(UserID)
-                start_time = time.time()
+                print("Timer afgelopen!")
+                userid = rfid.read_rfid()
+                if userid == UserID:
+                    scanned = True
+                # if scanned == True:
+                    start_time = time.time()
+                    scanned = False
         
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
@@ -119,8 +126,8 @@ def get_interval(userid):
     return interval
 
 def doReminder(userid):
-    print('reminder')
     type = DataRepository.read_remindertype_by_userid(userid)
+    print('reminder', type)
     if type == 'light':
         ledring.wave_effect(5)
 

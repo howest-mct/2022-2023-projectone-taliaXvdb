@@ -18,7 +18,7 @@ from helpers.buzzer import reminder
 from helpers.LCD import LCDpcfClass
 from helpers.rfid import RFid
 
-#REGION GPIO, PIN DEFINING
+#REGION GPIO, PIN DEFINING, GLOBAL VAR
 btn = 21
 lcdPins = {
     'rs': 26,
@@ -30,6 +30,10 @@ weightPins = {
     'sck': 18
 }
 
+UserID = 0
+login = False
+prevTemp = 0
+prevWeight = 0
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
@@ -58,15 +62,21 @@ def setup():
     lcd.show_ip()
 
 def loop():
-    while True:
-        temp = ds18b20.read_temp()
-        weight = hx711.get_weight()
-        # print(rfid.read_rfid())
-        # create_measurement(1,1, 2, time.gmtime(), temp, 'Temperature measured')
-        # create_measurement(2,1,2, time.gmtime(), weight, 'Weight measured')
+    global UserID, login, prevTemp, prevWeight
+    if login == True:
+        while True:
+            temp = ds18b20.read_temp()
+            weight = hx711.get_weight()
+            if temp != prevTemp:
+                create_measurement(1,1, UserID, time.gmtime(), temp, 'Temperature measured')
+                prevTemp = temp
+            
+            if weight != prevWeight:
+                create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
+                prevWeight = weight
+                
+            time.sleep(0.1)
         
-        time.sleep(0.5)
-
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
     if data is not None:
@@ -95,7 +105,7 @@ def doReminder(userid):
     print('reminder')
     type = DataRepository.read_remindertype_by_userid(userid)
     if type == 'light':
-        leds.wave_effect(5)
+        ledring.wave_effect(5)
 
     elif type == 'sound':
         buzz.reminder_song()
@@ -245,9 +255,10 @@ def show_weight():
 
 @socketio.on('F2B_readrfid')
 def show_id():
+    global UserID, login
     iduser = rfid.read_rfid()
     users = DataRepository.read_all_users()
-    print(users)
+    UserID = iduser
     for user in users:
         ids = []
         ids.append(user['userID'])
@@ -255,9 +266,11 @@ def show_id():
             emit('B2F_showuser', iduser)
         else:
             emit('B2F_showid', iduser)
+            login = True
 
 @socketio.on('F2B_createuser')
 def create_user(payload):
+    global login
     id = payload['newid']
     name = payload['name']
     goal = payload['goal']
@@ -267,22 +280,30 @@ def create_user(payload):
     print(f'id: {id}, name: {name}, goal: {goal}, type: {type}, interval: {interval}, amount: {amount}')
     if type == 'light':
         typeid = 1
+        notid = [2,3]
     elif type == 'sound':
         typeid = 2
+        notid = [1,3]
     elif type == 'vibration':
         typeid = 3
+        notid = [2,1]
+
     DataRepository.create_user(id, name, goal, 0)
     DataRepository.create_reminder(id, typeid, interval, amount)
+    for falseid in notid:
+        DataRepository.create_reminder(id, falseid, 0, 0)
+    login = True
 
 @socketio.on('F2B_getgoal')
 def show_goal():
-    goal = DataRepository.read_goal_by_userid(2)
+    global UserID
+    goal = DataRepository.read_goal_by_userid(UserID)
     print(goal)
     emit('B2F_showgoal', goal)
 
 @socketio.on('F2B_lighton')
 def light_on():
-    leds.wave_effect(3)
+    ledring.wave_effect(0.1)
     time.sleep(1)
 
 @socketio.on('F2B_playmusic')
@@ -306,6 +327,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print('KeyboardInterrupt exception is caught')
     finally:
+        ledring.cleanup()
         lcd.clear_lcd()
         hx711.cleanup()
         brrr.cleanup()

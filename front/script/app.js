@@ -367,9 +367,6 @@ const init = function () {
 const initLogin = function () {
   console.info('init login');
   const htmlBtn = document.querySelector('.js-btn');
-  htmlBtn.addEventListener('click', function () {
-    closePopup();
-  });
   // sockets
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
@@ -384,6 +381,10 @@ const initLogin = function () {
     localStorage.setItem('userid', id);
     showPopup(1);
     getTypes();
+    htmlBtn.addEventListener('click', function () {
+      closePopup();
+      window.location = 'index.html';
+    });
   });
 };
 
@@ -428,10 +429,14 @@ const initReadings = function () {
 
 const initSettings = function () {
   console.info('init settings');
-  const htmlSave = document.querySelector('.js-save');
+  const htmlSaveS = document.querySelector('.js-savespecifications');
+  const htmlSaveR = document.querySelector('.js-savereminders');
   const htmlDone = document.querySelector('.js-done');
   const htmlInfo = document.querySelector('.js-info');
-  htmlSave.addEventListener('click', function () {
+  htmlSaveS.addEventListener('click', function () {
+    showPopup(1);
+  });
+  htmlSaveR.addEventListener('click', function () {
     showPopup(1);
   });
   htmlDone.addEventListener('click', function () {

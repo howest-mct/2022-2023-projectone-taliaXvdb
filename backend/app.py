@@ -91,15 +91,11 @@ def loop():
 
 
             if elapsed_time > 5:
-            # while scanned != True:
                 doReminder(UserID)
                 print("Timer afgelopen!")
                 userid = rfid.read_rfid()
                 if userid == UserID:
-                    scanned = True
-                # if scanned == True:
                     start_time = time.time()
-                    scanned = False
         
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)

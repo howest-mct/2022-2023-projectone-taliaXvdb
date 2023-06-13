@@ -151,20 +151,20 @@ const showReminders = function (jsonObject) {
     if (reminder.type == 1) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td class="js-time">${reminder.time}</td>
-      <td class="js-amount">${reminder.amount}</td>
+      <td class="js-time" data-type="bulb">${reminder.time}</td>
+      <td class="js-amount" data-type="bulb">${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td class="js-time">${reminder.time}</td>
-      <td class="js-amount">${reminder.amount}</td>
+      <td class="js-time" data-type="music">${reminder.time}</td>
+      <td class="js-amount" data-type="music">${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td class="js-time">${reminder.time}</td>
-      <td class="js-amount">${reminder.amount}</td>
+      <td class="js-time" data-type="vibrate">${reminder.time}</td>
+      <td class="js-amount" data-type="vibrate">${reminder.amount}</td>
       </tr>`;
     }
   }
@@ -317,6 +317,8 @@ const getAllLogs = function () {
 
 const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
+  const remindertime = document.querySelectorAll('.js-time')
+  const reminderamount = document.querySelectorAll('.js-amount')
   for (const type of remindertypes) {
     type.addEventListener('click', function () {
       console.info(this);
@@ -333,6 +335,37 @@ const listenToClick = function () {
         socketio.emit('F2B_vibrate');
       }
     });
+  }
+  for(const time of remindertime){
+    time.addEventListener('click', function(){
+      console.info(this.innerHTML)
+      currentValue = this.innerHTML
+      var input = document.createElement("input");
+      input.type = "number";
+      input.value = currentValue;
+      input.onblur = function() {
+        // Wanneer het invoerveld wordt verlaten, update het getal
+        var newValue = parseInt(input.value);
+        this.innerHTML = newValue;
+
+        const kind = this.getAttribute('data-type');
+        console.info(kind);
+        if (kind == 'bulb') {
+          
+        } else if (kind == 'music') {
+
+        } else if (kind == 'vibrate') {
+
+        }
+      };
+    
+      // Vervang het huidige element door het invoerveld
+      this.innerHTML = "";
+      this.appendChild(input);
+    
+      // Plaats de focus op het invoerveld
+      input.focus();
+    })
   }
 };
 // #endregion

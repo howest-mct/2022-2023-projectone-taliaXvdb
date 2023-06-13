@@ -64,6 +64,9 @@ def setup():
 def loop():
     global UserID, login, prevTemp, prevWeight
     if login == True:
+        start_time = time.time()
+        elapsed_time = 0
+        interval = get_interval(UserID)
         while True:
             temp = ds18b20.read_temp()
             weight = hx711.get_weight()
@@ -74,8 +77,22 @@ def loop():
             if weight != prevWeight:
                 create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
                 prevWeight = weight
-                
-            time.sleep(0.1)
+
+            current_time = time.time()
+            elapsed_time = current_time - start_time
+
+            # Optioneel: Bereken resterende tijd en print het
+            remaining_time = 5 - elapsed_time
+            print("Resterende tijd:", remaining_time, "seconden")
+
+            # Wacht een korte periode voordat de volgende meting wordt gedaan
+            time.sleep(1)  # Wacht 1 seconde
+
+
+            if elapsed_time > 5:
+                print("Timer afgelopen!")
+                doReminder(UserID)
+                start_time = time.time()
         
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)

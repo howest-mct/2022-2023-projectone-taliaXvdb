@@ -53,12 +53,12 @@ class DataRepository:
         return Database.get_rows(sql, params)
     
     def read_intervalreminder_by_userid(id):
-        sql = "SELECT time FROM reminder WHERE iduser = %s and amount is not NULL"
+        sql = "SELECT time FROM reminder WHERE iduser = %s and amount is not 0"
         params = [id]
         return Database.get_rows(sql, params)        
 
     def read_remindertype_by_userid(id):
-        sql = "SELECT type FROM reminder WHERE iduser = %s and amount IS NOT NULL"
+        sql = "SELECT type FROM reminder WHERE iduser = %s and amount IS NOT 0"
         params = [id]
         return Database.get_rows(sql, params)                        
     

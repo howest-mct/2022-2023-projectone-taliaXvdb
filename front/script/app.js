@@ -151,20 +151,20 @@ const showReminders = function (jsonObject) {
     if (reminder.type == 1) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td>${reminder.time}</td>
-      <td>${reminder.amount}</td>
+      <td class="js-time">${reminder.time}</td>
+      <td class="js-amount">${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td>${reminder.time}</td>
-      <td>${reminder.amount}</td>
+      <td class="js-time">${reminder.time}</td>
+      <td class="js-amount">${reminder.amount}</td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td>${reminder.time}</td>
-      <td>${reminder.amount}</td>
+      <td class="js-time">${reminder.time}</td>
+      <td class="js-amount">${reminder.amount}</td>
       </tr>`;
     }
   }

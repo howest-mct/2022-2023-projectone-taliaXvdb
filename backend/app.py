@@ -210,20 +210,6 @@ def reminders(iduser):
         else:
             return jsonify(status='ERROR'), 500
         
-@app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET', 'POST'])
-def loggings(iduser):
-    if request.method == 'GET':
-        user = DataRepository.read_user(iduser)
-        loggings = DataRepository.read_logging_by_userid(iduser)
-        return jsonify(user=user, loggings = loggings), 200
-    elif request.method == 'POST':
-        form = DataRepository.json_or_formdata(request)
-        data = DataRepository.create_logging(iduser, form['time'], form['amount'], form['reached'])
-        if data is not None:
-            return jsonify(status='OK', data=data), 201
-        else:
-            return jsonify(status='ERROR'), 500
-        
 @app.route(ENDPOINT + '/user/<iduser>/logging/last/', methods=['GET'])
 def last_logging(iduser):
     if request.method == 'GET':

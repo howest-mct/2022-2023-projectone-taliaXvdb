@@ -91,19 +91,10 @@ class DataRepository:
     def read_lastweight():
         sql = "SELECT value FROM history WHERE deviceID = 2 ORDER BY ID DESC LIMIT 1"
         return Database.get_one_row(sql)
-    
-    def read_loggings():
-        sql = "SELECT * FROM logging"
-        return Database.get_rows(sql)
-    
-    def read_logging_by_userid(id):
-        sql = "SELECT * FROM logging WHERE usersID = %s"
-        params = [id]
-        return Database.get_rows(sql,params)
 
     def read_lastlogging_by_userid(id):
-        sql = "SELECT l.usersID, l.loggingDate, l .loggingTime, l.reached, dt.`total` FROM logging l JOIN (SELECT loggingDate, MAX(loggingTime) AS `last_time` FROM logging GROUP BY loggingDate) lt ON lt.loggingDate = l.loggingDate JOIN (SELECT loggingDate, SUM(loggingAmount) AS `total` FROM logging WHERE usersID = %s GROUP BY loggingDate) dt ON dt.loggingDate = lt.loggingDate WHERE l.loggingDate = lt.loggingDate and l.loggingTime = lt.`last_time` HAVING l.usersID = %s;"
-        params = [id, id]
+        sql = "select u.name, u.goal as 'daily goal', DATE_FORMAT(h.date,'%d-%m-%y') as date, sum(h.value) as 'total weight water', if(u.goal <= sum(h.value), 'Yes', 'No') as 'Goal reached?' from user u join history h on u.userID = h.userID where u.userid = %s and h.deviceID = 2 GROUP BY year(h.date), month(h.date), day(h.date)"
+        params = [id]
         return Database.get_rows(sql,params)
     
     #UPDATE

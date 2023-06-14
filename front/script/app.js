@@ -173,7 +173,14 @@ const showReminders = function (jsonObject) {
   listenToClick();
 };
 
-const showGraph = function (title, labels, axistitle, dataTopline, dataBottomline, dateData) {
+const showGraph = function (
+  title,
+  labels,
+  axistitle,
+  dataTopline,
+  dataBottomline,
+  dateData
+) {
   var options = {
     series: [
       {
@@ -254,15 +261,15 @@ const showLastLog = function (jsonObject) {
   const axistitles = ['Date', 'Amount(ml)'];
   let goalData = [];
   let amountDrank = [];
-  let dates = []
+  let dates = [];
   for (const logged of jsonObject.data) {
     goalData.push(logged['daily goal']);
-    amountDrank.push(logged['total weight water'])
-    dates.push(logged['date'])
+    amountDrank.push(logged['total weight water']);
+    dates.push(logged['date']);
   }
-  console.info(goalData)
-  console.info(amountDrank)
-  console.info(dates)
+  console.info(goalData);
+  console.info(amountDrank);
+  console.info(dates);
   showGraph(title, labels, axistitles, goalData, amountDrank, dates);
 };
 
@@ -271,6 +278,13 @@ function makeEdits(cell) {
   cell.focus(); // Plaats de cursor in de cel
 }
 
+const showTemp = function(jsonObject){
+  console.info(jsonObject)
+}
+
+const showWeight = function(jsonObject){
+  console.info(jsonObject)
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -313,14 +327,25 @@ const getLastLog = function () {
   handleData(url, showLastLog, showError);
 };
 
+const getTemp = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/temperature/`;
+  handleData(url, showTemp, showError);
+};
+
+const getWeight = function () {
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/weight/`;
+  handleData(url, showWeight, showError);
+};
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
 
 const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
-  const remindertime = document.querySelectorAll('.js-time')
-  const reminderamount = document.querySelectorAll('.js-amount')
+  const remindertime = document.querySelectorAll('.js-time');
+  const reminderamount = document.querySelectorAll('.js-amount');
   for (const type of remindertypes) {
     type.addEventListener('click', function () {
       console.info(this);
@@ -338,11 +363,11 @@ const listenToClick = function () {
       }
     });
   }
-  for(const time of remindertime){
-    time.addEventListener('click', function(){
-      console.info(this.innerHTML)
-      makeEdits(this)
-    })
+  for (const time of remindertime) {
+    time.addEventListener('click', function () {
+      console.info(this.innerHTML);
+      makeEdits(this);
+    });
   }
 };
 // #endregion
@@ -434,7 +459,8 @@ const initOverview = function () {
 
 const initReadings = function () {
   console.info('init readings');
-  getHistory();
+  getTemp()
+  getWeight()
 };
 
 const initSettings = function () {

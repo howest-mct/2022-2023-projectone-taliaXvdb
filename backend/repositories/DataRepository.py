@@ -85,12 +85,12 @@ class DataRepository:
         return Database.get_rows(sql)
     
     def read_temperature(id):
-        sql = "SELECT date_format(date, '%Y-%m-%d') AS `Date`, value FROM history WHERE deviceID = 1 and userID = %s and date >= CURDATE()   AND date < CURDATE() + INTERVAL 1 DAY"
+        sql = "SELECT date_format(date, '%Y-%m-%d') AS `Date`, date_format(date, '%H:%i') AS `Time`, value FROM history WHERE deviceID = 1 and userID = %s and date >= CURDATE()   AND date < CURDATE() + INTERVAL 1 DAY"
         params = [id]
         return Database.get_rows(sql,params)
     
     def read_weight(id):
-        sql = "SELECT date_format(date, '%Y-%m-%d') AS `Date`, value FROM history WHERE deviceID = 1 and userID = %s and date >= CURDATE()   AND date < CURDATE() + INTERVAL 1 DAY;"
+        sql = "SELECT date_format(date, '%Y-%m-%d') AS `Date`, date_format(date, '%H:%i') AS `Time`, value FROM history WHERE deviceID = 1 and userID = %s and date >= CURDATE()   AND date < CURDATE() + INTERVAL 1 DAY;"
         params = [id]
         return Database.get_rows(sql,params)
 

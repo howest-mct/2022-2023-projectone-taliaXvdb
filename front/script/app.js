@@ -254,11 +254,11 @@ const showDoubleLineGraph = function (
   chart.render();
 };
 
-const showSingleLineGraph = function(number) {
+const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData, number) {
   var options = {
     series: [{
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      name: label,
+      data: dataLine
     }],
     chart: {
       height: 350,
@@ -274,7 +274,7 @@ const showSingleLineGraph = function(number) {
       curve: 'straight'
     },
     title: {
-      text: 'Product Trends by Month',
+      text: title,
       align: 'left'
     },
     grid: {
@@ -284,7 +284,20 @@ const showSingleLineGraph = function(number) {
       }
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+      categories: dateData,
+      title: {
+        text: axistitle[0],
+      },
+    },
+    yaxis: {
+      title: {
+        text: axistitle[1],
+      },
+      min: 0,
+      max: 40,
+    },
+    xaxis: {
+      categories: dateData
     }
   };
   if (number == 1){
@@ -322,7 +335,19 @@ function makeEdits(cell) {
 
 const showTemp = function(jsonObject){
   console.info(jsonObject)
-  showSingleLineGraph(1)
+  const tempTitle = `Today's evolution of temperature`
+  const tempLabel = ['Temperature']
+  const tempAxis = ['Time', 'Temperature(°C)']
+  let tempData = []
+  let tempDates = []
+  let weightData = []
+  let weightDates = []
+  for(const temp of jsonObject.data){
+    tempData.push(temp.value)
+    tempDates.push(temp.Date)
+  }
+
+  showSingleLineGraph(tempTitle, tempLabel, tempAxis, tempData, tempDates, 1)
 }
 
 const showWeight = function(jsonObject){

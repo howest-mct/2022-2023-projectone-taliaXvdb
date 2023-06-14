@@ -736,6 +736,13 @@ a:active {
     height: 2rem;
   }
 }
+
+.c-reminder{
+
+  &__table{
+    padding-left: $space-m;
+  }
+}
 //
 /*---------------------------------------/*
  # UTILITIES

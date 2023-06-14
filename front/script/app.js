@@ -265,6 +265,11 @@ const showLastLog = function (jsonObject) {
   });
 };
 
+function makeEdits(cell) {
+  cell.contentEditable = true; // Maak de cel bewerkbaar
+  cell.focus(); // Plaats de cursor in de cel
+}
+
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -339,7 +344,8 @@ const listenToClick = function () {
   }
   for(const time of remindertime){
     time.addEventListener('click', function(){
-      console.info(this)
+      console.info(this.innerHTML)
+      makeEdits(this)
     })
   }
 };

@@ -189,6 +189,18 @@ def history():
             return jsonify(status='OK', data=data), 201
         else:
             return jsonify(status='ERROR'), 500
+        
+@app.route(ENDPOINT + '/user/<iduser>/temperature/', methods=['GET'])
+def temperature(iduser):
+    if request.method == 'GET':
+        result = DataRepository.read_temperature(iduser)
+        return jsonify(data=result), 200
+    
+@app.route(ENDPOINT + '/user/<iduser>/weight/', methods=['GET'])
+def weight(iduser):
+    if request.method == 'GET':
+        result = DataRepository.read_weight(iduser)
+        return jsonify(data=result), 200
     
 @app.route(ENDPOINT + '/reminders/', methods=['GET'])
 def all_reminders():

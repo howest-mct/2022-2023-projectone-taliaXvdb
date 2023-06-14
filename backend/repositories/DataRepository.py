@@ -84,13 +84,15 @@ class DataRepository:
         sql = "SELECT * FROM history"
         return Database.get_rows(sql)
     
-    def read_temperature():
-        sql = "SELECT date, value FROM history WHERE deviceID = 1"
-        return Database.get_one_row(sql)
+    def read_temperature(id):
+        sql = "SELECT date, value FROM history WHERE deviceID = 1 and userID = %s"
+        params = [id]
+        return Database.get_one_row(sql,params)
     
-    def read_weight():
-        sql = "SELECT date, value FROM history WHERE deviceID = 2"
-        return Database.get_one_row(sql)
+    def read_weight(id):
+        sql = "SELECT date, value FROM history WHERE deviceID = 2 and userID = %s"
+        params = [id]
+        return Database.get_one_row(sql,params)
 
     def read_lastlogging_by_userid(id):
         sql = "select u.name, u.goal as 'daily goal', DATE_FORMAT(h.date,'%d-%m-%y') as date, sum(h.value) as 'total weight water', if(u.goal <= sum(h.value), 'Yes', 'No') as 'Goal reached?' from user u join history h on u.userID = h.userID where u.userid = %s and h.deviceID = 2 GROUP BY year(h.date), month(h.date), day(h.date)"

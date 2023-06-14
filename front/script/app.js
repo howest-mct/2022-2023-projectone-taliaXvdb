@@ -173,7 +173,7 @@ const showReminders = function (jsonObject) {
   listenToClick();
 };
 
-const showGraph = function (
+const showDoubleLineGraph = function (
   title,
   labels,
   axistitle,
@@ -254,6 +254,48 @@ const showGraph = function (
   chart.render();
 };
 
+const showSingleLineGraph = function(number) {
+  var options = {
+    series: [{
+      name: "Desktops",
+      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+    }],
+    chart: {
+      height: 350,
+      type: 'line',
+      zoom: {
+        enabled: false
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    title: {
+      text: 'Product Trends by Month',
+      align: 'left'
+    },
+    grid: {
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      }
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+    }
+  };
+  if (number == 1){
+    var chart = new ApexCharts(document.querySelector(".js-chart1"), options);
+  }
+  else if(number == 2){
+    var chart = new ApexCharts(document.querySelector(".js-chart2"), options);
+  }
+  chart.render();
+}
+
 const showLastLog = function (jsonObject) {
   // console.info(jsonObject);
   const title = 'Did I reach my goal?';
@@ -270,7 +312,7 @@ const showLastLog = function (jsonObject) {
   console.info(goalData);
   console.info(amountDrank);
   console.info(dates);
-  showGraph(title, labels, axistitles, goalData, amountDrank, dates);
+  showDoubleLineGraph(title, labels, axistitles, goalData, amountDrank, dates);
 };
 
 function makeEdits(cell) {
@@ -280,10 +322,12 @@ function makeEdits(cell) {
 
 const showTemp = function(jsonObject){
   console.info(jsonObject)
+  showSingleLineGraph(1)
 }
 
 const showWeight = function(jsonObject){
   console.info(jsonObject)
+  showSingleLineGraph(2)
 }
 // #endregion
 

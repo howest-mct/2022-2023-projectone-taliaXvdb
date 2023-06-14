@@ -173,16 +173,16 @@ const showReminders = function (jsonObject) {
   listenToClick();
 };
 
-const showGraph = function (title, labels, axistitle) {
+const showGraph = function (title, labels, axistitle, dataTopline, dataBottomline, dateData) {
   var options = {
     series: [
       {
         name: labels[0],
-        data: [28, 29, 33, 36, 32, 32, 33],
+        data: dataTopline,
       },
       {
         name: labels[1],
-        data: [12, 11, 14, 18, 17, 13, 13],
+        data: dataBottomline,
       },
     ],
     chart: {
@@ -200,7 +200,7 @@ const showGraph = function (title, labels, axistitle) {
         show: false,
       },
     },
-    colors: ['#545454', '#77B6EA'],
+    colors: ['#545454', '#74C0FC'],
     dataLabels: {
       enabled: true,
     },
@@ -222,7 +222,7 @@ const showGraph = function (title, labels, axistitle) {
       size: 1,
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: dateData,
       title: {
         text: axistitle[0],
       },
@@ -231,8 +231,8 @@ const showGraph = function (title, labels, axistitle) {
       title: {
         text: axistitle[1],
       },
-      min: 5,
-      max: 40,
+      min: 0,
+      max: 3000,
     },
     legend: {
       position: 'top',
@@ -248,21 +248,22 @@ const showGraph = function (title, labels, axistitle) {
 };
 
 const showLastLog = function (jsonObject) {
-  console.info(jsonObject);
+  // console.info(jsonObject);
   const title = 'Did I reach my goal?';
   const labels = ['goal', 'what i drank'];
   const axistitles = ['Date', 'Amount(ml)'];
   let goalData = [];
   let amountDrank = [];
-  socketio.emit('F2B_getgoal');
-  socketio.on('B2F_showgoal', function (goal) {
-    for (const logged of jsonObject.data) {
-      console.info(logged.total)
-      goalData.push(jsonObject.user.goal);
-      amountDrank.push(logged.total)
-    }
-    showGraph(title, labels, axistitles);
-  });
+  let dates = []
+  for (const logged of jsonObject.data) {
+    goalData.push(logged['daily goal']);
+    amountDrank.push(logged['total weight water'])
+    dates.push(logged['date'])
+  }
+  console.info(goalData)
+  console.info(amountDrank)
+  console.info(dates)
+  showGraph(title, labels, axistitles, goalData, amountDrank, dates);
 };
 
 function makeEdits(cell) {
@@ -308,7 +309,7 @@ const getReminders = function () {
 
 const getLastLog = function () {
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/last/`;
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`;
   handleData(url, showLastLog, showError);
 };
 

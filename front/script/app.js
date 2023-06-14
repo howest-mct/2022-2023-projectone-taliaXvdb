@@ -339,20 +339,28 @@ const showTemp = function(jsonObject){
   const tempLabel = ['Temperature']
   const tempAxis = ['Time', 'Temperature(°C)']
   let tempData = []
-  let tempDates = []
-  let weightData = []
-  let weightDates = []
+  let tempTime = []
   for(const temp of jsonObject.data){
     tempData.push(temp.value)
-    tempDates.push(temp.Date)
+    tempTime.push(temp.Time)
   }
-
-  showSingleLineGraph(tempTitle, tempLabel, tempAxis, tempData, tempDates, 1)
+  showSingleLineGraph(tempTitle, tempLabel, tempAxis, tempData, tempTime, 1)
 }
 
 const showWeight = function(jsonObject){
   console.info(jsonObject)
-  showSingleLineGraph(2)
+  const weightTitle = `Today's evolution of weight`
+  const weightLabel = ['Weight']
+  const weightAxis = ['Time', 'Weight(g)']
+  let weightData = []
+  let weightTime = []
+  for(const weight of jsonObject.data){
+    weightData.push(weight.value)
+    weightTime.push(weight.Time)
+  }
+  console.info(weightData)
+  console.info(weightTime)
+  showSingleLineGraph(weightTitle, weightLabel, weightAxis, weightData, weightTime, 2)
 }
 // #endregion
 

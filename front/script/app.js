@@ -300,6 +300,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
       categories: dateData
     }
   };
+  console.info(number)
   if (number == 1){
     var chart = new ApexCharts(document.querySelector(".js-chart1"), options);
   }
@@ -308,6 +309,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
   }
   chart.render();
 }
+
 
 const showLastLog = function (jsonObject) {
   // console.info(jsonObject);
@@ -327,11 +329,6 @@ const showLastLog = function (jsonObject) {
   console.info(dates);
   showDoubleLineGraph(title, labels, axistitles, goalData, amountDrank, dates);
 };
-
-function makeEdits(cell) {
-  cell.contentEditable = true; // Maak de cel bewerkbaar
-  cell.focus(); // Plaats de cursor in de cel
-}
 
 const showTemp = function(jsonObject){
   console.info(jsonObject)
@@ -365,6 +362,14 @@ const showWeight = function(jsonObject){
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
+const formatTime = function(seconds) {
+  if(seconds < 0){
+    seconds = 0
+  }
+  var minutes = Math.floor(seconds / 60);
+  var remainingSeconds = Math.floor(seconds % 60);
+  return minutes + " minuten en " + remainingSeconds + " seconden";
+}
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
@@ -405,12 +410,14 @@ const getLastLog = function () {
 };
 
 const getTemp = function () {
+  console.info('get temp')
   let userid = localStorage.getItem('userid');
   const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/temperature/`;
   handleData(url, showTemp, showError);
 };
 
 const getWeight = function () {
+  console.info('getw weight')
   let userid = localStorage.getItem('userid');
   const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/weight/`;
   handleData(url, showWeight, showError);
@@ -519,6 +526,10 @@ const initIndex = function () {
     console.info(goal.goal);
     htmlGoal.innerHTML = goal.goal;
   });
+  socketio.on('B2F_showremaining', function(time_left){
+    console.info(time_left)
+    htmlTime.innerHTML = formatTime(time_left)
+  })
   getProgress();
 };
 

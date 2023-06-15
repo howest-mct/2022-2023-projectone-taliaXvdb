@@ -83,15 +83,15 @@ def loop():
             current_time = time.time()
             elapsed_time = current_time - start_time
 
-            # Optioneel: Bereken resterende tijd en print het
-            remaining_time = 5 - elapsed_time
+            remaining_time = 30 - elapsed_time
             print("Resterende tijd:", remaining_time, "seconden")
+            socketio.emit('B2F_showremaining', remaining_time)
+            
+            time.sleep(1)
 
-            # Wacht een korte periode voordat de volgende meting wordt gedaan
-            time.sleep(1)  # Wacht 1 seconde
 
-
-            if elapsed_time > 5:
+            if elapsed_time > 30:
+                scanned = False
                 doReminder(UserID)
                 print("Timer afgelopen!")
                 userid = rfid.read_rfid()
@@ -123,17 +123,24 @@ def get_interval(userid):
     return interval
 
 def doReminder(userid):
+    global scanned
     type = DataRepository.read_remindertype_by_userid(userid)
     print('reminder', type[0]["type"])
-    if type[0]["type"] == 1:
-        print("yes")
-        ledring.wave_effect(0.5)
+    while scanned != True:
+        userid = rfid.reader.read_id_no_block()
+        print("RFIDDD", userid)
+        if userid:
+            scanned = True
+        else:
+            if type[0]["type"] == 1:
+                print("yes")
+                ledring.wave_effect(0.2)
 
-    elif type[0]["type"] == 2:
-        buzz.reminder_song()
+            elif type[0]["type"] == 2:
+                buzz.reminder_song()
 
-    elif type[0]["type"] == 3:
-        brrr.vibrate(5)
+            elif type[0]["type"] == 3:
+                brrr.vibrate(5)
 
 
 # API ENDPOINTS

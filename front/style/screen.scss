@@ -517,6 +517,9 @@ a:active {
       display: none;
     }
   }
+  @include mq(bp1, max) {
+    justify-content: space-between;
+  }
 }
 
 .c-nav__list {
@@ -526,11 +529,81 @@ a:active {
   padding-left: $space-m;
   margin-top: $space-xs;
 }
-
 // title
 
 .c-title{
   padding-left: $space-s;
+}
+
+// burgermenu op gsm
+
+.c-icon-button{
+  display: none;
+  @include mq(bp1, max) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.c-mobile-nav {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+  padding-left: $space-m;
+
+  // @include mq(bp1) {
+  //   display: none;
+  // }
+}
+
+.c-mobile-nav__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.c-mobile-nav__body {
+  position: relative;
+  background-color: $color-primary-dark;
+  color: white;
+  padding: $space-m;
+  height: 100%;
+  // opacity: 0;
+  translate: 100% 0;
+  transition: all 0.2s ease;
+}
+
+/*
+  State: has-mobile-nav
+  ---
+  The has-mobile-nav state is to show the mobile nav and to prevent the body from scrolling when the mobile nav is open
+*/
+
+.has-mobile-nav {
+  overflow: hidden;
+
+  .c-mobile-nav {
+    pointer-events: auto;
+  }
+
+  .c-mobile-nav__overlay {
+    opacity: 0.25;
+  }
+
+  .c-mobile-nav__body {
+    // opacity: 1;
+    translate: 0 0;
+  }
 }
 
 //* login.html
@@ -547,7 +620,6 @@ a:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: $space-l;
   }
   &__img{
     display: flex;
@@ -555,6 +627,7 @@ a:active {
     height: 30rem;
     justify-content: center;
     align-items: center;
+    padding-bottom: $space-m;
   }
   &__text{
     font-size: 2rem;
@@ -562,33 +635,33 @@ a:active {
     justify-content: center;
     align-items: center;
   }
-  @include mq(bp1) {
-    // Stijlen voor smartphones
-    padding-top: $space-s; // Aangepaste padding voor smartphones
+  @include mq(bp1, max) {
+    padding-top: $space-s;
     &__title {
-      font-size: 2rem; // Aangepaste fontgrootte voor smartphones
+      font-size: 2rem;
+      padding-bottom: $space-l;
     }
     &__img {
-      width: 10rem;
-      height: 20rem;// Aangepaste hoogte voor smartphones
+      width: 15rem;
+      height: 20rem;
     }
     &__text {
-      font-size: 1.5rem; // Aangepaste fontgrootte voor smartphones
+      font-size: 1.5rem;
+      padding-top: $space-l;
     }
   }
   
   @include mq(bp2) {
-    // Stijlen voor tablets
-    padding-top: $space-l; // Aangepaste padding voor tablets
+    padding-top: $space-l;
     &__title {
-      font-size: 4rem; // Aangepaste fontgrootte voor tablets
+      font-size: 3rem;
     }
     &__img {
       width: 15rem;
-      height: 25rem;// Aangepaste hoogte voor tablets
+      height: 25rem;
     }
     &__text {
-      font-size: 2.5rem; // Aangepaste fontgrootte voor tablets
+      font-size: 2rem;
     }
   }
 }
@@ -648,6 +721,12 @@ a:active {
     border-radius: 1rem;
     padding: $space-s;
     box-shadow: 5px 5px 4px $color-border;
+    @include mq(bp1, max){
+      margin-bottom: $space-l;
+    }
+    @include mq(bp2, max){
+      margin-bottom: $space-l;
+    }
   }
 
   &__img{
@@ -658,6 +737,13 @@ a:active {
 
   &__title, &__value{
     margin-bottom: 0;
+  }
+
+  @include mq(bp1, max){
+    flex-direction: column;
+  }
+  @include mq(bp2, max){
+    flex-direction: column;
   }
 }
 

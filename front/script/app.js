@@ -255,7 +255,7 @@ const showDoubleLineGraph = function (
   chart.render();
 };
 
-const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData, number) {
+const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData, max, number) {
   var options = {
     series: [{
       name: label,
@@ -263,7 +263,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
     }],
     chart: {
       height: 350,
-      type: 'line',
+      type: 'area',
       zoom: {
         enabled: false
       }
@@ -295,10 +295,11 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
         text: axistitle[1],
       },
       min: 0,
-      max: 40,
+      max: max,
     },
     xaxis: {
-      categories: dateData
+      categories: dateData,
+      tickAmount: 8,
     }
   };
   console.info(number)
@@ -342,7 +343,7 @@ const showTemp = function(jsonObject){
     tempData.push(temp.value)
     tempTime.push(temp.Time)
   }
-  showSingleLineGraph(tempTitle, tempLabel, tempAxis, tempData, tempTime, 1)
+  showSingleLineGraph(tempTitle, tempLabel, tempAxis, tempData, tempTime, 40, 1)
 }
 
 const showWeight = function(jsonObject){
@@ -353,12 +354,23 @@ const showWeight = function(jsonObject){
   let weightData = []
   let weightTime = []
   for(const weight of jsonObject.data){
+    if (weight.value < 0) {
+      weight.value = 0
+    }
+    else if(weight.value > 3000){
+      weight.value = 3000
+    }
     weightData.push(weight.value)
+    for(const weightvalue of weightData){
+      if(weightvalue == 0){
+        weightData.pop(weightvalue)
+      }
+    }
     weightTime.push(weight.Time)
   }
   console.info(weightData)
   console.info(weightTime)
-  showSingleLineGraph(weightTitle, weightLabel, weightAxis, weightData, weightTime, 2)
+  showSingleLineGraph(weightTitle, weightLabel, weightAxis, weightData, weightTime, 3500, 2)
 }
 // #endregion
 
@@ -419,6 +431,7 @@ const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
   const remindertime = document.querySelectorAll('.js-time');
   const reminderamount = document.querySelectorAll('.js-amount');
+  const savebtn = document.querySelector('.js-savereminders')
   for (const type of remindertypes) {
     type.addEventListener('click', function () {
       console.info(this);
@@ -435,6 +448,11 @@ const listenToClick = function () {
         socketio.emit('F2B_vibrate');
       }
     });
+  }
+  for(const time of remindertime){
+    time.addEventListener('change', function(){
+      console.info(this)
+    })
   }
 };
 // #endregion

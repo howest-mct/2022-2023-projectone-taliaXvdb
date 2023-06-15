@@ -371,6 +371,11 @@ a:active {
     display: none;
   }
 }
+@media (max-width: 36.0625em) {
+  .c-header {
+    justify-content: space-between;
+  }
+}
 
 .c-nav__list {
   display: flex;
@@ -382,6 +387,67 @@ a:active {
 
 .c-title {
   padding-left: 1rem;
+}
+
+.c-icon-button {
+  display: none;
+}
+@media (max-width: 36.0625em) {
+  .c-icon-button {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.c-mobile-nav {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+  padding-left: 1.5rem;
+}
+
+.c-mobile-nav__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.c-mobile-nav__body {
+  position: relative;
+  background-color: #339af0;
+  color: white;
+  padding: 1.5rem;
+  height: 100%;
+  translate: 100% 0;
+  transition: all 0.2s ease;
+}
+
+/*
+  State: has-mobile-nav
+  ---
+  The has-mobile-nav state is to show the mobile nav and to prevent the body from scrolling when the mobile nav is open
+*/
+.has-mobile-nav {
+  overflow: hidden;
+}
+.has-mobile-nav .c-mobile-nav {
+  pointer-events: auto;
+}
+.has-mobile-nav .c-mobile-nav__overlay {
+  opacity: 0.25;
+}
+.has-mobile-nav .c-mobile-nav__body {
+  translate: 0 0;
 }
 
 .c-login {
@@ -396,7 +462,6 @@ a:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 2rem;
 }
 .c-login__img {
   display: flex;
@@ -404,6 +469,7 @@ a:active {
   height: 30rem;
   justify-content: center;
   align-items: center;
+  padding-bottom: 1.5rem;
 }
 .c-login__text {
   font-size: 2rem;
@@ -411,19 +477,21 @@ a:active {
   justify-content: center;
   align-items: center;
 }
-@media (min-width: 36.0625em) {
+@media (max-width: 36.0625em) {
   .c-login {
     padding-top: 1rem;
   }
   .c-login__title {
     font-size: 2rem;
+    padding-bottom: 2rem;
   }
   .c-login__img {
-    width: 10rem;
+    width: 15rem;
     height: 20rem;
   }
   .c-login__text {
     font-size: 1.5rem;
+    padding-top: 2rem;
   }
 }
 @media (min-width: 48.0625em) {
@@ -431,14 +499,14 @@ a:active {
     padding-top: 2rem;
   }
   .c-login__title {
-    font-size: 4rem;
+    font-size: 3rem;
   }
   .c-login__img {
     width: 15rem;
     height: 25rem;
   }
   .c-login__text {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 }
 
@@ -492,6 +560,16 @@ a:active {
   padding: 1rem;
   box-shadow: 5px 5px 4px #e9ecef;
 }
+@media (max-width: 36.0625em) {
+  .c-info__item {
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 48.0625em) {
+  .c-info__item {
+    margin-bottom: 2rem;
+  }
+}
 .c-info__img {
   width: 3rem;
   height: 3rem;
@@ -499,6 +577,16 @@ a:active {
 }
 .c-info__title, .c-info__value {
   margin-bottom: 0;
+}
+@media (max-width: 36.0625em) {
+  .c-info {
+    flex-direction: column;
+  }
+}
+@media (max-width: 48.0625em) {
+  .c-info {
+    flex-direction: column;
+  }
 }
 
 .c-streak {

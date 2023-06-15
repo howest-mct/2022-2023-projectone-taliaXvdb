@@ -72,8 +72,12 @@ def loop():
         start_time = time.time()
         elapsed_time = 0
         interval = get_interval(UserID)
+        startweight = hx711.get_weight()
+        totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
+        totalDrank = totalDrank[0]['total']
+        if totalDrank == None:
+            totalDrank = 0
         while True:
-            totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
             temp = ds18b20.read_temp()
             socketio.emit('B2F_showtemp', temp)
             weight = hx711.get_weight()
@@ -102,13 +106,17 @@ def loop():
                 userid = rfid.read_rfid()
                 if userid == UserID:
                     newestweight = hx711.get_weight()
-                    drank = startweight - newestweight
+                    drank = round(startweight - newestweight)
+                    print(startweight)
+                    print(drank)
                     totalDrank += drank
-                    datetime = datetime.datetime.now()
+                    datetimed = str(datetime.datetime.now())
                     if totalDrank == goal:
-                        create_logged(UserID, datetime, totalDrank, 1)
+                        create_logged(UserID, datetimed, drank, 1)
                     else:
-                        create_logged(UserID, datetime, totalDrank, 0)
+                        create_logged(UserID, datetimed, drank, 0)
+                    
+                    print(totalDrank)
                     socketio.emit('B2F_showprogress', totalDrank)
                     start_time = time.time()
         
@@ -119,8 +127,8 @@ def create_measurement(deviceID, actionID, userID, time, value, comment):
     else:
         return 'error'
     
-def create_logged(userid, datetime, amount, reached):
-    date, time = datetime.split(' ')
+def create_logged(userid, datetimed, amount, reached):
+    date, time = datetimed.split(' ')
     data = DataRepository.create_logging(userid, date, time, amount, reached)
     if data is not None:
         return 'ok'

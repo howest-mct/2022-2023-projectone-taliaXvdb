@@ -73,6 +73,7 @@ def loop():
         elapsed_time = 0
         interval = get_interval(UserID)
         while True:
+            totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
             temp = ds18b20.read_temp()
             socketio.emit('B2F_showtemp', temp)
             weight = hx711.get_weight()

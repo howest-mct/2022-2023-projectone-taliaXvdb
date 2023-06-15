@@ -27,9 +27,9 @@ class DataRepository:
         params = [deviceid, actionid, userid, date, value, comment]
         return Database.execute_sql(sql, params)
     
-    def create_logging(userid, time, amount, reached):
-        sql = "INSERT INTO logging (usersID, loggingTime, loggingAmount, reached) VALUES (%s,%s,%s,%s)"
-        params = [userid, time, amount, reached]
+    def create_logging(userid, date, time, amount, reached):
+        sql = "INSERT INTO logging (usersID, loggingDate, loggingTime, loggingAmount, reached) VALUES (%s,%s,%s,%s,%s)"
+        params = [userid, date, time, amount, reached]
         return Database.execute_sql(sql,params)
     
     #READ
@@ -99,6 +99,11 @@ class DataRepository:
         params = [id]
         return Database.get_rows(sql,params)
     
+    def read_loggedwater_by_userid(id):
+        sql = "SELECT date_format(loggingDate, '%Y-%m-%d') AS `date`, sum(loggingAmount) AS `total` from logging where usersID = %s and date_format(loggingDate, '%Y-%m-%d') >= CURDATE() AND date_format(loggingDate, '%Y-%m-%d') < CURDATE() + INTERVAL 1 DAY;"
+        params = [id]
+        return Database.get_rows(sql,params)
+
     #UPDATE
     def update_user(id, name, goal, streak):
         sql = "UPDATE user SET name = %s, goal = %s, streak = %s  WHERE userID = %s"

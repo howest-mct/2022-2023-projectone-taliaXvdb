@@ -5,6 +5,7 @@ from repositories.DataRepository import DataRepository
 from flask import Flask, jsonify, request
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+import datetime
 
 #GPIO IMPORT
 from RPi import GPIO
@@ -35,6 +36,9 @@ login = False
 prevTemp = 0
 prevWeight = 0
 scanned = False
+goal = 0
+startweight = 0
+totalDrank = 0
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
@@ -63,7 +67,7 @@ def setup():
     lcd.show_ip()
 
 def loop():
-    global UserID, login, prevTemp, prevWeight, scanned
+    global UserID, login, prevTemp, prevWeight, scanned, goal, startweight, totalDrank
     if login == True:
         start_time = time.time()
         elapsed_time = 0
@@ -83,23 +87,40 @@ def loop():
             current_time = time.time()
             elapsed_time = current_time - start_time
 
-            remaining_time = 30 - elapsed_time
+            remaining_time = 60 - elapsed_time
             print("Resterende tijd:", remaining_time, "seconden")
             socketio.emit('B2F_showremaining', remaining_time)
             
             time.sleep(1)
 
 
-            if elapsed_time > 30:
+            if elapsed_time > 60:
                 scanned = False
                 doReminder(UserID)
                 print("Timer afgelopen!")
                 userid = rfid.read_rfid()
                 if userid == UserID:
+                    newestweight = hx711.get_weight()
+                    drank = startweight - newestweight
+                    totalDrank += drank
+                    datetime = datetime.datetime.now()
+                    if totalDrank == goal:
+                        create_logged(UserID, datetime, totalDrank, 1)
+                    else:
+                        create_logged(UserID, datetime, totalDrank, 0)
+                    socketio.emit('B2F_showprogress', totalDrank)
                     start_time = time.time()
         
 def create_measurement(deviceID, actionID, userID, time, value, comment):
     data = DataRepository.create_reading(deviceID, actionID, userID, time, value, comment)
+    if data is not None:
+        return 'ok'
+    else:
+        return 'error'
+    
+def create_logged(userid, datetime, amount, reached):
+    date, time = datetime.split(' ')
+    data = DataRepository.create_logging(userid, date, time, amount, reached)
     if data is not None:
         return 'ok'
     else:
@@ -141,7 +162,6 @@ def doReminder(userid):
 
             elif type[0]["type"] == 3:
                 brrr.vibrate(5)
-
 
 # API ENDPOINTS
 
@@ -280,7 +300,7 @@ def show_weight():
 
 @socketio.on('F2B_readrfid')
 def show_id():
-    global UserID, login
+    global UserID, login, goal, startweight
     iduser = rfid.read_rfid()
     users = DataRepository.read_all_users()
     UserID = iduser
@@ -291,6 +311,8 @@ def show_id():
             emit('B2F_showuser', iduser)
         else:
             emit('B2F_showid', iduser)
+            goal = DataRepository.read_goal_by_userid(iduser)
+            startweight = hx711.get_weight()
             login = True
 
 @socketio.on('F2B_createuser')

@@ -1,5 +1,6 @@
 const lanIP = `${window.location.hostname}:5000`;
 const socketio = io(lanIP);
+let percentageProgress = 0
 
 // #region ***  DOM references                           ***********
 // #endregion
@@ -151,20 +152,20 @@ const showReminders = function (jsonObject) {
     if (reminder.type == 1) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td class="js-time" data-type="bulb">${reminder.time}</td>
-      <td class="js-amount" data-type="bulb">${reminder.amount}</td>
+      <td class="js-time" data-type="bulb"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount" data-type="bulb"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td class="js-time" data-type="music">${reminder.time}</td>
-      <td class="js-amount" data-type="music">${reminder.amount}</td>
+      <td class="js-time" data-type="music"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount" data-type="music"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
       <td class="js-reminder" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td class="js-time" data-type="vibrate">${reminder.time}</td>
-      <td class="js-amount" data-type="vibrate">${reminder.amount}</td>
+      <td class="js-time" data-type="vibrate"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount" data-type="vibrate"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     }
   }
@@ -391,22 +392,10 @@ const getTypes = function () {
   handleData(url, showTypes, showError);
 };
 
-const getProgress = function () {
-  let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`;
-  handleData(url, showLogging, showError);
-};
-
 const getReminders = function () {
   let userid = localStorage.getItem('userid');
   const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/reminders/`;
   handleData(url, showReminders, showError);
-};
-
-const getLastLog = function () {
-  let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`;
-  handleData(url, showLastLog, showError);
 };
 
 const getTemp = function () {
@@ -445,12 +434,6 @@ const listenToClick = function () {
         console.info('vibrate clicked');
         socketio.emit('F2B_vibrate');
       }
-    });
-  }
-  for (const time of remindertime) {
-    time.addEventListener('click', function () {
-      console.info(this.innerHTML);
-      makeEdits(this);
     });
   }
 };
@@ -509,29 +492,41 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
-  showProgress(0.76, '#4DABF7');
   htmlTemp = document.querySelector('.js-temp');
   htmlGoal = document.querySelector('.js-goal');
   htmlTime = document.querySelector('.js-time');
+  theGoal = 0
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_getgoal');
     socketio.emit('F2B_gettemp');
   });
   socketio.on('B2F_showtemp', function (temp) {
-    console.info(temp);
+    // console.info(temp);
     htmlTemp.innerHTML = temp;
   });
   socketio.on('B2F_showgoal', function (goal) {
     console.info(goal.goal);
+    theGoal = goal.goal
     htmlGoal.innerHTML = goal.goal;
   });
   socketio.on('B2F_showremaining', function(time_left){
-    console.info(time_left)
+    // console.info(time_left)
     htmlTime.innerHTML = formatTime(time_left)
   })
-  getProgress();
+  socketio.on('B2F_showprogress', function(progress){
+    console.info(progress)
+    percentageProgress = progress/theGoal
+    console.info(percentageProgress);
+    percentageToCircle(percentageProgress);
+  })
+
 };
+
+const percentageToCircle = function(percentage) {
+  console.info(percentage)
+  showProgress(percentage, '#4DABF7');
+}
 
 const initOverview = function () {
   console.info('init overview');

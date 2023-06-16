@@ -778,7 +778,7 @@ a:active {
 
 .c-edit{
   display: flex;
-  padding-left: $space-m;
+  padding-left: $space-s;
   padding-bottom: $space-l;
 
   &__title{
@@ -816,19 +816,42 @@ a:active {
 }
 
 .c-reminder{
-
-  &__img{
-    width: 2rem;
-    height: 2rem;
-  }
-}
-
-.c-reminder{
+  padding-left: $space-s;
 
   &__table{
     padding-left: $space-m;
   }
+  &__img{
+    width: 2rem;
+    height: 2rem;
+  }
+  &__type{
+    width: 2rem;
+  }
+  &__input{
+    width: 3rem;
+  }
+
+  &__button{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary;
+    justify-content: center;
+    width: 5rem;
+    border-radius: 1rem;
+    margin-top: $space-xs;
+    padding: $space-xxs;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+  @include mq(bp1, max){
+    &__input{
+      width: 1rem;
+
+    }
+  }
 }
+
+
 //
 /*---------------------------------------/*
  # UTILITIES

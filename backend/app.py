@@ -41,6 +41,7 @@ scanned = False
 goal = 0
 startweight = 0
 totalDrank = 0
+noitsnull = True
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HELLOTHISISSCERET'
@@ -71,12 +72,17 @@ def setup():
     shutdown(btn)
 
 def loop():
-    global UserID, login, prevTemp, prevWeight, scanned, goal, startweight, totalDrank
+    global UserID, login, prevTemp, prevWeight, scanned, goal, startweight, totalDrank, noitsnull
     if login == True:
         start_time = time.time()
         elapsed_time = 0
         interval = get_interval(UserID)
-        startweight = hx711.get_weight()
+        while noitsnull == True:
+            while startweight == 0:
+                time.sleep(3)
+                startweight = hx711.get_weight()
+                if startweight > 0:
+                    noitsnull = False
         totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
         totalDrank = totalDrank[0]['total']
         if totalDrank == None:
@@ -84,14 +90,17 @@ def loop():
         while True:
             temp = ds18b20.read_temp()
             socketio.emit('B2F_showtemp', temp)
-            weight = hx711.get_weight()
+            weight = round(hx711.get_weight())
             if temp != prevTemp:
                 create_measurement(1,1, UserID, time.gmtime(), temp, 'Temperature measured')
                 prevTemp = temp
             
             if weight != prevWeight:
-                create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
-                prevWeight = weight
+                if weight > 0:
+                    create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
+                    prevWeight = weight
+                else:
+                    pass
 
             current_time = time.time()
             elapsed_time = current_time - start_time
@@ -110,6 +119,7 @@ def loop():
                 userid = rfid.read_rfid()
                 if userid == UserID:
                     newestweight = hx711.get_weight()
+                    print(newestweight)
                     drank = round(startweight - newestweight)
                     print(startweight)
                     print(drank)
@@ -121,7 +131,7 @@ def loop():
                         create_logged(UserID, datetimed, drank, 0)
                     
                     print(totalDrank)
-                    socketio.emit('B2F_showprogress', totalDrank)
+                    socketio.emit('B2F_showprogress', int(totalDrank))
                     start_time = time.time()
         
 def create_measurement(deviceID, actionID, userID, time, value, comment):

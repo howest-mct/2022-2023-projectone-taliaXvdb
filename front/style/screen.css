@@ -613,7 +613,7 @@ a:active {
 
 .c-edit {
   display: flex;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
   padding-bottom: 2rem;
 }
 .c-edit__title {
@@ -646,13 +646,37 @@ a:active {
   height: 1rem;
 }
 
+.c-reminder {
+  padding-left: 1rem;
+}
+.c-reminder__table {
+  padding-left: 1.5rem;
+}
 .c-reminder__img {
   width: 2rem;
   height: 2rem;
 }
-
-.c-reminder__table {
-  padding-left: 1.5rem;
+.c-reminder__type {
+  width: 2rem;
+}
+.c-reminder__input {
+  width: 3rem;
+}
+.c-reminder__button {
+  display: flex;
+  gap: 1rem;
+  background-color: #74c0fc;
+  justify-content: center;
+  width: 5rem;
+  border-radius: 1rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  box-shadow: 5px 5px 4px #e9ecef;
+}
+@media (max-width: 36.0625em) {
+  .c-reminder__input {
+    width: 1rem;
+  }
 }
 
 /*---------------------------------------/*

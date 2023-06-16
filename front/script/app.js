@@ -151,21 +151,21 @@ const showReminders = function (jsonObject) {
     console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td class="js-time" data-type="bulb"><input type="number" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="bulb"><input type="number" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
+      <td class="js-time c-reminder__input" data-type="bulb"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount c-reminder__input" data-type="bulb"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td class="js-time" data-type="music"><input type="number" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="music"><input type="number" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
+      <td class="js-time c-reminder__input" data-type="music"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount c-reminder__input" data-type="music"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
-      <td class="js-reminder" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td class="js-time" data-type="vibrate"><input type="number" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="vibrate"><input type="number" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
+      <td class="js-time c-reminder__input" data-type="vibrate"><input type="number" value=${reminder.time}></input></td>
+      <td class="js-amount c-reminder__input" data-type="vibrate"><input type="number" value=${reminder.amount}></input></td>
       </tr>`;
     }
   }
@@ -448,11 +448,6 @@ const listenToClick = function () {
         socketio.emit('F2B_vibrate');
       }
     });
-  }
-  for(const time of remindertime){
-    time.addEventListener('change', function(){
-      console.info(this)
-    })
   }
 };
 // #endregion

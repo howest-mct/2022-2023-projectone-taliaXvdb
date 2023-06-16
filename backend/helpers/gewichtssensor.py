@@ -31,18 +31,18 @@ class HX711:
         GPIO.output(self.sck, GPIO.LOW)
 
         data = data - self.tare
-        print(f'Het gewicht is {data}')
 
         return data
 
     def get_weight(self):
         raw_value = self.read()
-        ##### 295 is de calibratie factor: aanpassen totdat gewicht ongeveer juist is #####
-        weight = raw_value / 295
+        ##### 209 is de calibratie factor: aanpassen totdat gewicht ongeveer juist is #####
+        weight = raw_value / 290
 
         if weight > -3 and weight < 3:
             weight = 0
 
+        print("Weight: {} grams".format(weight))
         return weight
 
     def cleanup(self):

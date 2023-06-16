@@ -15,7 +15,7 @@ class DS18B20:
             if line:
                 line = line.rstrip('\n')
                 line = int(line)
-                line = line/1000
+                line = format(line/1000, ".0F")
                 print(f"De temperatuur is {line} °Celsius")
             sensor_file.close()
         return line

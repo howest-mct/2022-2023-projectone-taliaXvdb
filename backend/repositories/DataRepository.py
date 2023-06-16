@@ -110,9 +110,9 @@ class DataRepository:
         params = [name, goal, streak, id]
         return Database.execute_sql(sql, params)
     
-    def update_reminder(id, iduser, type, time, amount, fasterWhenHot):
-        sql = "UPDATE reminder SET iduser = %s, type = %s, time = %s, amount = %s, fasterWhenHot = %s WHERE reminderID = %s"
-        params = [iduser, type, time, amount, fasterWhenHot, id]
+    def update_reminder(id, iduser, type, time, amount):
+        sql = "UPDATE reminder SET iduser = %s, type = %s, time = %s, amount = %s WHERE reminderID = %s"
+        params = [iduser, type, time, amount, id]
         return Database.execute_sql(sql, params)
     
     #DELETE

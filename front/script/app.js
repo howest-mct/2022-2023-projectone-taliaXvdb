@@ -151,21 +151,24 @@ const showReminders = function (jsonObject) {
     console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td class="js-time" data-type="bulb"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="bulb"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/bulb-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="bulb"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="bulb"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td class="js-time" data-type="music"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="music"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/music-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="music"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="music"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td class="js-time" data-type="vibrate"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="vibrate"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/phone-call-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="vibrate"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="vibrate"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     }
   }
@@ -300,6 +303,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
     xaxis: {
       categories: dateData,
       tickAmount: 8,
+      
     }
   };
   console.info(number)
@@ -443,18 +447,32 @@ const listenToClick = function () {
       console.info(this);
       const kind = this.getAttribute('data-type');
       console.info(kind);
-      if (kind == 'bulb') {
+      if (kind == 1) {
         console.info('bulb clicked');
         socketio.emit('F2B_lighton');
-      } else if (kind == 'music') {
+      } else if (kind == 2) {
         console.info('sound clicked');
         socketio.emit('F2B_playmusic');
-      } else if (kind == 'vibrate') {
+      } else if (kind == 3) {
         console.info('vibrate clicked');
         socketio.emit('F2B_vibrate');
       }
     });
   }
+  savebtn.addEventListener('click', function(){
+    for(let i = 0; i < 3; i ++){
+      console.info(remindertime[i].value)
+      console.info(reminderamount[i].value)
+      console.info(remindertypes[i].getAttribute('data-id'))
+      console.info(remindertypes[i].getAttribute('data-type'))
+      const timeval = remindertime[i].value
+      const amountval = reminderamount[i].value
+      const reminderid = remindertypes[i].getAttribute('data-id')
+      const typeid = remindertypes[i].getAttribute('data-type')
+      const userid = localStorage.getItem('userid')
+      socketio.emit('F2B_updatereminder', [reminderid, userid, typeid, timeval, amountval])
+    }
+  })
 };
 // #endregion
 

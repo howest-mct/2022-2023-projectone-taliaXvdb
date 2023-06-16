@@ -391,6 +391,15 @@ def vibrate_on():
     brrr.vibrate(3)
     time.sleep(1)
 
+@socketio.on('F2B_updatereminder')
+def update_reminder(payload):
+    reminderid = payload[0]
+    userid = payload[1]
+    type = payload[2]
+    time = payload[3]
+    amount = payload[4]
+    DataRepository.update_reminder(reminderid, userid, type, time, amount)
+
 if __name__ == '__main__':
     try:
         print("**** Starting APP ****")

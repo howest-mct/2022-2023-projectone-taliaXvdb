@@ -423,6 +423,12 @@ const getWeight = function () {
   const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/weight/`;
   handleData(url, showWeight, showError);
 };
+
+const getLastLog = function(){
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`
+  handleData(url, showLastLog, showError)
+}
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********

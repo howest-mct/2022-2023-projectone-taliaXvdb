@@ -510,6 +510,10 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
+  const empty = ['', null, 0]
+  if(empty.includes(localStorage.getItem('userid'))){
+    window.location = 'login.html'
+  }
   htmlTemp = document.querySelector('.js-temp');
   htmlGoal = document.querySelector('.js-goal');
   htmlTime = document.querySelector('.js-time');

@@ -650,7 +650,7 @@ a:active {
   padding-left: 1rem;
 }
 .c-reminder__table {
-  padding-left: 1.5rem;
+  border-spacing: 1rem;
 }
 .c-reminder__img {
   width: 2rem;
@@ -661,6 +661,7 @@ a:active {
 }
 .c-reminder__input {
   width: 3rem;
+  height: 1.25rem;
 }
 .c-reminder__button {
   display: flex;

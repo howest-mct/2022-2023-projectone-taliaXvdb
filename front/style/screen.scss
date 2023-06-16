@@ -819,7 +819,9 @@ a:active {
   padding-left: $space-s;
 
   &__table{
-    padding-left: $space-m;
+    border-spacing: $space-s;
+  }
+  &__title{
   }
   &__img{
     width: 2rem;
@@ -830,8 +832,8 @@ a:active {
   }
   &__input{
     width: 3rem;
+    height: 1.25rem;
   }
-
   &__button{
     display: flex;
     gap: $space-s;

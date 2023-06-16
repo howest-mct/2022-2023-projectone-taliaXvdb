@@ -18,9 +18,11 @@ from helpers.ledring import leds
 from helpers.buzzer import reminder
 from helpers.LCD import LCDpcfClass
 from helpers.rfid import RFid
+from helpers.klasseknop import Button
+import subprocess
 
 #REGION GPIO, PIN DEFINING, GLOBAL VAR
-btn = 21
+btn = Button(21)
 lcdPins = {
     'rs': 26,
     'e': 19
@@ -57,14 +59,16 @@ rfid = RFid(socketio)
 
 def setup():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(btn, GPIO.IN)
-    GPIO.add_event_detect(btn, GPIO.FALLING, callback=callback_button, bouncetime=300)
+    # GPIO.setup(btn, GPIO.IN)
+    # GPIO.add_event_detect(btn, GPIO.FALLING, callback=callback_button, bouncetime=300)
     lcd.set_cursor()
     lcd.clear_lcd()
     print("hx711 setup begin")
     hx711.setup()
     print("hx711 setup done")
     lcd.show_ip()
+    btn.on_press(shutdown)
+    shutdown(btn)
 
 def loop():
     global UserID, login, prevTemp, prevWeight, scanned, goal, startweight, totalDrank
@@ -137,6 +141,11 @@ def create_logged(userid, datetimed, amount, reached):
 
 def callback_button(pin):
     print('button pressed')
+
+def shutdown(channel):
+    if btn.pressed:
+        print('shutdown')
+        subprocess.call(['sudo', 'shutdown', 'now'])
 
 def gpio_thread():
     setup()

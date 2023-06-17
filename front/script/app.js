@@ -149,7 +149,6 @@ const showReminders = function (jsonObject) {
     </tr></thead>
   <tbody>`;
   for (const reminder of jsonObject.reminders) {
-    console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
       <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
@@ -383,6 +382,14 @@ const showTheProgress = function(jsonObject){
   val = jsonObject.progress[0]['total']/theGoal
   percentageToCircle(val)
 }
+
+const showUserInfo = function(jsonObject){
+  console.info(jsonObject.user)
+  const htmlName = document.querySelector('.js-name')
+  const htmlTheGoal = document.querySelector('.js-thegoal')
+  htmlName.value = jsonObject.user.name
+  htmlTheGoal.value = jsonObject.user.goal
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -393,6 +400,11 @@ const formatTime = function(seconds) {
   var minutes = Math.floor(seconds / 60);
   var remainingSeconds = Math.floor(seconds % 60);
   return minutes + ":" + remainingSeconds;
+}
+
+const percentageToCircle = function(percentage) {
+  console.info(percentage)
+  showProgress(percentage, '#4DABF7');
 }
 // #endregion
 
@@ -437,7 +449,7 @@ const getWeight = function () {
 
 const getLastLog = function(){
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/last/`
   handleData(url, showLastLog, showError)
 }
 
@@ -445,6 +457,12 @@ const getProgress = function(){
   let userid = localStorage.getItem('userid');
   const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`
   handleData(url, showTheProgress, showError)
+}
+
+const getUser = function(){
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`
+  handleData(url, showUserInfo, showError)
 }
 // #endregion
 
@@ -586,19 +604,12 @@ const initIndex = function () {
 
 };
 
-const percentageToCircle = function(percentage) {
-  console.info(percentage)
-  showProgress(percentage, '#4DABF7');
-}
-
 const initOverview = function () {
   console.info('init overview');
   htmlTemp = document.querySelector('.js-temp');
   htmlWeight = document.querySelector('.js-weight');
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
-    // socketio.emit('F2B_getweight');
-    // socketio.emit('F2B_gettemp');
   });
   getLastLog();
 };
@@ -615,6 +626,7 @@ const initSettings = function () {
   const htmlSaveR = document.querySelector('.js-savereminders');
   const htmlDone = document.querySelector('.js-done');
   const htmlInfo = document.querySelector('.js-info');
+  getUser()
   htmlSaveS.addEventListener('click', function () {
     showPopup(1);
   });

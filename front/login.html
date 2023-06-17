@@ -28,19 +28,19 @@
       <div id="popupContent" class="popup-content">
         <h1>Create a new user profile</h1>
         <p>Your name:</p>
-        <input type="text" class="form-control c-input js-name" name="userName" id="userName" placeholder="name" required pattern="[a-zA-Z -'éàè]{3,}" title="naam heeft minstens 3 tekens nodig">
+        <input type="text" class="form-control popup-content__input js-name" name="userName" id="userName" placeholder="name" required pattern="[a-zA-Z -'éàè]{3,}" title="naam heeft minstens 3 tekens nodig">
         <p>Your goal</p>
-        <input type="number" class="form-control c-input js-goal" name="goal" id="goal" min="1000" max="3500" value="1500" step="100">
+        <input type="number" class="form-control popup-content__input js-goal" name="goal" id="goal" min="1000" max="3500" value="1500" step="100">
         <p>First reminder</p>
         <p>Select a type of reminder</p>
-        <select class="form-control c-input js-type" name="reminderType" id="reminderType">
+        <select class="form-control popup-content__input js-type" name="reminderType" id="reminderType">
           <option selected disabled>--- Choose a type ---</option>
         </select>
         <p>Select the interval for the reminder(in minutes)</p>
-        <input type="number" name="interval" id="interval" class="form-control c-input js-interval">
+        <input type="number" name="interval" id="interval" class="form-control popup-content__input js-interval">
         <p>Select the amount of water</p>
-        <input type="number" name="amount" id="amount" min="50" max="500" class="form-control c-input js-amount">
-        <input class="c-btn js-btn" type="submit" name="button" id="submit" value="Save" onclick="newUser()">
+        <input type="number" name="amount" id="amount" min="50" max="500" class="form-control popup-content__input js-amount">
+        <input class="popup-content__btn js-btn o-button-reset" type="submit" name="button" id="submit" value="Save" onclick="newUser()">
       </div>
     </div>
 </body>

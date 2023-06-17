@@ -1,6 +1,7 @@
 const lanIP = `${window.location.hostname}:5000`;
 const socketio = io(lanIP);
 let percentageProgress = 0
+let theGoal = 0
 
 // #region ***  DOM references                           ***********
 // #endregion
@@ -376,6 +377,12 @@ const showWeight = function(jsonObject){
   console.info(weightTime)
   showSingleLineGraph(weightTitle, weightLabel, weightAxis, weightData, weightTime, 3500, 2)
 }
+
+const showTheProgress = function(jsonObject){
+  console.info(jsonObject.progress[0]['total'])
+  val = jsonObject.progress[0]['total']/theGoal
+  percentageToCircle(val)
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -385,7 +392,7 @@ const formatTime = function(seconds) {
   }
   var minutes = Math.floor(seconds / 60);
   var remainingSeconds = Math.floor(seconds % 60);
-  return minutes + " minuten en " + remainingSeconds + " seconden";
+  return minutes + ":" + remainingSeconds;
 }
 // #endregion
 
@@ -432,6 +439,12 @@ const getLastLog = function(){
   let userid = localStorage.getItem('userid');
   const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`
   handleData(url, showLastLog, showError)
+}
+
+const getProgress = function(){
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`
+  handleData(url, showTheProgress, showError)
 }
 // #endregion
 
@@ -533,15 +546,23 @@ const initIndex = function () {
   if(empty.includes(localStorage.getItem('userid'))){
     window.location = 'login.html'
   }
+  iduser = localStorage.getItem('userid')
   htmlTemp = document.querySelector('.js-temp');
   htmlGoal = document.querySelector('.js-goal');
   htmlTime = document.querySelector('.js-time');
-  theGoal = 0
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_getgoal');
     socketio.emit('F2B_gettemp');
   });
+  socketio.on('B2F_placedrink', function(interval){
+    console.info(interval)
+    console.info('drink')
+    showPopup(1)
+  })
+  socketio.on('B2F_closepopup', function(){
+    closePopup(1)
+  })
   socketio.on('B2F_showtemp', function (temp) {
     // console.info(temp);
     htmlTemp.innerHTML = temp;
@@ -550,6 +571,7 @@ const initIndex = function () {
     console.info(goal.goal);
     theGoal = goal.goal
     htmlGoal.innerHTML = goal.goal;
+    getProgress(iduser)
   });
   socketio.on('B2F_showremaining', function(time_left){
     // console.info(time_left)

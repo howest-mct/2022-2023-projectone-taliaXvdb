@@ -383,6 +383,13 @@ a:active {
   gap: 2rem;
   padding-left: 1.5rem;
   margin-top: 0.75rem;
+  font-size: 1.25rem;
+}
+@media (max-width: 36.0625em) {
+  .c-nav__list {
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
 }
 
 .c-title {
@@ -410,6 +417,12 @@ a:active {
   overflow-y: auto;
   padding-left: 1.5rem;
 }
+@media (min-width: 36.0625em) {
+  .c-mobile-nav {
+    display: none;
+    overflow: hidden;
+  }
+}
 
 .c-mobile-nav__overlay {
   position: absolute;
@@ -430,6 +443,46 @@ a:active {
   height: 100%;
   translate: 100% 0;
   transition: all 0.2s ease;
+}
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 20px;
+  text-align: center;
+}
+.popup-content__btn {
+  gap: 1rem;
+  background-color: #74c0fc;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  border-radius: 1rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  box-shadow: 5px 5px 4px #e9ecef;
+}
+.popup-content__input {
+  gap: 1rem;
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border: #f8f9fa;
 }
 
 /*
@@ -508,27 +561,6 @@ a:active {
   .c-login__text {
     font-size: 2rem;
   }
-}
-
-.popup-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
 }
 
 .c-progress {
@@ -613,7 +645,7 @@ a:active {
 
 .c-edit {
   display: flex;
-  padding-left: 1rem;
+  padding-left: 2rem;
   padding-bottom: 2rem;
 }
 .c-edit__title {
@@ -647,7 +679,7 @@ a:active {
 }
 
 .c-reminder {
-  padding-left: 1rem;
+  padding-left: 1.5rem;
 }
 .c-reminder__table {
   border-spacing: 1rem;
@@ -674,12 +706,6 @@ a:active {
   padding: 0.5rem;
   box-shadow: 5px 5px 4px #e9ecef;
 }
-@media (max-width: 36.0625em) {
-  .c-reminder__input {
-    width: 1rem;
-  }
-}
-
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/

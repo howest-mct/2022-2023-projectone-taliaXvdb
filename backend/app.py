@@ -10,6 +10,8 @@ import datetime
 #GPIO IMPORT
 from RPi import GPIO
 import time
+import datetime
+import pytz
 import board
 from helpers.gewichtssensor import HX711
 from helpers.temperatuursensor import DS18B20
@@ -76,13 +78,17 @@ def loop():
     if login == True:
         start_time = time.time()
         elapsed_time = 0
+        utc_time = datetime.datetime.utcnow()
+        desired_timezone = pytz.timezone('Europe/Brussels')
         interval = get_interval(UserID)
         while noitsnull == True:
-            while startweight == 0:
+            while startweight <= 0:
                 time.sleep(3)
                 startweight = hx711.get_weight()
+                socketio.emit('B2F_placedrink', interval)
                 if startweight > 0:
                     noitsnull = False
+                    socketio.emit('B2F_closepopup')
         totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
         totalDrank = totalDrank[0]['total']
         if totalDrank == None:
@@ -92,12 +98,12 @@ def loop():
             socketio.emit('B2F_showtemp', temp)
             weight = round(hx711.get_weight())
             if temp != prevTemp:
-                create_measurement(1,1, UserID, time.gmtime(), temp, 'Temperature measured')
+                create_measurement(1,1, UserID, utc_time.replace(tzinfo=pytz.utc).astimezone(desired_timezone), temp, 'Temperature measured')
                 prevTemp = temp
             
             if weight != prevWeight:
                 if weight > 0:
-                    create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
+                    create_measurement(2,1,UserID, utc_time.replace(tzinfo=pytz.utc).astimezone(desired_timezone), weight, 'Weight measured')
                     prevWeight = weight
                 else:
                     pass
@@ -123,6 +129,8 @@ def loop():
                     drank = round(startweight - newestweight)
                     print(startweight)
                     print(drank)
+                    if drank < 0:
+                        drank = 0
                     totalDrank += drank
                     datetimed = str(datetime.datetime.now())
                     if totalDrank == goal:
@@ -277,6 +285,12 @@ def reminders(iduser):
         else:
             return jsonify(status='ERROR'), 500
         
+@app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET'])
+def total(iduser):
+    if request.method == 'GET':
+        progress = DataRepository.read_loggedwater_by_userid(iduser)
+        return jsonify(progress=progress), 200
+
 @app.route(ENDPOINT + '/user/<iduser>/logging/last/', methods=['GET'])
 def last_logging(iduser):
     if request.method == 'GET':

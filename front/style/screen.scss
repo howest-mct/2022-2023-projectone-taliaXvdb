@@ -528,6 +528,12 @@ a:active {
   gap: $space-l;
   padding-left: $space-m;
   margin-top: $space-xs;
+  font-size: 1.25rem;
+  
+  @include mq(bp1,max){
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
 }
 // title
 
@@ -556,9 +562,10 @@ a:active {
   overflow-y: auto;
   padding-left: $space-m;
 
-  // @include mq(bp1) {
-  //   display: none;
-  // }
+  @include mq(bp1) {
+    display: none;
+    overflow: hidden;
+  }
 }
 
 .c-mobile-nav__overlay {
@@ -581,6 +588,50 @@ a:active {
   // opacity: 0;
   translate: 100% 0;
   transition: all 0.2s ease;
+}
+
+//* popups
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $color-primary-lighter;
+  border-radius: 1rem;
+  padding: 20px;
+  text-align: center;
+
+  &__btn{
+    gap: $space-s;
+    background-color: $color-primary;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    border-radius: 1rem;
+    margin-top: $space-xs;
+    padding: $space-xxs;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+
+  &__input{
+    gap: $space-s;
+    background-color: $color-primary-lighter;
+    border-radius: 1rem;
+    padding: $space-xxs;
+    border: $color-border-light;
+  }
 }
 
 /*
@@ -664,27 +715,6 @@ a:active {
       font-size: 2rem;
     }
   }
-}
-
-.popup-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
 }
 
 //* index.html
@@ -778,7 +808,7 @@ a:active {
 
 .c-edit{
   display: flex;
-  padding-left: $space-s;
+  padding-left: $space-l;
   padding-bottom: $space-l;
 
   &__title{
@@ -816,7 +846,7 @@ a:active {
 }
 
 .c-reminder{
-  padding-left: $space-s;
+  padding-left: $space-m;
 
   &__table{
     border-spacing: $space-s;
@@ -847,7 +877,6 @@ a:active {
   }
   @include mq(bp1, max){
     &__input{
-      width: 1rem;
 
     }
   }

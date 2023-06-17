@@ -612,8 +612,12 @@ a:active {
   border-radius: 1rem;
   padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__btn{
+    display: flex;
     gap: $space-s;
     background-color: $color-primary;
     justify-content: center;
@@ -627,10 +631,20 @@ a:active {
 
   &__input{
     gap: $space-s;
-    background-color: $color-primary-lighter;
+    background-color: $color-primary-light;
     border-radius: 1rem;
     padding: $space-xxs;
     border: $color-border-light;
+  }
+  &__text{
+    margin-bottom: $space-xs;
+    padding-top: $space-xs;
+  }
+
+  &__subtitle{
+    margin-bottom: 0;
+    margin-top: $space-xs;
+    font-size: 1.25rem;
   }
 }
 
@@ -918,6 +932,9 @@ a:active {
   max-width: calc(1400 / 16 * 1rem);
 }
 
+.u-max-height {
+  height: 100vh;
+}
 /*
     Utitlities: whitespace
     ---

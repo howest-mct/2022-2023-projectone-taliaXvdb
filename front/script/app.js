@@ -318,7 +318,8 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
 
 
 const showLastLog = function (jsonObject) {
-  // console.info(jsonObject);
+  const htmlStreak = document.querySelector('.js-streak')
+  let streak = 0
   const title = 'Did I reach my goal?';
   const labels = ['goal', 'what i drank'];
   const axistitles = ['Date', 'Amount(ml)'];
@@ -329,7 +330,11 @@ const showLastLog = function (jsonObject) {
     goalData.push(logged['daily goal']);
     amountDrank.push(logged['total weight water']);
     dates.push(logged['date']);
+    if (logged['total weight water'] >= logged['daily goal']){
+      streak += 1
+    }
   }
+  htmlStreak.innerHTML = streak
   console.info(goalData);
   console.info(amountDrank);
   console.info(dates);
@@ -399,12 +404,28 @@ const formatTime = function(seconds) {
   }
   var minutes = Math.floor(seconds / 60);
   var remainingSeconds = Math.floor(seconds % 60);
-  return minutes + ":" + remainingSeconds;
+  if(minutes < 10){
+    if(remainingSeconds < 10){
+      return '0' + minutes + ":" + '0' + remainingSeconds;
+    }
+    return '0' + minutes + ":" + remainingSeconds;
+  }
+  else if(remainingSeconds < 10){
+    return minutes + ":" + '0' + remainingSeconds;
+  }
+  else {
+    return minutes + ":" + remainingSeconds;
+  }
 }
 
 const percentageToCircle = function(percentage) {
   console.info(percentage)
-  showProgress(percentage, '#4DABF7');
+  if(percentage >= 1){
+    showProgress(1, '#4DABF7');
+  }
+  else {
+    showProgress(percentage, '#4DABF7');
+  }
 }
 // #endregion
 

@@ -95,7 +95,7 @@ class DataRepository:
         return Database.get_rows(sql,params)
 
     def read_lastlogging_by_userid(id):
-        sql = "select u.name, u.goal as 'daily goal', DATE_FORMAT(h.date,'%d-%m-%y') as date, sum(h.value) as 'total weight water', if(u.goal <= sum(h.value), 'Yes', 'No') as 'Goal reached?' from user u join history h on u.userID = h.userID where u.userid = %s and h.deviceID = 2 GROUP BY year(h.date), month(h.date), day(h.date)"
+        sql = "select u.name, u.goal as 'daily goal', DATE_FORMAT(l.loggingDate,'%d-%m-%y') as date, sum(l.loggingAmount) as 'total weight water', if(u.goal <= sum(l.loggingAmount), 'Yes', 'No') as 'Goal reached?' from user u join logging l on u.userID = l.usersID where u.userid = %s GROUP BY year(l.loggingDate), month(l.loggingDate), day(l.loggingDate);"
         params = [id]
         return Database.get_rows(sql,params)
     

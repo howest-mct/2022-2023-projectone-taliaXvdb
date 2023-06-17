@@ -753,6 +753,29 @@ a:active {
 }
 
 // boxes
+.c-hot{
+  justify-content: center;
+  align-items: center;
+  margin-bottom: $space-m;
+  &__back{
+    gap: $space-s;
+    background-color: $oc-orange-1;
+    border-radius: 1rem;
+    padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+  &__item{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    align-items: center;
+    justify-content: center;
+
+    &--text{
+      margin-bottom: 0;
+    }
+  }
+}
 
 .c-info{
   display: flex;
@@ -765,6 +788,11 @@ a:active {
     border-radius: 1rem;
     padding: $space-s;
     box-shadow: 5px 5px 4px $color-border;
+
+    &--text {
+      display: flex;
+      flex-direction: column;
+    }
     @include mq(bp1, max){
       margin-bottom: $space-l;
     }
@@ -865,8 +893,6 @@ a:active {
   &__table{
     border-spacing: $space-s;
   }
-  &__title{
-  }
   &__img{
     width: 2rem;
     height: 2rem;
@@ -890,9 +916,6 @@ a:active {
     box-shadow: 5px 5px 4px $color-border;
   }
   @include mq(bp1, max){
-    &__input{
-
-    }
   }
 }
 

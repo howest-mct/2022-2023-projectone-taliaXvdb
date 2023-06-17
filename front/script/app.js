@@ -586,9 +586,11 @@ const initIndex = function () {
     window.location = 'login.html'
   }
   iduser = localStorage.getItem('userid')
-  htmlTemp = document.querySelector('.js-temp');
-  htmlGoal = document.querySelector('.js-goal');
-  htmlTime = document.querySelector('.js-time');
+  const htmlTemp = document.querySelector('.js-temp');
+  const htmlGoal = document.querySelector('.js-goal');
+  const htmlTime = document.querySelector('.js-time');
+  const htmlHot = document.querySelector('.js-hot')
+
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_getgoal');
@@ -605,6 +607,19 @@ const initIndex = function () {
   socketio.on('B2F_showtemp', function (temp) {
     // console.info(temp);
     htmlTemp.innerHTML = temp;
+    if(temp >= 25){
+      htmlHot.innerHTML = `
+      <div class="o-layout__item u-1-of-3">
+        <div class="c-hot__back">
+          <div class="c-hot__item">
+            <p class="c-hot__item--text">Watch out, it's warm outside.</p>
+          </div>
+          <div class="c-hot__item">
+            <p class="c-hot__item--text">Make sure you drink enough water today!</p>
+          </div>
+        </div>
+      </div>`
+    }
   });
   socketio.on('B2F_showgoal', function (goal) {
     console.info(goal.goal);

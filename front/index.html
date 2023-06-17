@@ -41,41 +41,45 @@
     </div>
   </header>
   <main>
-    <article class="o-container">
-      <h1 class="c-title">Current progress</h1>
-      <div class="c-progress">
-        <canvas id="progressCanvas" width="200" height="200"></canvas>
+    <div class="o-row">
+      <div class="o-container">
+        <div class="js-hot c-hot o-layout">
+        </div>
+        <h1 class="c-title">Current progress</h1>
+        <div class="c-progress">
+          <canvas id="progressCanvas" width="200" height="200"></canvas>
+        </div>
+        <div class="c-info o-layout o-layout--gutter">
+          <div class="o-layout__item u-1-of-3">
+            <div class="c-info__item">
+              <object data="img/flag-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+              <div class="c-info__text">
+                <p class="c-info__title">Goal:</p>
+                <p class="c-info__value js-goal">1500</p>
+              </div>
+            </div>
+          </div>
+          <div class="o-layout__item u-1-of-3">
+            <div class="c-info__item">
+              <object data="img/clock-outline.svg" type="image/svg+xml" class="c-info__img"></object>
+              <div class="c-info__text">
+                <p class="c-info__title">Next hydration in:</p>
+                <p class="c-info__value js-time">00:00</p>
+              </div>
+            </div>
+          </div>
+          <div class="o-layout__item u-1-of-3">
+            <div class="c-info__item">
+              <object data="img/thermometer.svg" type="image/svg+xml" class="c-info__img"></object>
+              <div class="c-info__text">
+                <p class="c-info__title">Temperature:</p>
+                <p class="c-info__value js-temp"></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="c-info o-layout o-layout--gutter">
-        <div class="o-layout__item u-1-of-3">
-          <div class="c-info__item">
-            <object data="img/flag-outline.svg" type="image/svg+xml" class="c-info__img"></object>
-            <div class="c-info__text">
-              <p class="c-info__title">Goal:</p>
-              <p class="c-info__value js-goal">1500</p>
-            </div>
-          </div>
-        </div>
-        <div class="o-layout__item u-1-of-3">
-          <div class="c-info__item">
-            <object data="img/clock-outline.svg" type="image/svg+xml" class="c-info__img"></object>
-            <div class="c-info__text">
-              <p class="c-info__title">Next hydration in:</p>
-              <p class="c-info__value js-time">00:00</p>
-            </div>
-          </div>
-        </div>
-        <div class="o-layout__item u-1-of-3">
-          <div class="c-info__item">
-            <object data="img/thermometer.svg" type="image/svg+xml" class="c-info__img"></object>
-            <div class="c-info__text">
-              <p class="c-info__title">Temperature:</p>
-              <p class="c-info__value js-temp"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
+    </div>
     <div id="popupContainer" class="popup-container c-popup">
       <div id="popupContent" class="popup-content">
         <h1>Place your bottle on the round platform</h1>

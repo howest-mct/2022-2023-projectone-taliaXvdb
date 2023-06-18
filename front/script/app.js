@@ -13,53 +13,6 @@ const showError = function (error) {
   console.error(error);
 };
 
-const showHistory = function (jsonObject) {
-  console.info(jsonObject);
-  const htmlTable = document.querySelector('.js-historyTable');
-  htmlTable.innerHTML = `<tr>
-      <th>ID</th>
-      <th>deviceID</th>
-      <th>date</th>
-      <th>value</th>
-    </tr>
-  <tbody>`;
-  for (const record of jsonObject.history) {
-    // console.info(record)
-    htmlTable.innerHTML += `<tr>
-    <td>${record.ID}</td>
-    <td>${record.deviceID}</td>
-    <td>${record.date}</td>
-    <td>${record.value}</td>
-    </tr>`;
-  }
-  htmlTable.innerHTML += `</tbody></table>`;
-};
-
-const showReadings = function (jsonObject) {
-  console.info(jsonObject);
-  const htmlHistory = document.querySelector('.js-historytable');
-  const htmlButton = document.querySelectorAll('.js-btn');
-  for (const record of jsonObject.history) {
-    console.info(record);
-    htmlHistory.innerHTML += `
-    <tr>
-      <td>${record.ID}</td>
-      <td>${record.deviceID}</td>
-      <td>${record.actionID}</td>
-      <td>${record.date}</td>
-      <td>${record.value}</td>
-      <td>${record.comment}</td>
-    </tr>
-    `;
-  }
-  for (const btn of htmlButton) {
-    btn.addEventListener('click', function () {
-      if (btn.getAttribute('data-temperature')) {
-      }
-    });
-  }
-};
-
 const showProgress = function (progress, color) {
   var canvas = document.getElementById('progressCanvas');
   var context = canvas.getContext('2d');
@@ -133,10 +86,6 @@ const showTypes = function (jsonObject) {
     console.info(type);
     htmlType.innerHTML += `<option>${type.name}</option>`;
   }
-};
-
-const showLogging = function (jsonObject) {
-  console.info(jsonObject);
 };
 
 const showReminders = function (jsonObject) {
@@ -431,18 +380,6 @@ const percentageToCircle = function(percentage) {
 
 // #region ***  Data Access - get___                     ***********
 
-const getHistory = function () {
-  const userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
-  handleData(url, showHistory, showError);
-};
-
-const getReadings = function () {
-  let userid = window.localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
-  handleData(url, showReadings, showError);
-};
-
 const getTypes = function () {
   const url = `http://${lanIP}/api/v1/waterreminder/type/`;
   handleData(url, showTypes, showError);
@@ -659,8 +596,6 @@ const initIndex = function () {
 
 const initOverview = function () {
   console.info('init overview');
-  const htmlTemp = document.querySelector('.js-temp');
-  consthtmlWeight = document.querySelector('.js-weight');
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
   });

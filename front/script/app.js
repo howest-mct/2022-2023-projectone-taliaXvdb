@@ -566,6 +566,7 @@ const init = function () {
     initSettings();
   }
   poweroff.addEventListener('click', function(){
+    console.info('poweroff')
     socketio.emit('F2B_poweroff')
   })
 };

@@ -94,6 +94,7 @@ def loop():
         if totalDrank == None:
             totalDrank = 0
         while True:
+            interval = get_interval(UserID)
             temp = ds18b20.read_temp()
             socketio.emit('B2F_showtemp', temp)
             weight = round(hx711.get_weight())
@@ -331,7 +332,7 @@ def initial_connection():
 
 @socketio.on('F2B_poweroff')
 def poweroff():
-    shutdown()
+    subprocess.call(['sudo', 'shutdown', 'now'])
 
 @socketio.on('F2B_gettemp')
 def show_temp():

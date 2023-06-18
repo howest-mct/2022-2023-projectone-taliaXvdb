@@ -209,6 +209,19 @@ def hallo():
     return "Server is running, er zijn momenteel geen API endpoints beschikbaar."
 
 ENDPOINT = '/api/v1/waterreminder'
+
+@app.route(ENDPOINT + '/users/', methods= ['GET', 'POST'])
+def users():
+    if request.method == 'GET':
+        result = DataRepository.read_all_users()
+        return jsonify(data=result), 200
+    elif request.method == 'POST':
+        form = DataRepository.json_or_formdata(request)
+        data = DataRepository.create_user(form['name'], form['goal'], form['streak'])
+        if data is not None:
+            return jsonify(status='OK', data=data), 201
+        else:
+            return jsonify(status='ERROR'), 500
         
 @app.route(ENDPOINT + '/user/<id>/', methods=['GET', 'PUT', 'DELETE'])
 def user(id):

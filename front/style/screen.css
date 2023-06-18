@@ -376,6 +376,19 @@ a:active {
     justify-content: space-between;
   }
 }
+.c-header__poweroff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 36.0625em) {
+  .c-header__poweroff {
+    display: none;
+  }
+}
 
 .c-nav__list {
   display: flex;
@@ -383,17 +396,39 @@ a:active {
   gap: 2rem;
   padding-left: 1.5rem;
   margin-top: 0.75rem;
+  font-size: 1.25rem;
+}
+@media (max-width: 36.0625em) {
+  .c-nav__list {
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
 }
 
 .c-title {
   padding-left: 1rem;
 }
 
+.c-icon {
+  display: flex;
+  justify-content: space-between;
+}
 .c-icon-button {
   display: none;
 }
 @media (max-width: 36.0625em) {
   .c-icon-button {
+    display: flex;
+    align-items: center;
+  }
+}
+.c-icon-poweroff {
+  display: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+@media (max-width: 36.0625em) {
+  .c-icon-poweroff {
     display: flex;
     align-items: center;
   }
@@ -409,6 +444,12 @@ a:active {
   z-index: 100;
   overflow-y: auto;
   padding-left: 1.5rem;
+}
+@media (min-width: 36.0625em) {
+  .c-mobile-nav {
+    display: none;
+    overflow: hidden;
+  }
 }
 
 .c-mobile-nav__overlay {
@@ -430,6 +471,59 @@ a:active {
   height: 100%;
   translate: 100% 0;
   transition: all 0.2s ease;
+}
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #e7f5ff;
+  border-radius: 1rem;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.popup-content__btn {
+  display: flex;
+  gap: 1rem;
+  background-color: #74c0fc;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  border-radius: 1rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  box-shadow: 5px 5px 4px #e9ecef;
+}
+.popup-content__input {
+  gap: 1rem;
+  background-color: #a5d8ff;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  border: #f8f9fa;
+}
+.popup-content__text {
+  margin-bottom: 0.75rem;
+  padding-top: 0.75rem;
+}
+.popup-content__subtitle {
+  margin-bottom: 0;
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
 }
 
 /*
@@ -510,27 +604,6 @@ a:active {
   }
 }
 
-.popup-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
 .c-progress {
   display: flex;
   justify-content: center;
@@ -548,6 +621,29 @@ a:active {
   }
 }
 
+.c-hot {
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.c-hot__back {
+  gap: 1rem;
+  background-color: #ffe8cc;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 5px 5px 4px #e9ecef;
+}
+.c-hot__item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
+.c-hot__item--text {
+  margin-bottom: 0;
+}
+
 .c-info {
   display: flex;
   padding: 1rem;
@@ -559,6 +655,10 @@ a:active {
   border-radius: 1rem;
   padding: 1rem;
   box-shadow: 5px 5px 4px #e9ecef;
+}
+.c-info__item--text {
+  display: flex;
+  flex-direction: column;
 }
 @media (max-width: 36.0625em) {
   .c-info__item {
@@ -613,7 +713,7 @@ a:active {
 
 .c-edit {
   display: flex;
-  padding-left: 1rem;
+  padding-left: 2rem;
   padding-bottom: 2rem;
 }
 .c-edit__title {
@@ -647,7 +747,7 @@ a:active {
 }
 
 .c-reminder {
-  padding-left: 1rem;
+  padding-left: 1.5rem;
 }
 .c-reminder__table {
   border-spacing: 1rem;
@@ -674,12 +774,6 @@ a:active {
   padding: 0.5rem;
   box-shadow: 5px 5px 4px #e9ecef;
 }
-@media (max-width: 36.0625em) {
-  .c-reminder__input {
-    width: 1rem;
-  }
-}
-
 /*---------------------------------------/*
  # UTILITIES
 /*---------------------------------------*/
@@ -707,6 +801,10 @@ a:active {
 
 .u-max-width-l {
   max-width: 87.5rem;
+}
+
+.u-max-height {
+  height: 100vh;
 }
 
 /*

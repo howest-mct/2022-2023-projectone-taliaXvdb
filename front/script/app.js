@@ -1,6 +1,8 @@
 const lanIP = `${window.location.hostname}:5000`;
 const socketio = io(lanIP);
 let percentageProgress = 0
+let theGoal = 0
+let streak = 0
 
 // #region ***  DOM references                           ***********
 // #endregion
@@ -9,53 +11,6 @@ let percentageProgress = 0
 
 const showError = function (error) {
   console.error(error);
-};
-
-const showHistory = function (jsonObject) {
-  console.info(jsonObject);
-  const htmlTable = document.querySelector('.js-historyTable');
-  htmlTable.innerHTML = `<tr>
-      <th>ID</th>
-      <th>deviceID</th>
-      <th>date</th>
-      <th>value</th>
-    </tr>
-  <tbody>`;
-  for (const record of jsonObject.history) {
-    // console.info(record)
-    htmlTable.innerHTML += `<tr>
-    <td>${record.ID}</td>
-    <td>${record.deviceID}</td>
-    <td>${record.date}</td>
-    <td>${record.value}</td>
-    </tr>`;
-  }
-  htmlTable.innerHTML += `</tbody></table>`;
-};
-
-const showReadings = function (jsonObject) {
-  console.info(jsonObject);
-  const htmlHistory = document.querySelector('.js-historytable');
-  const htmlButton = document.querySelectorAll('.js-btn');
-  for (const record of jsonObject.history) {
-    console.info(record);
-    htmlHistory.innerHTML += `
-    <tr>
-      <td>${record.ID}</td>
-      <td>${record.deviceID}</td>
-      <td>${record.actionID}</td>
-      <td>${record.date}</td>
-      <td>${record.value}</td>
-      <td>${record.comment}</td>
-    </tr>
-    `;
-  }
-  for (const btn of htmlButton) {
-    btn.addEventListener('click', function () {
-      if (btn.getAttribute('data-temperature')) {
-      }
-    });
-  }
 };
 
 const showProgress = function (progress, color) {
@@ -133,10 +88,6 @@ const showTypes = function (jsonObject) {
   }
 };
 
-const showLogging = function (jsonObject) {
-  console.info(jsonObject);
-};
-
 const showReminders = function (jsonObject) {
   const htmlReminders = document.querySelector('.js-table');
   let htmlString = '';
@@ -148,24 +99,26 @@ const showReminders = function (jsonObject) {
     </tr></thead>
   <tbody>`;
   for (const reminder of jsonObject.reminders) {
-    console.info(reminder);
     if (reminder.type == 1) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="bulb"><img src="img/bulb-outline.svg" class="c-reminder__img js-reminder" data-type="bulb"></img></td>
-      <td class="js-time" data-type="bulb"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="bulb"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/bulb-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="bulb"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="bulb"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 2) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="music"><img src="img/music-outline.svg" class="c-reminder__img js-reminder" data-type="music"></img></td>
-      <td class="js-time" data-type="music"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="music"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/music-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="music"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="music"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     } else if (reminder.type == 3) {
       htmlString += `<tr>
-      <td class="js-reminder c-reminder__type" data-type="vibrate"><img src="img/phone-call-outline.svg" class="c-reminder__img js-reminder" data-type="vibrate"></img></td>
-      <td class="js-time" data-type="vibrate"><input type="number" class="c-reminder__input" value=${reminder.time}></input></td>
-      <td class="js-amount" data-type="vibrate"><input type="number" class="c-reminder__input" value=${reminder.amount}></input></td>
+      <td class="js-reminder c-reminder__type" data-type="${reminder.type}" data-id="${reminder.reminderID}">
+      <img src="img/phone-call-outline.svg" class="c-reminder__img" data-type="${reminder.type}"></td>
+      <td data-type="vibrate"><input type="number" class="c-reminder__input js-time" value=${reminder.time}></input></td>
+      <td data-type="vibrate"><input type="number" class="c-reminder__input js-amount" value=${reminder.amount}></input></td>
       </tr>`;
     }
   }
@@ -300,6 +253,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
     xaxis: {
       categories: dateData,
       tickAmount: 8,
+      
     }
   };
   console.info(number)
@@ -314,7 +268,7 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
 
 
 const showLastLog = function (jsonObject) {
-  // console.info(jsonObject);
+  const htmlStreak = document.querySelector('.js-streak')
   const title = 'Did I reach my goal?';
   const labels = ['goal', 'what i drank'];
   const axistitles = ['Date', 'Amount(ml)'];
@@ -325,7 +279,11 @@ const showLastLog = function (jsonObject) {
     goalData.push(logged['daily goal']);
     amountDrank.push(logged['total weight water']);
     dates.push(logged['date']);
+    if (logged['total weight water'] >= logged['daily goal']){
+      streak += 1
+    }
   }
+  htmlStreak.innerHTML = streak
   console.info(goalData);
   console.info(amountDrank);
   console.info(dates);
@@ -372,6 +330,20 @@ const showWeight = function(jsonObject){
   console.info(weightTime)
   showSingleLineGraph(weightTitle, weightLabel, weightAxis, weightData, weightTime, 3500, 2)
 }
+
+const showTheProgress = function(jsonObject){
+  console.info(jsonObject.progress[0]['total'])
+  val = jsonObject.progress[0]['total']/theGoal
+  percentageToCircle(val)
+}
+
+const showUserInfo = function(jsonObject){
+  console.info(jsonObject.user)
+  const htmlName = document.querySelector('.js-name')
+  const htmlTheGoal = document.querySelector('.js-thegoal')
+  htmlName.value = jsonObject.user.name
+  htmlTheGoal.value = jsonObject.user.goal
+}
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
@@ -381,23 +353,32 @@ const formatTime = function(seconds) {
   }
   var minutes = Math.floor(seconds / 60);
   var remainingSeconds = Math.floor(seconds % 60);
-  return minutes + " minuten en " + remainingSeconds + " seconden";
+  if(minutes < 10){
+    if(remainingSeconds < 10){
+      return '0' + minutes + ":" + '0' + remainingSeconds;
+    }
+    return '0' + minutes + ":" + remainingSeconds;
+  }
+  else if(remainingSeconds < 10){
+    return minutes + ":" + '0' + remainingSeconds;
+  }
+  else {
+    return minutes + ":" + remainingSeconds;
+  }
+}
+
+const percentageToCircle = function(percentage) {
+  console.info(percentage)
+  if(percentage >= 1){
+    showProgress(1, '#4DABF7');
+  }
+  else {
+    showProgress(percentage, '#4DABF7');
+  }
 }
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
-
-const getHistory = function () {
-  const userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
-  handleData(url, showHistory, showError);
-};
-
-const getReadings = function () {
-  let userid = window.localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`;
-  handleData(url, showReadings, showError);
-};
 
 const getTypes = function () {
   const url = `http://${lanIP}/api/v1/waterreminder/type/`;
@@ -426,8 +407,20 @@ const getWeight = function () {
 
 const getLastLog = function(){
   let userid = localStorage.getItem('userid');
-  const url = `http://${lanIP}/api/v1/waterreminder/user/2/logging/last/`
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/last/`
   handleData(url, showLastLog, showError)
+}
+
+const getProgress = function(){
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/logging/`
+  handleData(url, showTheProgress, showError)
+}
+
+const getUser = function(){
+  let userid = localStorage.getItem('userid');
+  const url = `http://${lanIP}/api/v1/waterreminder/user/${userid}/`
+  handleData(url, showUserInfo, showError)
 }
 // #endregion
 
@@ -437,24 +430,49 @@ const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
   const remindertime = document.querySelectorAll('.js-time');
   const reminderamount = document.querySelectorAll('.js-amount');
-  const savebtn = document.querySelector('.js-savereminders')
+  const savebtnRem = document.querySelector('.js-savereminders')
+  const savebtnSpe = document.querySelector('.js-savespecifications');
+  const thename = document.querySelector('.js-name')
+  const thegoal = document.querySelector('.js-thegoal')
   for (const type of remindertypes) {
     type.addEventListener('click', function () {
       console.info(this);
       const kind = this.getAttribute('data-type');
       console.info(kind);
-      if (kind == 'bulb') {
+      if (kind == 1) {
         console.info('bulb clicked');
         socketio.emit('F2B_lighton');
-      } else if (kind == 'music') {
+      } else if (kind == 2) {
         console.info('sound clicked');
         socketio.emit('F2B_playmusic');
-      } else if (kind == 'vibrate') {
+      } else if (kind == 3) {
         console.info('vibrate clicked');
         socketio.emit('F2B_vibrate');
       }
     });
   }
+  savebtnRem.addEventListener('click', function(){
+    for(let i = 0; i < 3; i ++){
+      console.info(remindertime[i].value)
+      console.info(reminderamount[i].value)
+      console.info(remindertypes[i].getAttribute('data-id'))
+      console.info(remindertypes[i].getAttribute('data-type'))
+      const timeval = remindertime[i].value
+      const amountval = reminderamount[i].value
+      const reminderid = remindertypes[i].getAttribute('data-id')
+      const typeid = remindertypes[i].getAttribute('data-type')
+      const userid = localStorage.getItem('userid')
+      socketio.emit('F2B_updatereminder', [reminderid, userid, typeid, timeval, amountval])
+    }
+  })
+  savebtnSpe.addEventListener('click', function(){
+    console.info(thename.value)
+    console.info(thegoal.value)
+    const userid = localStorage.getItem('userid')
+    const newName = thename.value
+    const newgoal = thegoal.value
+    socketio.emit('F2B_updateuser', [userid, newName, newgoal, streak])
+  })
 };
 // #endregion
 
@@ -471,6 +489,7 @@ const init = function () {
   const overview = document.querySelector('.js-pageoverview');
   const readings = document.querySelector('.js-pagereadings');
   const settings = document.querySelector('.js-pagesettings');
+  const poweroff = document.querySelector('.js-poweroff')
 
   if (login) {
     initLogin();
@@ -483,6 +502,10 @@ const init = function () {
   } else if (settings) {
     initSettings();
   }
+  poweroff.addEventListener('click', function(){
+    console.info('poweroff')
+    socketio.emit('F2B_poweroff')
+  })
 };
 
 const initLogin = function () {
@@ -511,27 +534,52 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
+  const poweroff = document.querySelector('.js-poweroff')
   const empty = ['', null, 0]
   if(empty.includes(localStorage.getItem('userid'))){
     window.location = 'login.html'
   }
-  htmlTemp = document.querySelector('.js-temp');
-  htmlGoal = document.querySelector('.js-goal');
-  htmlTime = document.querySelector('.js-time');
-  theGoal = 0
+  iduser = localStorage.getItem('userid')
+  const htmlTemp = document.querySelector('.js-temp');
+  const htmlGoal = document.querySelector('.js-goal');
+  const htmlTime = document.querySelector('.js-time');
+  const htmlHot = document.querySelector('.js-hot')
+
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
     socketio.emit('F2B_getgoal');
     socketio.emit('F2B_gettemp');
   });
+  socketio.on('B2F_placedrink', function(interval){
+    console.info(interval)
+    console.info('drink')
+    showPopup(1)
+  })
+  socketio.on('B2F_closepopup', function(){
+    closePopup(1)
+  })
   socketio.on('B2F_showtemp', function (temp) {
     // console.info(temp);
     htmlTemp.innerHTML = temp;
+    if(temp >= 25){
+      htmlHot.innerHTML = `
+      <div class="o-layout__item u-1-of-3">
+        <div class="c-hot__back">
+          <div class="c-hot__item">
+            <p class="c-hot__item--text">Watch out, it's warm outside.</p>
+          </div>
+          <div class="c-hot__item">
+            <p class="c-hot__item--text">Make sure you drink enough water today!</p>
+          </div>
+        </div>
+      </div>`
+    }
   });
   socketio.on('B2F_showgoal', function (goal) {
     console.info(goal.goal);
     theGoal = goal.goal
     htmlGoal.innerHTML = goal.goal;
+    getProgress(iduser)
   });
   socketio.on('B2F_showremaining', function(time_left){
     // console.info(time_left)
@@ -546,19 +594,10 @@ const initIndex = function () {
 
 };
 
-const percentageToCircle = function(percentage) {
-  console.info(percentage)
-  showProgress(percentage, '#4DABF7');
-}
-
 const initOverview = function () {
   console.info('init overview');
-  htmlTemp = document.querySelector('.js-temp');
-  htmlWeight = document.querySelector('.js-weight');
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
-    // socketio.emit('F2B_getweight');
-    // socketio.emit('F2B_gettemp');
   });
   getLastLog();
 };
@@ -575,6 +614,7 @@ const initSettings = function () {
   const htmlSaveR = document.querySelector('.js-savereminders');
   const htmlDone = document.querySelector('.js-done');
   const htmlInfo = document.querySelector('.js-info');
+  getUser()
   htmlSaveS.addEventListener('click', function () {
     showPopup(1);
   });

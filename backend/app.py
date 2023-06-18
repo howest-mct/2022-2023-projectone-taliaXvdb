@@ -10,6 +10,8 @@ import datetime
 #GPIO IMPORT
 from RPi import GPIO
 import time
+import datetime
+import pytz
 import board
 from helpers.gewichtssensor import HX711
 from helpers.temperatuursensor import DS18B20
@@ -76,28 +78,33 @@ def loop():
     if login == True:
         start_time = time.time()
         elapsed_time = 0
+        utc_time = datetime.datetime.utcnow()
+        desired_timezone = pytz.timezone('Europe/Brussels')
         interval = get_interval(UserID)
         while noitsnull == True:
-            while startweight == 0:
+            while startweight <= 0:
+                socketio.emit('B2F_placedrink', interval)
                 time.sleep(3)
                 startweight = hx711.get_weight()
                 if startweight > 0:
                     noitsnull = False
+                    socketio.emit('B2F_closepopup')
         totalDrank = DataRepository.read_loggedwater_by_userid(UserID)
         totalDrank = totalDrank[0]['total']
         if totalDrank == None:
             totalDrank = 0
         while True:
+            interval = get_interval(UserID)
             temp = ds18b20.read_temp()
             socketio.emit('B2F_showtemp', temp)
             weight = round(hx711.get_weight())
             if temp != prevTemp:
-                create_measurement(1,1, UserID, time.gmtime(), temp, 'Temperature measured')
+                create_measurement(1,1, UserID, utc_time.replace(tzinfo=pytz.utc).astimezone(desired_timezone), temp, 'Temperature measured')
                 prevTemp = temp
             
             if weight != prevWeight:
                 if weight > 0:
-                    create_measurement(2,1,UserID, time.gmtime(), weight, 'Weight measured')
+                    create_measurement(2,1,UserID, utc_time.replace(tzinfo=pytz.utc).astimezone(desired_timezone), weight, 'Weight measured')
                     prevWeight = weight
                 else:
                     pass
@@ -105,14 +112,14 @@ def loop():
             current_time = time.time()
             elapsed_time = current_time - start_time
 
-            remaining_time = 60 - elapsed_time
+            remaining_time = interval - elapsed_time
             print("Resterende tijd:", remaining_time, "seconden")
             socketio.emit('B2F_showremaining', remaining_time)
             
             time.sleep(1)
 
 
-            if elapsed_time > 60:
+            if elapsed_time > interval:
                 scanned = False
                 doReminder(UserID)
                 print("Timer afgelopen!")
@@ -123,6 +130,8 @@ def loop():
                     drank = round(startweight - newestweight)
                     print(startweight)
                     print(drank)
+                    if drank < 0:
+                        drank = 0
                     totalDrank += drank
                     datetimed = str(datetime.datetime.now())
                     if totalDrank == goal:
@@ -165,9 +174,10 @@ def gpio_thread():
 
 def get_interval(userid):
     intervalreminder = DataRepository.read_intervalreminder_by_userid(userid)
-    # print(intervalreminder[0]['time'])
-    # interval = intervalreminder[0]['time']
-    interval = 1*60
+    print(intervalreminder[0]['time'])
+    interval = intervalreminder[0]['time']
+    interval = interval*60
+
 
     return interval
 
@@ -231,19 +241,6 @@ def user(id):
             return jsonify(status='ERROR'), 500
     elif request.method == 'DELETE':
         return jsonify(status='DELETED', id=DataRepository.delete_user(id))
-    
-@app.route(ENDPOINT + '/history/', methods=['GET', 'POST'])
-def history():
-    if request.method == 'GET':
-        result = DataRepository.read_history()
-        return jsonify(data=result), 200
-    elif request.method == 'POST':
-        form = DataRepository.json_or_formdata(request)
-        data = DataRepository.create_reading(form['deviceID'], form['actionID'], form['userID'], form['date'], form['value'], form['comment'])
-        if data is not None:
-            return jsonify(status='OK', data=data), 201
-        else:
-            return jsonify(status='ERROR'), 500
         
 @app.route(ENDPOINT + '/user/<iduser>/temperature/', methods=['GET'])
 def temperature(iduser):
@@ -277,6 +274,12 @@ def reminders(iduser):
         else:
             return jsonify(status='ERROR'), 500
         
+@app.route(ENDPOINT + '/user/<iduser>/logging/', methods=['GET'])
+def total(iduser):
+    if request.method == 'GET':
+        progress = DataRepository.read_loggedwater_by_userid(iduser)
+        return jsonify(progress=progress), 200
+
 @app.route(ENDPOINT + '/user/<iduser>/logging/last/', methods=['GET'])
 def last_logging(iduser):
     if request.method == 'GET':
@@ -313,6 +316,10 @@ def types():
 def initial_connection():
     print('A new client connect')
     # # Send to the client!
+
+@socketio.on('F2B_poweroff')
+def poweroff():
+    subprocess.call(['sudo', 'shutdown', 'now'])
 
 @socketio.on('F2B_gettemp')
 def show_temp():
@@ -390,6 +397,24 @@ def sound_on():
 def vibrate_on():
     brrr.vibrate(3)
     time.sleep(1)
+
+@socketio.on('F2B_updatereminder')
+def update_reminder(payload):
+    reminderid = payload[0]
+    userid = payload[1]
+    type = payload[2]
+    time = payload[3]
+    amount = payload[4]
+    DataRepository.update_reminder(reminderid, userid, type, time, amount)
+
+
+@socketio.on('F2B_updateuser')
+def update_user(payload):
+    userid = payload[0]
+    name = payload[1]
+    goal = payload[2]
+    streak = payload[3]
+    DataRepository.update_user(userid, name, goal, streak)
 
 if __name__ == '__main__':
     try:

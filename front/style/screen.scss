@@ -520,6 +520,17 @@ a:active {
   @include mq(bp1, max) {
     justify-content: space-between;
   }
+  &__poweroff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    margin-top: $space-xxs;
+    @include mq(bp1, max) {
+      display: none;
+    }
+  }
 }
 
 .c-nav__list {
@@ -528,6 +539,12 @@ a:active {
   gap: $space-l;
   padding-left: $space-m;
   margin-top: $space-xs;
+  font-size: 1.25rem;
+  
+  @include mq(bp1,max){
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
 }
 // title
 
@@ -537,11 +554,24 @@ a:active {
 
 // burgermenu op gsm
 
-.c-icon-button{
-  display: none;
-  @include mq(bp1, max) {
-    display: flex;
-    align-items: center;
+.c-icon{
+  display: flex;
+  justify-content: space-between;
+  &-button{
+    display: none;
+    @include mq(bp1, max) {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &-poweroff{
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include mq(bp1, max) {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 
@@ -556,9 +586,10 @@ a:active {
   overflow-y: auto;
   padding-left: $space-m;
 
-  // @include mq(bp1) {
-  //   display: none;
-  // }
+  @include mq(bp1) {
+    display: none;
+    overflow: hidden;
+  }
 }
 
 .c-mobile-nav__overlay {
@@ -581,6 +612,64 @@ a:active {
   // opacity: 0;
   translate: 100% 0;
   transition: all 0.2s ease;
+}
+
+//* popups
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.popup-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $color-primary-lighter;
+  border-radius: 1rem;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__btn{
+    display: flex;
+    gap: $space-s;
+    background-color: $color-primary;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    border-radius: 1rem;
+    margin-top: $space-xs;
+    padding: $space-xxs;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+
+  &__input{
+    gap: $space-s;
+    background-color: $color-primary-light;
+    border-radius: 1rem;
+    padding: $space-xxs;
+    border: $color-border-light;
+  }
+  &__text{
+    margin-bottom: $space-xs;
+    padding-top: $space-xs;
+  }
+
+  &__subtitle{
+    margin-bottom: 0;
+    margin-top: $space-xs;
+    font-size: 1.25rem;
+  }
 }
 
 /*
@@ -666,27 +755,6 @@ a:active {
   }
 }
 
-.popup-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
 //* index.html
 
 // cirkel
@@ -709,6 +777,29 @@ a:active {
 }
 
 // boxes
+.c-hot{
+  justify-content: center;
+  align-items: center;
+  margin-bottom: $space-m;
+  &__back{
+    gap: $space-s;
+    background-color: $oc-orange-1;
+    border-radius: 1rem;
+    padding: $space-s;
+    box-shadow: 5px 5px 4px $color-border;
+  }
+  &__item{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    align-items: center;
+    justify-content: center;
+
+    &--text{
+      margin-bottom: 0;
+    }
+  }
+}
 
 .c-info{
   display: flex;
@@ -721,6 +812,11 @@ a:active {
     border-radius: 1rem;
     padding: $space-s;
     box-shadow: 5px 5px 4px $color-border;
+
+    &--text {
+      display: flex;
+      flex-direction: column;
+    }
     @include mq(bp1, max){
       margin-bottom: $space-l;
     }
@@ -778,7 +874,7 @@ a:active {
 
 .c-edit{
   display: flex;
-  padding-left: $space-s;
+  padding-left: $space-l;
   padding-bottom: $space-l;
 
   &__title{
@@ -816,12 +912,10 @@ a:active {
 }
 
 .c-reminder{
-  padding-left: $space-s;
+  padding-left: $space-m;
 
   &__table{
     border-spacing: $space-s;
-  }
-  &__title{
   }
   &__img{
     width: 2rem;
@@ -846,10 +940,6 @@ a:active {
     box-shadow: 5px 5px 4px $color-border;
   }
   @include mq(bp1, max){
-    &__input{
-      width: 1rem;
-
-    }
   }
 }
 
@@ -889,6 +979,9 @@ a:active {
   max-width: calc(1400 / 16 * 1rem);
 }
 
+.u-max-height {
+  height: 100vh;
+}
 /*
     Utitlities: whitespace
     ---

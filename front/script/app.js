@@ -2,6 +2,7 @@ const lanIP = `${window.location.hostname}:5000`;
 const socketio = io(lanIP);
 let percentageProgress = 0
 let theGoal = 0
+let streak = 0
 
 // #region ***  DOM references                           ***********
 // #endregion
@@ -319,7 +320,6 @@ const showSingleLineGraph = function(title, label, axistitle, dataLine, dateData
 
 const showLastLog = function (jsonObject) {
   const htmlStreak = document.querySelector('.js-streak')
-  let streak = 0
   const title = 'Did I reach my goal?';
   const labels = ['goal', 'what i drank'];
   const axistitles = ['Date', 'Amount(ml)'];
@@ -493,7 +493,10 @@ const listenToClick = function () {
   const remindertypes = document.querySelectorAll('.js-reminder');
   const remindertime = document.querySelectorAll('.js-time');
   const reminderamount = document.querySelectorAll('.js-amount');
-  const savebtn = document.querySelector('.js-savereminders')
+  const savebtnRem = document.querySelector('.js-savereminders')
+  const savebtnSpe = document.querySelector('.js-savespecifications');
+  const thename = document.querySelector('.js-name')
+  const thegoal = document.querySelector('.js-thegoal')
   for (const type of remindertypes) {
     type.addEventListener('click', function () {
       console.info(this);
@@ -511,7 +514,7 @@ const listenToClick = function () {
       }
     });
   }
-  savebtn.addEventListener('click', function(){
+  savebtnRem.addEventListener('click', function(){
     for(let i = 0; i < 3; i ++){
       console.info(remindertime[i].value)
       console.info(reminderamount[i].value)
@@ -524,6 +527,14 @@ const listenToClick = function () {
       const userid = localStorage.getItem('userid')
       socketio.emit('F2B_updatereminder', [reminderid, userid, typeid, timeval, amountval])
     }
+  })
+  savebtnSpe.addEventListener('click', function(){
+    console.info(thename.value)
+    console.info(thegoal.value)
+    const userid = localStorage.getItem('userid')
+    const newName = thename.value
+    const newgoal = thegoal.value
+    socketio.emit('F2B_updateuser', [userid, newName, newgoal, streak])
   })
 };
 // #endregion
@@ -541,6 +552,7 @@ const init = function () {
   const overview = document.querySelector('.js-pageoverview');
   const readings = document.querySelector('.js-pagereadings');
   const settings = document.querySelector('.js-pagesettings');
+  const poweroff = document.querySelector('.js-poweroff')
 
   if (login) {
     initLogin();
@@ -553,6 +565,9 @@ const init = function () {
   } else if (settings) {
     initSettings();
   }
+  poweroff.addEventListener('click', function(){
+    socketio.emit('F2B_poweroff')
+  })
 };
 
 const initLogin = function () {
@@ -581,6 +596,7 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
+  const poweroff = document.querySelector('.js-poweroff')
   const empty = ['', null, 0]
   if(empty.includes(localStorage.getItem('userid'))){
     window.location = 'login.html'
@@ -642,8 +658,8 @@ const initIndex = function () {
 
 const initOverview = function () {
   console.info('init overview');
-  htmlTemp = document.querySelector('.js-temp');
-  htmlWeight = document.querySelector('.js-weight');
+  const htmlTemp = document.querySelector('.js-temp');
+  consthtmlWeight = document.querySelector('.js-weight');
   socketio.on('connect', function () {
     console.info('succesfully connected to socket');
   });

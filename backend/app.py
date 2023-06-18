@@ -83,9 +83,9 @@ def loop():
         interval = get_interval(UserID)
         while noitsnull == True:
             while startweight <= 0:
+                socketio.emit('B2F_placedrink', interval)
                 time.sleep(3)
                 startweight = hx711.get_weight()
-                socketio.emit('B2F_placedrink', interval)
                 if startweight > 0:
                     noitsnull = False
                     socketio.emit('B2F_closepopup')
@@ -111,14 +111,14 @@ def loop():
             current_time = time.time()
             elapsed_time = current_time - start_time
 
-            remaining_time = 60 - elapsed_time
+            remaining_time = interval - elapsed_time
             print("Resterende tijd:", remaining_time, "seconden")
             socketio.emit('B2F_showremaining', remaining_time)
             
             time.sleep(1)
 
 
-            if elapsed_time > 60:
+            if elapsed_time > interval:
                 scanned = False
                 doReminder(UserID)
                 print("Timer afgelopen!")
@@ -173,9 +173,10 @@ def gpio_thread():
 
 def get_interval(userid):
     intervalreminder = DataRepository.read_intervalreminder_by_userid(userid)
-    # print(intervalreminder[0]['time'])
-    # interval = intervalreminder[0]['time']
-    interval = 1*60
+    print(intervalreminder[0]['time'])
+    interval = intervalreminder[0]['time']
+    interval = interval*60
+
 
     return interval
 
@@ -328,6 +329,10 @@ def initial_connection():
     print('A new client connect')
     # # Send to the client!
 
+@socketio.on('F2B_poweroff')
+def poweroff():
+    shutdown()
+
 @socketio.on('F2B_gettemp')
 def show_temp():
     temp = ds18b20.read_temp()
@@ -413,6 +418,15 @@ def update_reminder(payload):
     time = payload[3]
     amount = payload[4]
     DataRepository.update_reminder(reminderid, userid, type, time, amount)
+
+
+@socketio.on('F2B_updateuser')
+def update_user(payload):
+    userid = payload[0]
+    name = payload[1]
+    goal = payload[2]
+    streak = payload[3]
+    DataRepository.update_user(userid, name, goal, streak)
 
 if __name__ == '__main__':
     try:

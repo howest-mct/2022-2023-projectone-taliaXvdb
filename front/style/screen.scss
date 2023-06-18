@@ -520,6 +520,17 @@ a:active {
   @include mq(bp1, max) {
     justify-content: space-between;
   }
+  &__poweroff{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    margin-top: $space-xxs;
+    @include mq(bp1, max) {
+      display: none;
+    }
+  }
 }
 
 .c-nav__list {
@@ -543,11 +554,24 @@ a:active {
 
 // burgermenu op gsm
 
-.c-icon-button{
-  display: none;
-  @include mq(bp1, max) {
-    display: flex;
-    align-items: center;
+.c-icon{
+  display: flex;
+  justify-content: space-between;
+  &-button{
+    display: none;
+    @include mq(bp1, max) {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &-poweroff{
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include mq(bp1, max) {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 

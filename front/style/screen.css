@@ -376,6 +376,19 @@ a:active {
     justify-content: space-between;
   }
 }
+.c-header__poweroff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 36.0625em) {
+  .c-header__poweroff {
+    display: none;
+  }
+}
 
 .c-nav__list {
   display: flex;
@@ -396,11 +409,26 @@ a:active {
   padding-left: 1rem;
 }
 
+.c-icon {
+  display: flex;
+  justify-content: space-between;
+}
 .c-icon-button {
   display: none;
 }
 @media (max-width: 36.0625em) {
   .c-icon-button {
+    display: flex;
+    align-items: center;
+  }
+}
+.c-icon-poweroff {
+  display: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+@media (max-width: 36.0625em) {
+  .c-icon-poweroff {
     display: flex;
     align-items: center;
   }

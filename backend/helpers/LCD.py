@@ -105,10 +105,8 @@ class LCDpcfClass():
         ips = check_output(['hostname', '--all-ip-addresses'])
         # print('ips: {}'.format(ips))
         ip1 = ips.decode('utf-8').split(' ')[0]
-        ip2 = ips.decode('utf-8').split(' ')[1]
         self.send_text(ip1)
-        self.second_line()
-        self.send_text(ip2)
+
 
     def clock(self):
         time.sleep(self.delay)

@@ -534,7 +534,6 @@ const initLogin = function () {
 
 const initIndex = function () {
   console.info('init index');
-  const poweroff = document.querySelector('.js-poweroff')
   const empty = ['', null, 0]
   if(empty.includes(localStorage.getItem('userid'))){
     window.location = 'login.html'

@@ -1,0 +1,12 @@
+[Unit]
+Description=ProjectOne Project
+After=network.target
+[Service]
+ExecStart=/home/pi/2022-2023-projectone-taliaXvdb/bin/python -u /home/pi/2022-2023-projectone-taliaXvdb/backend/app.py
+WorkingDirectory=/home/pi/2022-2023-projectone-taliaXvdb/backend
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+[Install]
+WantedBy=multi-user.target
